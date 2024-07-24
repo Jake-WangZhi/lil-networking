@@ -3,16 +3,8 @@
   "installCommand": "yarn install",
   "crons": [
     {
-      "path": "/api/streak_calculation_cron?key=b0686dfa42e95017476f71d500bd62182e51ee3427fdfa0893e0bc70e3cce546",
-      "schedule": "0 6 1 * *"
-    },
-    {
       "path": "/api/new_action_push_notifications_cron?key=b0686dfa42e95017476f71d500bd62182e51ee3427fdfa0893e0bc70e3cce546",
       "schedule": "0 13 * * *"
-    },
-    {
-      "path": "/api/streak_push_notifications_cron?key=b0686dfa42e95017476f71d500bd62182e51ee3427fdfa0893e0bc70e3cce546",
-      "schedule": "0 13 24 * *"
     },
     {
       "path": "/api/meet_goal_push_notifications_cron?key=b0686dfa42e95017476f71d500bd62182e51ee3427fdfa0893e0bc70e3cce546",
