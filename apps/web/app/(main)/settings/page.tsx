@@ -6,8 +6,9 @@ import { Avatar, Typography } from "@mui/material";
 import { UserCircle } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { ChevronRight } from "react-feather";
+import { ChevronRight, LogOut } from "react-feather";
 import { useUser } from "~/contexts/UserContext";
+import { signOut } from "next-auth/react";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -21,6 +22,8 @@ export default function SettingsPage() {
   }, [router]);
 
   const { name, image } = useUser();
+
+  const handleLogoutClick = useCallback(() => signOut(), []);
 
   return (
     <main className="relative min-h-screen py-8 space-y-6">
@@ -64,6 +67,23 @@ export default function SettingsPage() {
           <div className="flex justify-between px-4 w-full">
             <Typography variant="subtitle1">Notifications</Typography>
             <ChevronRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+          </div>
+        </Button>
+        <Button
+          variant="text"
+          sx={{
+            width: "100%",
+          }}
+          onClick={handleLogoutClick}
+        >
+          <div className="flex justify-between px-4 w-full">
+            <Typography variant="subtitle1" className="text-light-blue">
+              Logout
+            </Typography>
+            <LogOut
+              size={24}
+              className="text-light-blue md:w-7 md:h-7 lg:w-8 lg:h-8"
+            />
           </div>
         </Button>
       </div>
