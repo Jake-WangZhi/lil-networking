@@ -2,7 +2,7 @@
   "name": "Lil Networking",
   "short_name": "Lil Networking",
   "theme_color": "#0F1A24",
-  "background_color": "#004740",
+  "background_color": "#0F1A24",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
