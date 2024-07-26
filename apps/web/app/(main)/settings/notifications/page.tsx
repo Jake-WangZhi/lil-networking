@@ -8,12 +8,12 @@ import { useRouter } from "next/navigation";
 import { urlBase64ToUint8Array } from "~/lib/utils";
 import { SubscriptionArgs } from "~/types";
 import { useSubscriptionMutation } from "~/hooks/useSubscription";
-import { useSession } from "next-auth/react";
 import { useNotificationSettings } from "~/hooks/useNotificationSettings";
 import { useNotificationSettingsMutation } from "~/hooks/useNotificationSettingsMutation";
+import { useUser } from "~/contexts/UserContext";
 
 export default function NotificationSettingPage() {
-  const { data: session } = useSession();
+  const { email } = useUser();
   const router = useRouter();
   const [endpoint, setEndpoint] = useState("");
   const { notificationSettings } = useNotificationSettings({
@@ -115,7 +115,7 @@ export default function NotificationSettingPage() {
         );
 
         postSubscriptionMutation.mutate({
-          email: session?.user?.email || "",
+          email: email || "",
           subscription: pushSubscription?.toJSON() as SubscriptionArgs,
         });
 
@@ -217,18 +217,18 @@ export default function NotificationSettingPage() {
     );
 
     postSubscriptionMutation.mutate({
-      email: session?.user?.email || "",
+      email: email || "",
       subscription: pushSubscription?.toJSON() as SubscriptionArgs,
     });
   }, [
     router,
-    meetGoalChecked,
+    subscriptionId,
+    putNotificationSettingsMutation,
     newActionChecked,
     streakChecked,
-    putNotificationSettingsMutation,
-    subscriptionId,
+    meetGoalChecked,
     postSubscriptionMutation,
-    session?.user?.email,
+    email,
   ]);
 
   return (

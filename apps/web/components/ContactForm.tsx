@@ -8,16 +8,15 @@ import { Contact } from "~/types";
 import TagsInput from "react-tagsinput";
 import { upsertContact } from "~/app/_actions";
 import { event } from "nextjs-google-analytics";
-import { useSession } from "next-auth/react";
+import { useUser } from "~/contexts/UserContext";
 
 interface Props {
   contact?: Contact;
-  userEmail?: string | null;
 }
 
-export const ContactForm = ({ contact, userEmail }: Props) => {
+export const ContactForm = ({ contact }: Props) => {
+  const { email: userEmail } = useUser();
   const router = useRouter();
-  const { data: session } = useSession();
   const submitFormRef = useRef<HTMLButtonElement>(null);
 
   const [firstName, setFirstName] = useState(contact?.firstName);
@@ -105,20 +104,11 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     if (!hasError) {
       submitFormRef.current?.click();
 
-      const email = session?.user?.email;
-      !contact && email && event("contact_created", { label: email });
+      !contact && userEmail && event("contact_created", { label: userEmail });
     } else {
       setIsSaving(false);
     }
-  }, [
-    email,
-    firstName,
-    industry,
-    lastName,
-    phone,
-    session?.user?.email,
-    contact,
-  ]);
+  }, [firstName, lastName, industry, email, phone, contact, userEmail]);
 
   const handleBackClick = useCallback(() => router.back(), [router]);
 

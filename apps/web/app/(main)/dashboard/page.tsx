@@ -2,7 +2,6 @@
 
 import { ActionList } from "~/components/ActionList";
 import { GoalSummary } from "~/components/GoalSummary";
-import { useSession } from "next-auth/react";
 import { useActions } from "~/hooks/useActions";
 import { Typography } from "@mui/material";
 import { InfoTooltipButton } from "~/components/InfoTooltipButton";
@@ -10,11 +9,12 @@ import { NavFooter } from "~/components/NavFooter";
 import { AddContactTooltipButton } from "~/components/AddContactTooltipButton";
 import { useEffect } from "react";
 import { event } from "nextjs-google-analytics";
+import { useUser } from "~/contexts/UserContext";
 
 export default function DashboardPage() {
-  const { data: session } = useSession();
+  const { email, name } = useUser();
   const { actions, isLoading, isError } = useActions({
-    email: session?.user?.email,
+    email,
   });
 
   useEffect(() => {
@@ -26,7 +26,6 @@ export default function DashboardPage() {
   useEffect(() => {
     const eventAlreadySent = sessionStorage.getItem("lastOpenedEventSent");
 
-    const email = session?.user?.email;
     if (!eventAlreadySent && email) {
       event(`last_opened`, {
         category: new Date().toISOString(),
@@ -35,15 +34,13 @@ export default function DashboardPage() {
 
       sessionStorage.setItem("lastOpenedEventSent", "true");
     }
-  }, [session?.user?.email]);
+  }, [email]);
 
   return (
     <main className="relative flex flex-col items-center text-white px-4">
       <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
         <div className="flex justify-between items-center">
-          <Typography variant="h1">
-            Hi, {session?.user?.name?.split(" ")[0]}!
-          </Typography>
+          <Typography variant="h1">Hi, {name?.split(" ")[0]}!</Typography>
           <div className="flex items-center space-x-2">
             <InfoTooltipButton />
             <AddContactTooltipButton hasContacts={actions?.hasContacts} />

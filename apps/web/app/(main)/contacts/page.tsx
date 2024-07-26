@@ -6,15 +6,15 @@ import { NavFooter } from "~/components/NavFooter";
 import { SearchBar } from "~/components/SearchBar";
 import { useContacts } from "~/hooks/useContacts";
 import { Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { useUser } from "~/contexts/UserContext";
 
 export default function ContactsPage() {
-  const { data: session } = useSession();
+  const { email } = useUser();
   const [name, setName] = useState("");
 
   const { contacts, isLoading, isError } = useContacts({
-    userEmail: session?.user?.email,
+    userEmail: email,
     name,
   });
 

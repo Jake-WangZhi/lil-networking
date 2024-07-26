@@ -2,7 +2,6 @@
 
 import "react-tagsinput/react-tagsinput.css";
 import "../../styles.css";
-import { useSession } from "next-auth/react";
 import { useContact } from "~/hooks/useContact";
 import { ContactForm } from "~/components/ContactForm";
 import { ClipLoader } from "react-spinners";
@@ -13,7 +12,6 @@ export default function EditPage({
 }: {
   params: { contactId: string };
 }) {
-  const { data: session } = useSession();
   const { contact, isLoading, isError } = useContact({
     id: params.contactId,
   });
@@ -62,5 +60,5 @@ export default function EditPage({
     );
   }
 
-  return <ContactForm contact={contact} userEmail={session?.user?.email} />;
+  return <ContactForm contact={contact} />;
 }

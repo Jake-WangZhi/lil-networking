@@ -9,8 +9,8 @@ import { Contact, SearchParams } from "~/types";
 import { Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { AlertDialog } from "./AlertDialog";
-import { useSession } from "next-auth/react";
 import { event } from "nextjs-google-analytics";
+import { useUser } from "~/contexts/UserContext";
 
 interface Props {
   contact: Contact;
@@ -18,7 +18,7 @@ interface Props {
 
 export const ContactHeader = ({ contact }: Props) => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { email } = useUser();
   const { backPath } = useBackPath();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
@@ -48,8 +48,6 @@ export const ContactHeader = ({ contact }: Props) => {
     method: "PUT",
     onSuccess: () => {
       setErrorMessage("");
-
-      const email = session?.user?.email;
 
       if (email)
         event(`contact_${!contact.isArchived ? "archived" : "unarchived"}`, {

@@ -1,9 +1,10 @@
 "use client";
 
 import { BackPathContext } from "~/contexts/BackPathContext";
-import { usePathname } from "next/navigation";
-import React from "react";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useSession } from "next-auth/react";
+import { UserProvider } from "~/contexts/UserContext";
 
 export default function MainLayout({
   children,
@@ -12,12 +13,21 @@ export default function MainLayout({
 }) {
   const pathname = usePathname();
   const [backPath, setBackPath] = useState(`/${pathname?.split("/")[1]}`);
+  const { data: session } = useSession();
+  const router = useRouter();
 
-  return (
-    <section>
-      <BackPathContext.Provider value={{ backPath, setBackPath }}>
-        {children}
-      </BackPathContext.Provider>
-    </section>
-  );
+  if (!session?.user) {
+    router.push("/signin");
+    return null;
+  } else {
+    const { name, image, email } = session.user;
+
+    return (
+      <section>
+        <BackPathContext.Provider value={{ backPath, setBackPath }}>
+          <UserProvider user={{ name, image, email }}>{children}</UserProvider>
+        </BackPathContext.Provider>
+      </section>
+    );
+  }
 }

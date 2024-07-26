@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 import { useGoalsMutation } from "~/hooks/useGoalsMutation";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Grid, Typography } from "@mui/material";
 import { Button } from "~/components/Button";
@@ -19,12 +18,13 @@ import { useGoals } from "~/hooks/useGoals";
 import { SearchParams } from "~/types";
 import Lottie from "react-lottie";
 import animationData from "../../../../lottie/106770-empty-box.json";
+import { useUser } from "~/contexts/UserContext";
 
 export default function GoalSettingPage() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { email } = useUser();
   const { goals, isLoading, isError } = useGoals({
-    email: session?.user?.email,
+    email,
   });
 
   const [goalConnections, setGoalConnections] = useState(2);
@@ -113,15 +113,9 @@ export default function GoalSettingPage() {
         goalConnections,
         goalMessages,
       },
-      email: session?.user?.email || "",
+      email: email || "",
     });
-  }, [
-    router,
-    goalConnections,
-    goalMessages,
-    putGoalsMutation,
-    session?.user?.email,
-  ]);
+  }, [router, goalConnections, goalMessages, putGoalsMutation, email]);
 
   const handleSetGoalsClick = useCallback(() => {
     router.push(`/goals?${SearchParams.IsFromSettings}=true`);

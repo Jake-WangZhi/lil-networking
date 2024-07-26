@@ -6,10 +6,10 @@ import { Check, Archive } from "react-feather";
 import { useContactMutation } from "~/hooks/useContactMutation";
 import { ActivityType, Contact, SearchParams } from "~/types";
 import { AlertDialog } from "./AlertDialog";
-import { useSession } from "next-auth/react";
 import { useActivityMutation } from "~/hooks/useActivityMutation";
 import { useBackPath } from "~/contexts/BackPathContext";
 import { convertToLocalizedISODate } from "~/lib/utils";
+import { useUser } from "~/contexts/UserContext";
 
 interface Props {
   contact: Contact;
@@ -17,7 +17,7 @@ interface Props {
 
 export const MessageActions = ({ contact }: Props) => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { name } = useUser();
   const { backPath } = useBackPath();
   const searchParams = useSearchParams();
   const isFromProfile = searchParams?.get(SearchParams.IsFromProfile);
@@ -30,12 +30,12 @@ export const MessageActions = ({ contact }: Props) => {
     return {
       [SearchParams.Title]: "Messaged",
       [SearchParams.Date]: new Date().toISOString().split("T")[0],
-      [SearchParams.Description]: `${
-        session?.user?.name?.split(" ")[0]
-      } reached out to ${contact.firstName}`,
+      [SearchParams.Description]: `${name?.split(" ")[0]} reached out to ${
+        contact.firstName
+      }`,
       [SearchParams.IsFromMessage]: "true",
     };
-  }, [contact.firstName, session?.user?.name]);
+  }, [contact.firstName, name]);
 
   const postActivityMutation = useActivityMutation({
     method: "POST",
