@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, useCallback, useRef, useEffect } from "react";
 import { AlertTriangle } from "react-feather";
-import { createActivity } from "../../../../../_actions";
+import { createActivity } from "~/app/_actions";
 import { Button } from "~/components/Button";
 import { useActivityMutation } from "~/hooks/useActivityMutation";
 import { convertToLocalizedISODate } from "~/lib/utils";
