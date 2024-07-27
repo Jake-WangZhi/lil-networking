@@ -1,24 +1,22 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "~/lib/prisma";
-import { sendPushNotification } from "~/helper/PushNotificationHelper";
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from '~/lib/prisma';
+import { sendPushNotification } from '~/helper/PushNotificationHelper';
 
-export default async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
-) {
-  if (request.query.key !== process.env.CRON_KEY) {
-    response.status(404).end();
-    return;
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  const key = url.searchParams.get("key");
+
+  if (key !== process.env.CRON_KEY) {
+    return NextResponse.json(null, { status: 404 });
   }
 
   try {
-    const streakNotificationsCollection =
-      await prisma.notificationSettings.findMany({
-        where: { streak: true },
-        select: {
-          subscriptionId: true,
-        },
-      });
+    const streakNotificationsCollection = await prisma.notificationSettings.findMany({
+      where: { streak: true },
+      select: {
+        subscriptionId: true,
+      },
+    });
 
     for (const notifications of streakNotificationsCollection) {
       const subscription = await prisma.subscription.findUnique({
@@ -57,21 +55,16 @@ export default async function handler(
 
         const notificationData = {
           title: `Streak Reminder`,
-          body: `Hi, ${
-            user.name?.split(" ")[0]
-          }, make sure to meet your goals by the end of the month to keep your current streak!`,
+          body: `Hi, ${user.name?.split(" ")[0]}, make sure to meet your goals by the end of the month to keep your current streak!`,
         };
 
         await sendPushNotification(subscription, notificationData);
       }
     }
 
-    response
-      .status(200)
-      .json({ message: "Streak push notifications sent successfully" });
+    return NextResponse.json({ message: "Streak push notifications sent successfully" }, { status: 200 });
   } catch (error) {
-    response
-      .status(500)
-      .json({ error: "Error sending streak push notifications" });
+    console.error("Error sending streak push notifications:", error);
+    return NextResponse.json({ error: "Error sending streak push notifications" }, { status: 500 });
   }
 }

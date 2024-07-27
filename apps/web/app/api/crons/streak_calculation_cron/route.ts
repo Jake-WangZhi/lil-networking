@@ -1,13 +1,12 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "~/lib/prisma";
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from '~/lib/prisma';
 
-export default async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
-) {
-  if (request.query.key !== process.env.CRON_KEY) {
-    response.status(404).end();
-    return;
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  const key = url.searchParams.get("key");
+
+  if (key !== process.env.CRON_KEY) {
+    return NextResponse.json(null, { status: 404 });
   }
 
   try {
@@ -45,8 +44,8 @@ export default async function handler(
       })
     );
 
-    response.status(200).json({ message: "Streaks updated successfully" });
+    return NextResponse.json({ message: "Streaks updated successfully" }, { status: 200 });
   } catch (error) {
-    response.status(500).json({ error: "Error updating streaks" });
+    return NextResponse.json({ error: "Error updating streaks" }, { status: 500 });
   }
 }

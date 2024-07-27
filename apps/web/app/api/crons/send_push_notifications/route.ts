@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import webpush from "web-push";
-import prisma from "~/lib/prisma";
+import { NextRequest, NextResponse } from 'next/server';
+import webpush from 'web-push';
+import prisma from '~/lib/prisma';
 
 webpush.setVapidDetails(
   process.env.VAPID_MAILTO ?? "",
@@ -8,13 +8,12 @@ webpush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY ?? ""
 );
 
-export default async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
-) {
-  if (request.query.key !== process.env.CRON_KEY) {
-    response.status(404).end();
-    return;
+export async function GET(request: NextRequest){
+  const url = new URL(request.url);
+  const key = url.searchParams.get("key");
+
+  if (key !== process.env.CRON_KEY) {
+    return NextResponse.json(null, { status: 404 });
   }
 
   try {
@@ -45,10 +44,8 @@ export default async function handler(
       }
     }
 
-    response
-      .status(200)
-      .json({ message: "Push notifications sent successfully" });
+    return NextResponse.json({ message: "Push notifications sent successfully" }, { status: 200 });
   } catch (error) {
-    response.status(500).json({ error: "Error sending push notifications" });
+    return NextResponse.json({ error: "Error sending push notifications" }, { status: 500 });
   }
 }

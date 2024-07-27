@@ -1,25 +1,23 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "~/lib/prisma";
-import { differenceInDays } from "date-fns";
-import { sendPushNotification } from "~/helper/PushNotificationHelper";
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from '~/lib/prisma';
+import { differenceInDays } from 'date-fns';
+import { sendPushNotification } from '~/helper/PushNotificationHelper';
 
-export default async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
-) {
-  if (request.query.key !== process.env.CRON_KEY) {
-    response.status(404).end();
-    return;
+export async function GET(request: NextRequest){
+  const url = new URL(request.url);
+  const key = url.searchParams.get("key");
+
+  if (key !== process.env.CRON_KEY) {
+    return NextResponse.json(null, { status: 404 });
   }
 
   try {
-    const meetGoalNotificationsCollection =
-      await prisma.notificationSettings.findMany({
-        where: { meetGoal: true },
-        select: {
-          subscriptionId: true,
-        },
-      });
+    const meetGoalNotificationsCollection = await prisma.notificationSettings.findMany({
+      where: { meetGoal: true },
+      select: {
+        subscriptionId: true,
+      },
+    });
 
     for (const notifications of meetGoalNotificationsCollection) {
       const subscription = await prisma.subscription.findUnique({
@@ -58,9 +56,7 @@ export default async function handler(
 
       const notificationData = {
         title: `Meet Goal Reminder`,
-        body: `Hey, ${
-          user.name?.split(" ")[0]
-        }! You haven't been active in a week. Get back on the app and build those habits!`,
+        body: `Hey, ${user.name?.split(" ")[0]}! You haven't been active in a week. Get back on the app and build those habits!`,
       };
 
       const activity = await prisma.activity.findFirst({
@@ -75,7 +71,7 @@ export default async function handler(
         },
       });
 
-      // If there is no activities, use the creation date of the user.
+      // If there are no activities, use the creation date of the user.
       const dayDiff = differenceInDays(
         new Date(),
         activity ? activity.createdAt : user.createdAt
@@ -86,12 +82,8 @@ export default async function handler(
       }
     }
 
-    response
-      .status(200)
-      .json({ message: "Meet goal push notifications sent successfully" });
+    return NextResponse.json({ message: "Meet goal push notifications sent successfully" }, { status: 200 });
   } catch (error) {
-    response
-      .status(500)
-      .json({ error: "Error sending meet goal push notifications" });
+    return NextResponse.json({ error: "Error sending meet goal push notifications" }, { status: 500 });
   }
 }
