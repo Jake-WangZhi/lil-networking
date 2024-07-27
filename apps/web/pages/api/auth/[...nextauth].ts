@@ -1,5 +1,6 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import LinkedInProvider, { LinkedInProfile } from "next-auth/providers/linkedin";
+import GoogleProvider from "next-auth/providers/google";
 import prisma from "~/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
@@ -8,8 +9,8 @@ export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
   providers: [
     LinkedInProvider({
-      clientId: process.env.LINKEDIN_CLIENT_ID || "",
-      clientSecret: process.env.LINKEDIN_CLIENT_SECRET || "",
+      clientId: String(process.env.LINKEDIN_CLIENT_ID),
+      clientSecret: String(process.env.LINKEDIN_CLIENT_SECRET),
       client: { token_endpoint_auth_method: "client_secret_post" },
       issuer: "https://www.linkedin.com",
       profile: (profile: LinkedInProfile) => ({
@@ -25,6 +26,10 @@ export const authOptions: AuthOptions = {
           scope: "openid profile email",
         },
       },
+    }),
+    GoogleProvider({
+      clientId: String(process.env.GOOGLE_ID),
+      clientSecret: String(process.env.GOOGLE_SECRET),
     }),
   ],
   session: {

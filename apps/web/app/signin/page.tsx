@@ -2,13 +2,20 @@
 
 import { AddToHomeScreenBanner } from "~/components/AddToHomeScreenBanner";
 import { Button } from "~/components/Button";
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useCallback } from "react";
 
 export default function SignInPage() {
-  const handleClick = useCallback(
+  const theme = useTheme();
+
+  const handleLinkedinClick = useCallback(
     () => signIn("linkedin", { callbackUrl: "/dashboard" }),
+    []
+  );
+
+  const handleGoogleClick = useCallback(
+    () => signIn("google", { callbackUrl: "/dashboard" }),
     []
   );
 
@@ -24,9 +31,30 @@ export default function SignInPage() {
         Build networking habits & <br />
         reach your goals
       </Typography>
-      <div className="flex justify-center !mt-24">
-        <Button variant="contained" onClick={handleClick}>
+      <div className="flex justify-center !mt-24 flex-col gap-8">
+        <Button
+          variant="contained"
+          sx={{
+            width: "200px",
+            [theme.breakpoints.up("sm")]: {
+              width: "300px",
+            },
+          }}
+          onClick={handleLinkedinClick}
+        >
           Sign in with LinkedIn
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            width: "200px",
+            [theme.breakpoints.up("sm")]: {
+              width: "300px",
+            },
+          }}
+          onClick={handleGoogleClick}
+        >
+          Sign in with Google
         </Button>
       </div>
       <AddToHomeScreenBanner addBottomPadding={false} />
