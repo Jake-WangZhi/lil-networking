@@ -40,16 +40,16 @@ yarn-error.log*
 
 
 # next-pwa
-/apps/web/public/precache.*.*.js
-/apps/web/public/sw.js
-/apps/web/public/workbox-*.js
-/apps/web/public/worker-*.js
-/apps/web/public/fallback-*.js
-/apps/web/public/precache.*.*.js.map
-/apps/web/public/sw.js.map
-/apps/web/public/workbox-*.js.map
-/apps/web/public/worker-*.js.map
-/apps/web/public/fallback-*.js
+/public/precache.*.*.js
+/public/sw.js
+/public/workbox-*.js
+/public/worker-*.js
+/public/fallback-*.js
+/public/precache.*.*.js.map
+/public/sw.js.map
+/public/workbox-*.js.map
+/public/worker-*.js.map
+/public/fallback-*.js
 
 # yarn
 .yarn/*
