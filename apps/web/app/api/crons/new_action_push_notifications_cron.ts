@@ -1,25 +1,23 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "~/lib/prisma";
 import { differenceInDays } from "date-fns";
 import { sendPushNotification } from "~/helper/PushNotificationHelper";
+import { NextRequest } from "next/server";
 
-export default async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
-) {
-  if (request.query.key !== process.env.CRON_KEY) {
-    response.status(404).end();
-    return;
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  const key = url.searchParams.get("key");
+
+  if (key !== process.env.CRON_KEY) {
+    return new Response(null, { status: 404 });
   }
 
   try {
-    const newActionNotificationsCollection =
-      await prisma.notificationSettings.findMany({
-        where: { newAction: true },
-        select: {
-          subscriptionId: true,
-        },
-      });
+    const newActionNotificationsCollection = await prisma.notificationSettings.findMany({
+      where: { newAction: true },
+      select: {
+        subscriptionId: true,
+      },
+    });
 
     for (const notifications of newActionNotificationsCollection) {
       const subscription = await prisma.subscription.findUnique({
@@ -79,12 +77,14 @@ export default async function handler(
       }
     }
 
-    response
-      .status(200)
-      .json({ message: "New action push notifications sent successfully" });
+    return new Response(JSON.stringify({ message: "New action push notifications sent successfully" }), {
+      headers: { 'Content-Type': 'application/json' },
+      status: 200,
+    });
   } catch (error) {
-    response
-      .status(500)
-      .json({ error: "Error sending new action push notifications" });
+    return new Response(JSON.stringify({ error: "Error sending new action push notifications" }), {
+      headers: { 'Content-Type': 'application/json' },
+      status: 500,
+    });
   }
 }
