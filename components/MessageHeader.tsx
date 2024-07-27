@@ -1,10 +1,10 @@
 import { Grid, Typography } from "@mui/material";
-import { Button } from "~/components/Button";
+import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useBackPath } from "~/contexts/BackPathContext";
+import { useBackPath } from "@/contexts/BackPathContext";
 import { useCallback } from "react";
-import { SearchParams } from "~/types";
+import { SearchParams } from "@/types";
 
 interface Props {
   firstName: string;

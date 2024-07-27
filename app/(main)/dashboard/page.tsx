@@ -1,15 +1,15 @@
 "use client";
 
-import { ActionList } from "~/components/ActionList";
-import { GoalSummary } from "~/components/GoalSummary";
-import { useActions } from "~/hooks/useActions";
+import { ActionList } from "@/components/ActionList";
+import { GoalSummary } from "@/components/GoalSummary";
+import { useActions } from "@/hooks/useActions";
 import { Typography } from "@mui/material";
-import { InfoTooltipButton } from "~/components/InfoTooltipButton";
-import { NavFooter } from "~/components/NavFooter";
-import { AddContactTooltipButton } from "~/components/AddContactTooltipButton";
+import { InfoTooltipButton } from "@/components/InfoTooltipButton";
+import { NavFooter } from "@/components/NavFooter";
+import { AddContactTooltipButton } from "@/components/AddContactTooltipButton";
 import { useEffect } from "react";
 import { event } from "nextjs-google-analytics";
-import { useUser } from "~/contexts/UserContext";
+import { useUser } from "@/contexts/UserContext";
 
 export default function DashboardPage() {
   const { email, name } = useUser();

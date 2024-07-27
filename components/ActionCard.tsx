@@ -1,7 +1,7 @@
-import { Action, ActionType, SearchParams } from "~/types";
+import { Action, ActionType, SearchParams } from "@/types";
 import { ArrowRight } from "react-feather";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
-import { formatDate } from "~/lib/utils";
+import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
 interface Props {

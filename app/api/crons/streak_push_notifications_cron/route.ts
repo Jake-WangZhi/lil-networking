@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '~/lib/prisma';
-import { sendPushNotification } from '~/helper/PushNotificationHelper';
+import prisma from '@/lib/prisma';
+import { sendPushNotification } from '@/helper/PushNotificationHelper';
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);

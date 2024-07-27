@@ -1,7 +1,7 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import LinkedInProvider, { LinkedInProfile } from "next-auth/providers/linkedin";
 import GoogleProvider from "next-auth/providers/google";
-import prisma from "~/lib/prisma";
+import prisma from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 const authOptions: AuthOptions = {

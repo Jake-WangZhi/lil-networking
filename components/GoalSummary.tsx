@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
 import { GoalStats } from "./GoalStats";
-import { useGoals } from "~/hooks/useGoals";
+import { useGoals } from "@/hooks/useGoals";
 import { Button } from "./Button";
 import { PlusCircle } from "react-feather";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 import { useCallback, useEffect } from "react";
 import { event } from "nextjs-google-analytics";
-import { useUser } from "~/contexts/UserContext";
+import { useUser } from "@/contexts/UserContext";
 
 export const GoalSummary = () => {
   const router = useRouter();

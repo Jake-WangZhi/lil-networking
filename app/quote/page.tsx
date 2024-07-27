@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "~/components/Button";
-import { useQuote } from "~/hooks/useQuote";
-import { formatTitles } from "~/lib/utils";
-import { SearchParams } from "~/types";
+import { Button } from "@/components/Button";
+import { useQuote } from "@/hooks/useQuote";
+import { formatTitles } from "@/lib/utils";
+import { SearchParams } from "@/types";
 import { Typography } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ClipLoader } from "react-spinners";

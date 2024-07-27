@@ -2,8 +2,8 @@ import { Card, CardContent, Typography } from "@mui/material";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
-import { Activity } from "~/types";
-import { formatDate } from "~/lib/utils";
+import { Activity } from "@/types";
+import { formatDate } from "@/lib/utils";
 
 import "swiper/css";
 import "swiper/css/free-mode";

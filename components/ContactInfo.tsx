@@ -1,9 +1,9 @@
 import { Link, Mail, Phone } from "react-feather";
-import { Contact } from "~/types";
+import { Contact } from "@/types";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Clock } from "@phosphor-icons/react";
 import { Button } from "./Button";
-import { formatBaseUrl, formatPhoneNumber } from "~/lib/utils";
+import { formatBaseUrl, formatPhoneNumber } from "@/lib/utils";
 import { useCallback } from "react";
 
 interface Props {

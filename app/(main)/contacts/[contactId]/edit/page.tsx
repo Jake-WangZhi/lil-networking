@@ -2,8 +2,8 @@
 
 import "react-tagsinput/react-tagsinput.css";
 import "../../styles.css";
-import { useContact } from "~/hooks/useContact";
-import { ContactForm } from "~/components/ContactForm";
+import { useContact } from "@/hooks/useContact";
+import { ContactForm } from "@/components/ContactForm";
 import { ClipLoader } from "react-spinners";
 import { Typography } from "@mui/material";
 

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import prisma from "~/lib/prisma";
-import { SearchParams, SubscriptionArgs } from "~/types";
+import prisma from "@/lib/prisma";
+import { SearchParams, SubscriptionArgs } from "@/types";
 
 export async function POST(request: Request) {
   const subscriptionArgs: SubscriptionArgs = await request.json();

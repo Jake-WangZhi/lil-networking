@@ -1,5 +1,5 @@
-import prisma from "~/lib/prisma";
-import { GoalsArgs, SearchParams } from "~/types";
+import prisma from "@/lib/prisma";
+import { GoalsArgs, SearchParams } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

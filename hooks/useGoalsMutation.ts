@@ -1,4 +1,4 @@
-import { GoalsArgs, SearchParams } from "~/types";
+import { GoalsArgs, SearchParams } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {

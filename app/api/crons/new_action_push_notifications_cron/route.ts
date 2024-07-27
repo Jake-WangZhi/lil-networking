@@ -1,6 +1,6 @@
-import prisma from "~/lib/prisma";
+import prisma from "@/lib/prisma";
 import { differenceInDays } from "date-fns";
-import { sendPushNotification } from "~/helper/PushNotificationHelper";
+import { sendPushNotification } from "@/helper/PushNotificationHelper";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {

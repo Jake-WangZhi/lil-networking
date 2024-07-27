@@ -1,10 +1,10 @@
 "use client";
 
-import { BackPathContext } from "~/contexts/BackPathContext";
+import { BackPathContext } from "@/contexts/BackPathContext";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
-import { UserProvider } from "~/contexts/UserContext";
+import { UserProvider } from "@/contexts/UserContext";
 
 export default function MainLayout({
   children,

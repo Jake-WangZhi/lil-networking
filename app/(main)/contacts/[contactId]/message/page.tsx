@@ -1,13 +1,13 @@
 "use client";
 
-import { useContact } from "~/hooks/useContact";
+import { useContact } from "@/hooks/useContact";
 import { Typography } from "@mui/material";
-import { ContactInterests } from "~/components/ContactInterests";
-import { SwipeableActivities } from "~/components/SwipeableActivities";
+import { ContactInterests } from "@/components/ContactInterests";
+import { SwipeableActivities } from "@/components/SwipeableActivities";
 import { ClipLoader } from "react-spinners";
-import { MessageCard } from "~/components/MessageCard";
-import { MessageHeader } from "~/components/MessageHeader";
-import { MessageActions } from "~/components/MessageActions";
+import { MessageCard } from "@/components/MessageCard";
+import { MessageHeader } from "@/components/MessageHeader";
+import { MessageActions } from "@/components/MessageActions";
 
 import "../../styles.css";
 

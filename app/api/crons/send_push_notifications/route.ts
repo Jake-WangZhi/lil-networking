@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import webpush from 'web-push';
-import prisma from '~/lib/prisma';
+import prisma from '@/lib/prisma';
 
 webpush.setVapidDetails(
   process.env.VAPID_MAILTO ?? "",

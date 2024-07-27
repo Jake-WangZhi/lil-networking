@@ -1,4 +1,4 @@
-import { NotificationSettingsArgs, SearchParams } from "~/types";
+import { NotificationSettingsArgs, SearchParams } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {

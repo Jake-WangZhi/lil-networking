@@ -1,14 +1,14 @@
 "use client";
 
 import "../styles.css";
-import { useContact } from "~/hooks/useContact";
+import { useContact } from "@/hooks/useContact";
 import { ClipLoader } from "react-spinners";
-import { ContactHeader } from "~/components/ContactHeader";
+import { ContactHeader } from "@/components/ContactHeader";
 import { Typography } from "@mui/material";
-import { NavFooter } from "~/components/NavFooter";
-import { ContactActivites } from "~/components/ContactActivities";
-import { ContactInfo } from "~/components/ContactInfo";
-import { ContactInterests } from "~/components/ContactInterests";
+import { NavFooter } from "@/components/NavFooter";
+import { ContactActivites } from "@/components/ContactActivities";
+import { ContactInfo } from "@/components/ContactInfo";
+import { ContactInterests } from "@/components/ContactInterests";
 
 export default function ContactPage({
   params,

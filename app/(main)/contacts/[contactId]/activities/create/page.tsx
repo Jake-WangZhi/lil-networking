@@ -1,15 +1,15 @@
 "use client";
 
-import { ActivityType, SearchParams } from "~/types";
+import { ActivityType, SearchParams } from "@/types";
 import { Typography, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, useCallback, useRef, useEffect } from "react";
 import { AlertTriangle } from "react-feather";
-import { createActivity } from "~/app/_actions";
-import { Button } from "~/components/Button";
-import { useActivityMutation } from "~/hooks/useActivityMutation";
-import { convertToLocalizedISODate } from "~/lib/utils";
+import { createActivity } from "@/app/_actions";
+import { Button } from "@/components/Button";
+import { useActivityMutation } from "@/hooks/useActivityMutation";
+import { convertToLocalizedISODate } from "@/lib/utils";
 
 import "../../../styles.css";
 

@@ -1,20 +1,20 @@
 "use client";
 
-import { OnboardingIntroPage } from "~/components/OnboardingIntroPage";
-import { OnboardingActionPage } from "~/components/OnboardingActionPage";
-import pic1 from "~/public/images/onboarding_pic1.svg";
-import pic2 from "~/public/images/onboarding_pic2.svg";
-import pic3 from "~/public/images/onboarding_pic3.svg";
+import { OnboardingIntroPage } from "@/components/OnboardingIntroPage";
+import { OnboardingActionPage } from "@/components/OnboardingActionPage";
+import pic1 from "@/public/images/onboarding_pic1.svg";
+import pic2 from "@/public/images/onboarding_pic2.svg";
+import pic3 from "@/public/images/onboarding_pic3.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperRef } from "swiper";
-import { Button } from "~/components/Button";
+import { Button } from "@/components/Button";
 import { useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { urlBase64ToUint8Array } from "~/lib/utils";
-import { useSubscriptionMutation } from "~/hooks/useSubscription";
+import { urlBase64ToUint8Array } from "@/lib/utils";
+import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useSession } from "next-auth/react";
-import { SubscriptionArgs } from "~/types";
-import { useNotificationSettingsMutation } from "~/hooks/useNotificationSettingsMutation";
+import { SubscriptionArgs } from "@/types";
+import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 
 import "swiper/css";
 

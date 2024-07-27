@@ -4,11 +4,11 @@ import { useState, useCallback, useRef } from "react";
 import { AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
-import { Contact } from "~/types";
+import { Contact } from "@/types";
 import TagsInput from "react-tagsinput";
-import { upsertContact } from "~/app/_actions";
+import { upsertContact } from "@/app/_actions";
 import { event } from "nextjs-google-analytics";
-import { useUser } from "~/contexts/UserContext";
+import { useUser } from "@/contexts/UserContext";
 
 interface Props {
   contact?: Contact;

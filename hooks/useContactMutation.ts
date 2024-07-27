@@ -1,4 +1,4 @@
-import { ContactArgs } from "~/types";
+import { ContactArgs } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {

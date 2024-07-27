@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "~/components/Button";
-import { NavFooter } from "~/components/NavFooter";
+import { Button } from "@/components/Button";
+import { NavFooter } from "@/components/NavFooter";
 import { Avatar, Typography } from "@mui/material";
 import { UserCircle } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { ChevronRight, LogOut } from "react-feather";
-import { useUser } from "~/contexts/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { signOut } from "next-auth/react";
 
 export default function SettingsPage() {

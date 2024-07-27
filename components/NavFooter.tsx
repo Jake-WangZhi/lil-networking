@@ -2,7 +2,7 @@
 
 import { Home, Users, Settings } from "react-feather";
 import { useRouter } from "next/navigation";
-import { useBackPath } from "~/contexts/BackPathContext";
+import { useBackPath } from "@/contexts/BackPathContext";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useState } from "react";
 import { AddToHomeScreenBanner } from "./AddToHomeScreenBanner";

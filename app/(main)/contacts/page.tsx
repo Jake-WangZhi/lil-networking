@@ -1,13 +1,13 @@
 "use client";
 
-import { AddContactTooltipButton } from "~/components/AddContactTooltipButton";
-import { ContactList } from "~/components/ContactList";
-import { NavFooter } from "~/components/NavFooter";
-import { SearchBar } from "~/components/SearchBar";
-import { useContacts } from "~/hooks/useContacts";
+import { AddContactTooltipButton } from "@/components/AddContactTooltipButton";
+import { ContactList } from "@/components/ContactList";
+import { NavFooter } from "@/components/NavFooter";
+import { SearchBar } from "@/components/SearchBar";
+import { useContacts } from "@/hooks/useContacts";
 import { Typography } from "@mui/material";
 import { useState } from "react";
-import { useUser } from "~/contexts/UserContext";
+import { useUser } from "@/contexts/UserContext";
 
 export default function ContactsPage() {
   const { email } = useUser();

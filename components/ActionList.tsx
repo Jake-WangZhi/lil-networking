@@ -1,4 +1,4 @@
-import { Action, ActionType } from "~/types";
+import { Action, ActionType } from "@/types";
 import { ClipLoader } from "react-spinners";
 import { ActionCard } from "./ActionCard";
 import {
@@ -8,9 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import icon from "~/public/images/empty_state_icon.svg";
+import icon from "@/public/images/empty_state_icon.svg";
 import Lottie from "react-lottie";
-import animationData from "~/lottie/908-add-and-save.json";
+import animationData from "@/lottie/908-add-and-save.json";
 import { ChevronDown } from "react-feather";
 
 interface Props {

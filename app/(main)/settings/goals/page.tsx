@@ -8,17 +8,17 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useGoalsMutation } from "~/hooks/useGoalsMutation";
+import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useRouter } from "next/navigation";
 import { Grid, Typography } from "@mui/material";
-import { Button } from "~/components/Button";
+import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
 import { ClipLoader } from "react-spinners";
-import { useGoals } from "~/hooks/useGoals";
-import { SearchParams } from "~/types";
+import { useGoals } from "@/hooks/useGoals";
+import { SearchParams } from "@/types";
 import Lottie from "react-lottie";
 import animationData from "../../../../lottie/106770-empty-box.json";
-import { useUser } from "~/contexts/UserContext";
+import { useUser } from "@/contexts/UserContext";
 
 export default function GoalSettingPage() {
   const router = useRouter();

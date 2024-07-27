@@ -1,7 +1,7 @@
 import { Typography, Card, CardContent } from "@mui/material";
 import { Mail, Linkedin } from "react-feather";
-import { Button } from "~/components/Button";
-import { Contact } from "~/types";
+import { Button } from "@/components/Button";
+import { Contact } from "@/types";
 import { useCallback } from "react";
 
 interface Props {

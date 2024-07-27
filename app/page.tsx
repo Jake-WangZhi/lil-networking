@@ -1,6 +1,6 @@
 "use client";
 
-import { AddToHomeScreenBanner } from "~/components/AddToHomeScreenBanner";
+import { AddToHomeScreenBanner } from "@/components/AddToHomeScreenBanner";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

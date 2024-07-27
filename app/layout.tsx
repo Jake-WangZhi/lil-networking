@@ -3,7 +3,7 @@ import "@fontsource/metropolis";
 import { Session } from "next-auth";
 import { headers } from "next/headers";
 import AuthContext from "./AuthContext";
-import { QCProvider, MuiCssProvider } from "~/app/provider";
+import { QCProvider, MuiCssProvider } from "@/app/provider";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {

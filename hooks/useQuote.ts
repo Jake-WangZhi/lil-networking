@@ -1,4 +1,4 @@
-import { fetcher } from "~/lib/utils";
+import { fetcher } from "@/lib/utils";
 import { Quote } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 

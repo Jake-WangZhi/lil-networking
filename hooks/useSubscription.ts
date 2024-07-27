@@ -1,4 +1,4 @@
-import { SearchParams, SubscriptionArgs } from "~/types";
+import { SearchParams, SubscriptionArgs } from "@/types";
 import { Subscription } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 

@@ -1,9 +1,9 @@
 "use server";
 
-import prisma from "~/lib/prisma";
+import prisma from "@/lib/prisma";
 
-import { validateEmail, validatePhone } from "~/lib/utils";
-import { SearchParams } from "~/types";
+import { validateEmail, validatePhone } from "@/lib/utils";
+import { SearchParams } from "@/types";
 import { redirect } from "next/navigation";
 
 interface FormDataOptions {

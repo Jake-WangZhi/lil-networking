@@ -1,8 +1,8 @@
-import { ActivityType, Contact } from "~/types";
+import { ActivityType, Contact } from "@/types";
 import { ArrowRight, Archive } from "react-feather";
 import Link from "next/link";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
-import { formatDate } from "~/lib/utils";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   contact: Contact;

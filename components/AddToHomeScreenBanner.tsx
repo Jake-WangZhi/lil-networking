@@ -1,5 +1,5 @@
 import { X, Share } from "react-feather";
-import icon from "~/public/icons/icon-512x512.png";
+import icon from "@/public/icons/icon-512x512.png";
 import Image from "next/image";
 import { Button } from "./Button";
 import { Typography } from "@mui/material";

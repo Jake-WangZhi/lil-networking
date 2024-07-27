@@ -1,12 +1,12 @@
-import { useActivityMutation } from "~/hooks/useActivityMutation";
-import { Activity, ActivityType, SearchParams } from "~/types";
+import { useActivityMutation } from "@/hooks/useActivityMutation";
+import { Activity, ActivityType, SearchParams } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { formatDate } from "~/lib/utils";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   activities: Activity[];

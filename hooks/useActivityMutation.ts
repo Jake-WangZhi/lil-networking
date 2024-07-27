@@ -1,4 +1,4 @@
-import { ActivityArgs } from "~/types";
+import { ActivityArgs } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type ActivityResponse = {

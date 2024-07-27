@@ -1,15 +1,15 @@
-import { Button } from "~/components/Button";
+import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { Check, Archive } from "react-feather";
-import { useContactMutation } from "~/hooks/useContactMutation";
-import { ActivityType, Contact, SearchParams } from "~/types";
+import { useContactMutation } from "@/hooks/useContactMutation";
+import { ActivityType, Contact, SearchParams } from "@/types";
 import { AlertDialog } from "./AlertDialog";
-import { useActivityMutation } from "~/hooks/useActivityMutation";
-import { useBackPath } from "~/contexts/BackPathContext";
-import { convertToLocalizedISODate } from "~/lib/utils";
-import { useUser } from "~/contexts/UserContext";
+import { useActivityMutation } from "@/hooks/useActivityMutation";
+import { useBackPath } from "@/contexts/BackPathContext";
+import { convertToLocalizedISODate } from "@/lib/utils";
+import { useUser } from "@/contexts/UserContext";
 
 interface Props {
   contact: Contact;

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import prisma from "~/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { Action, ActivityType, SearchParams } from "~/types";
+import { Action, ActivityType, SearchParams } from "@/types";
 import { differenceInDays } from "date-fns";
 
 const DAYS_BEFORE_PAST_DUE = 10;
