@@ -1,7 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-import baseConfig from "@foundrymakes/tailwind-config";
-
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -39,5 +37,4 @@ module.exports = {
     },
   },
   plugins: [],
-  presets: [baseConfig],
 };
