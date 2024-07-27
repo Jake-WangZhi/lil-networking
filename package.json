@@ -1,6 +1,6 @@
 {
-  "name": "@foundrymakes/web",
-  "repository": "https://github.com/FoundryMakes/lil-networking",
+  "name": "lil-networking",
+  "repository": "https://github.com/Jake-WangZhi/lil-networking",
   "license": "MIT",
   "version": "0.0.0",
   "private": true,
