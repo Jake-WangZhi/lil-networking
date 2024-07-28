@@ -42,7 +42,7 @@ export default function SignInPage() {
         </div>
       </div>
 
-      <div className="flex justify-center flex-col gap-8">
+      <div className="flex justify-center flex-col mt-16 gap-8">
         <Button variant="contained" onClick={handleLinkedinClick}>
           Sign in with LinkedIn
         </Button>
