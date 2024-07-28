@@ -5,7 +5,7 @@ import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useCallback } from "react";
-import { ArrowsClockwise, Notepad, UsersThree } from "phosphor-react";
+import { ArrowsClockwise, Notepad, UsersThree } from "@phosphor-icons/react";
 import logo from "@/public/icons/logo.png";
 import Image from "next/image";
 
