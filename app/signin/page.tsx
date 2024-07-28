@@ -1,6 +1,6 @@
 "use client";
 
-// import { AddToHomeScreenBanner } from "@/components/AddToHomeScreenBanner";
+import { AddToHomeScreenBanner } from "@/components/AddToHomeScreenBanner";
 import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
@@ -21,7 +21,7 @@ export default function SignInPage() {
   );
 
   return (
-    <main className="relative flex flex-col justify-center items-center h-screen gap-14">
+    <main className="relative flex flex-col justify-center items-center py-20 gap-14">
       <div className="flex flex-col items-center">
         <Image src={logo} alt="Logo" width={186} height={186} />
         <Typography variant="h2">Lil&apos; Networking App</Typography>
@@ -50,6 +50,7 @@ export default function SignInPage() {
           &nbsp;Sign in with Google&nbsp;
         </Button>
       </div>
+      <AddToHomeScreenBanner addBottomPadding={false} />
     </main>
   );
 }
