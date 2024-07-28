@@ -21,7 +21,7 @@ export default function SignInPage() {
   );
 
   return (
-    <main className="relative flex flex-col justify-center items-center py-20 gap-14">
+    <main className="relative flex flex-1 flex-col justify-center items-center h-screen gap-14">
       <div className="flex flex-col items-center">
         <Image src={logo} alt="Logo" width={186} height={186} />
         <Typography variant="h2">Lil&apos; Networking App</Typography>
@@ -42,7 +42,7 @@ export default function SignInPage() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-16 flex-col gap-8">
+      <div className="flex justify-center flex-col gap-8">
         <Button variant="contained" onClick={handleLinkedinClick}>
           Sign in with LinkedIn
         </Button>
