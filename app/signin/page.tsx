@@ -21,11 +21,13 @@ export default function SignInPage() {
   );
 
   return (
-    <main className="relative flex flex-col justify-center items-center px-8 pt-20 h-screen">
-      <Image src={logo} alt="Logo" width={186} height={186} />
-      <Typography variant="h2">Lil&apos; Networking App</Typography>
+    <main className="relative flex flex-col justify-center items-center px-8 h-screen gap-14">
+      <div className="flex flex-col items-center">
+        <Image src={logo} alt="Logo" width={186} height={186} />
+        <Typography variant="h2">Lil&apos; Networking App</Typography>
+      </div>
 
-      <div className="mt-14 space-y-6">
+      <div className="space-y-6">
         <div className="flex space-x-4 items-center">
           <Notepad color="white" size={32} />
           <Typography variant="h3">Build Networking Habits</Typography>
@@ -40,7 +42,7 @@ export default function SignInPage() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-32 flex-col gap-8">
+      <div className="flex justify-center flex-col gap-8">
         <Button variant="contained" onClick={handleLinkedinClick}>
           Sign in with LinkedIn
         </Button>
