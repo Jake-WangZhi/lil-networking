@@ -79,14 +79,12 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
       const action = {
         contactFirstName: contact.firstName,
         contactLastName: contact.lastName,
-        contactIndustry: contact.industry || "",
         contactId: contact.id,
+        title: contact.title,
         description: activity.description,
         days,
         goalDays,
-        ...(!isUserActivity && {
-          contactCreatedAt: activity.date.toISOString(),
-        }),
+        isNewUser: !isUserActivity
       };
 
       const pastDueThreshold = isUserActivity ? goalDays : 0;

@@ -8,7 +8,7 @@ import { ClipLoader } from "react-spinners";
 import { useCallback, useEffect } from "react";
 import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
-import { Lightning } from "@phosphor-icons/react";
+import { Lightning, Confetti } from "@phosphor-icons/react";
 
 export const GoalSummary = () => {
   const router = useRouter();
@@ -81,16 +81,19 @@ export const GoalSummary = () => {
               {new Date().toLocaleString("default", { month: "long" })} Goals
             </Typography>
             <div className="flex items-center gap-2">
-              <Lightning
-                className="text-2xl md:text-3xl lg:text-4xl"
-                color="#FDB913"
-              />
+              <Lightning className="text-primary-yellow text-2xl md:text-3xl lg:text-4xl" />
               <Typography variant="subtitle1" className="font-semibold">
                 {goals.streak} month streak
               </Typography>
             </div>
           </div>
           <GoalStats goals={goals} />
+          <div className="flex items-center justify-center gap-2">
+            <Confetti className="text-primary-yellow text-2xl md:text-3xl lg:text-4xl" />
+            <Typography variant="subtitle1" className="font-semibold">
+              You met your monthly goals!
+            </Typography>
+          </div>
         </div>
       ) : (
         <Button
