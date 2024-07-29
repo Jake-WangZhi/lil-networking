@@ -35,6 +35,7 @@ export const NavFooter = () => {
         sx={{
           backgroundColor: "#0F1A24",
           margin: "auto",
+          px: "16px",
           justifyContent: "space-between",
           pb: "4px",
           "& .MuiBottomNavigationAction-root.Mui-selected": {
@@ -66,7 +67,6 @@ export const NavFooter = () => {
           value={"/contacts"}
           sx={{
             color: "#C5C6C7",
-            mx: "48px",
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
             },
