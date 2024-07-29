@@ -79,7 +79,7 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
       {isModalOpened && (
         <div
           className={`fixed bottom-0 left-0 right-0 w-full z-10 mx-auto max-w-lg md:max-w-xl lg:max-w-3xl px-4 py-6 bg-[#2C353E] flex justify-between ${
-            addBottomPadding && "mb-14"
+            addBottomPadding && "mb-[90px]"
           }`}
         >
           <div className="flex items-center space-x-2">

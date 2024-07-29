@@ -1,11 +1,11 @@
 "use client";
 
-import { Home, Users, Settings } from "react-feather";
 import { useRouter } from "next/navigation";
 import { useBackPath } from "@/contexts/BackPathContext";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useState } from "react";
 import { AddToHomeScreenBanner } from "./AddToHomeScreenBanner";
+import { House, Users, Gear } from "@phosphor-icons/react";
 
 export const NavFooter = () => {
   const { backPath, setBackPath } = useBackPath();
@@ -37,7 +37,8 @@ export const NavFooter = () => {
           margin: "auto",
           px: "16px",
           justifyContent: "space-between",
-          pb: "4px",
+          pb: "34px",
+          height: "90px",
           "& .MuiBottomNavigationAction-root.Mui-selected": {
             color: "white",
           },
@@ -51,11 +52,10 @@ export const NavFooter = () => {
       >
         <BottomNavigationAction
           label="Dashboard"
-          icon={<Home />}
+          icon={<House size={24} />}
           value={"/dashboard"}
           sx={{
             color: "#C5C6C7",
-            padding: 0,
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
             },
@@ -63,7 +63,7 @@ export const NavFooter = () => {
         />
         <BottomNavigationAction
           label="Contacts"
-          icon={<Users />}
+          icon={<Users size={24} />}
           value={"/contacts"}
           sx={{
             color: "#C5C6C7",
@@ -74,11 +74,10 @@ export const NavFooter = () => {
         />
         <BottomNavigationAction
           label="Settings"
-          icon={<Settings />}
+          icon={<Gear size={24} />}
           value={"/settings"}
           sx={{
             color: "#C5C6C7",
-            padding: 0,
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
             },
