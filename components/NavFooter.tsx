@@ -37,8 +37,8 @@ export const NavFooter = () => {
           margin: "auto",
           px: "16px",
           justifyContent: "space-between",
-          pb: "34px",
-          height: "90px",
+          pb: "20px",
+          height: "76px",
           "& .MuiBottomNavigationAction-root.Mui-selected": {
             color: "white",
           },
