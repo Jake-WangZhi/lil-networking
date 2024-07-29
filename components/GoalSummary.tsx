@@ -86,7 +86,7 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
             </Typography>
             <div className="flex items-center gap-2">
               <Lightning className="text-primary-yellow text-2xl md:text-3xl lg:text-4xl" />
-              <Typography variant="subtitle1" className="font-semibold">
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 {goals.streak} month streak
               </Typography>
             </div>
@@ -95,7 +95,7 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
           {isMeetGoals && (
             <div className="flex items-center justify-center gap-2">
               <Confetti className="text-primary-yellow text-2xl md:text-3xl lg:text-4xl" />
-              <Typography variant="subtitle1" className="font-semibold">
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 You met your monthly goals!
               </Typography>
             </div>

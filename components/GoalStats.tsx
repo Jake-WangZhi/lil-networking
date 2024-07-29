@@ -33,7 +33,7 @@ export const GoalStats = ({ goals }: Props) => {
           <Typography variant="body1">
             {goals.connections}/{goals.goalConnections}
           </Typography>
-          <Typography variant="subtitle1" className="font-semibold">
+          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Contacts
           </Typography>
         </div>
@@ -55,7 +55,7 @@ export const GoalStats = ({ goals }: Props) => {
           <Typography variant="body1">
             {goals.messages}/{goals.goalMessages}
           </Typography>
-          <Typography variant="subtitle1" className="font-semibold">
+          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Messages
           </Typography>
         </div>

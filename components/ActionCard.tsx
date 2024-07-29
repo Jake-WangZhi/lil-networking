@@ -50,7 +50,13 @@ export const ActionCard = ({ action, actionType }: Props) => {
                 </Typography>
               </div>
               {action.isNewUser && (
-                <Chip label="New" className="text-white bg-medium-overlay" />
+                <Chip
+                  label="New"
+                  sx={{
+                    color: "white",
+                    background: "#2C353E",
+                  }}
+                />
               )}
             </div>
             <div className="flex items-center gap-2">
@@ -61,9 +67,10 @@ export const ActionCard = ({ action, actionType }: Props) => {
               <Typography variant="body1">{action.goalDays} days •</Typography>
               <Typography
                 variant="body1"
-                className={`font-semibold ${
-                  actionType === "past" ? "text-magenta" : "text-light-yellow"
-                }`}
+                sx={{
+                  fontWeight: 600,
+                  color: actionType === "past" ? "#ED3293" : "#FFCF79",
+                }}
               >
                 Last Activity: {getLastActivityMessage(action.days)}
               </Typography>
