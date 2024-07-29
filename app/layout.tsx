@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @next/next/no-sync-scripts */
 import "tailwindcss/tailwind.css";
 import "@fontsource/metropolis";
 import { Session } from "next-auth";
@@ -38,6 +40,7 @@ export default async function RootLayout({
           crossOrigin="use-credentials"
           href="/manifest.json"
         />
+        <script src="https://cdn.jsdelivr.net/npm/ios-pwa-splash@1.0.0/cdn.min.js"></script>
       </head>
       <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-3xl">
         <QCProvider>
@@ -47,6 +50,7 @@ export default async function RootLayout({
             </AuthContext>
           </MuiCssProvider>
         </QCProvider>
+        <script>iosPWASplash('icons/icon-512x512.png', '#0F1A24');</script>
       </body>
     </html>
   );
