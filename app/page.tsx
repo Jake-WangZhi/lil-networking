@@ -29,7 +29,7 @@ export default function Home() {
       <div className="my-4">
         <ClipLoader color="#38ACE2" size={50} />
       </div>
-      <div className="absolute bottom-0 mb-4 flex items-center gap-2">
+      <div className="absolute bottom-0 mb-20 flex items-center gap-2">
         <Typography variant="subtitle1">Made with</Typography>
         <Heart color="red" size={24} weight="fill" />
       </div>
