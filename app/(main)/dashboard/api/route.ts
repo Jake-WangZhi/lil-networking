@@ -50,13 +50,21 @@ export async function GET(request: Request) {
     distinct: ["contactId"],
   });
 
+  const goals = await prisma.goals.findUnique({
+    where: {
+      userId: user.id,
+    },
+  });
+
+
+
   const sortedActivities = activities.sort(
     (a, b) => b.date.getTime() - a.date.getTime()
   );
 
   const actions = parseActions(activeContacts, sortedActivities);
 
-  return NextResponse.json({ ...actions, hasContacts: !!contacts.length });
+  return NextResponse.json({ ...actions, hasContacts: !!contacts.length, isMeetGoals: goals?.connections === goals?.goalConnections && goals?.messages===goals?.goalMessages });
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {
