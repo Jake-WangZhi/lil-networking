@@ -40,14 +40,6 @@ export default async function RootLayout({
           crossOrigin="use-credentials"
           href="/manifest.json"
         />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-title" content="iosPWASplash" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
-        />
-        <script src="https://cdn.jsdelivr.net/npm/ios-pwa-splash@1.0.0/cdn.min.js"></script>
       </head>
       <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-3xl">
         <QCProvider>
@@ -57,7 +49,6 @@ export default async function RootLayout({
             </AuthContext>
           </MuiCssProvider>
         </QCProvider>
-        <script>iosPWASplash('icons/icon-512x512.png', '#0F1A24');</script>
       </body>
     </html>
   );
