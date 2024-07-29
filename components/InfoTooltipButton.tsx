@@ -67,7 +67,7 @@ export const InfoTooltipButton = () => {
           size={32}
           fill="white"
           color="#0F1A24"
-          className="md:w-10 md:h-10 lg:w-12 lg:h-12 "
+          className="md:w-10 md:h-10 lg:w-12 lg:h-12"
         />
       </Tooltip>
     </Button>

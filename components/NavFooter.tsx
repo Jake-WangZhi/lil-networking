@@ -52,34 +52,52 @@ export const NavFooter = () => {
       >
         <BottomNavigationAction
           label="Dashboard"
-          icon={<House size={24} />}
+          icon={<House className="text-2xl md:text-3xl lg:text-4xl" />}
           value={"/dashboard"}
           sx={{
             color: "#C5C6C7",
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
+              "@media (min-width: 768px)": {
+                fontSize: "13px !important",
+              },
+              "@media (min-width: 1024px)": {
+                fontSize: "15px !important",
+              },
             },
           }}
         />
         <BottomNavigationAction
           label="Contacts"
-          icon={<Users size={24} />}
+          icon={<Users className="text-2xl md:text-3xl lg:text-4xl" />}
           value={"/contacts"}
           sx={{
             color: "#C5C6C7",
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
+              "@media (min-width: 768px)": {
+                fontSize: "13px !important",
+              },
+              "@media (min-width: 1024px)": {
+                fontSize: "15px !important",
+              },
             },
           }}
         />
         <BottomNavigationAction
           label="Settings"
-          icon={<Gear size={24} />}
+          icon={<Gear className="text-2xl md:text-3xl lg:text-4xl" />}
           value={"/settings"}
           sx={{
             color: "#C5C6C7",
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
+              "@media (min-width: 768px)": {
+                fontSize: "13px !important",
+              },
+              "@media (min-width: 1024px)": {
+                fontSize: "15px !important",
+              },
             },
           }}
         />
