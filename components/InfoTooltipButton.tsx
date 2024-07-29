@@ -1,6 +1,6 @@
 import { Tooltip, Typography } from "@mui/material";
 import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
-import { Info, X } from "react-feather";
+import { Info, X } from "@phosphor-icons/react";
 import { Button } from "./Button";
 
 export const InfoTooltipButton = () => {
