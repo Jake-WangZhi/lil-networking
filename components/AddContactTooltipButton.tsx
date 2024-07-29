@@ -1,6 +1,6 @@
 import { Tooltip, Typography } from "@mui/material";
 import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
-import { PlusSquare, X } from "react-feather";
+import { PlusSquare, X } from "@phosphor-icons/react";
 import { Button } from "./Button";
 import { useRouter } from "next/navigation";
 

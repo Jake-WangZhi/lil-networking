@@ -50,13 +50,21 @@ export async function GET(request: Request) {
     distinct: ["contactId"],
   });
 
+  const goals = await prisma.goals.findUnique({
+    where: {
+      userId: user.id,
+    },
+  });
+
+
+
   const sortedActivities = activities.sort(
     (a, b) => b.date.getTime() - a.date.getTime()
   );
 
   const actions = parseActions(activeContacts, sortedActivities);
 
-  return NextResponse.json({ ...actions, hasContacts: !!contacts.length });
+  return NextResponse.json({ ...actions, hasContacts: !!contacts.length, isMeetGoals: goals?.connections === goals?.goalConnections && goals?.messages===goals?.goalMessages });
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {
@@ -79,14 +87,12 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
       const action = {
         contactFirstName: contact.firstName,
         contactLastName: contact.lastName,
-        contactIndustry: contact.industry || "",
         contactId: contact.id,
+        title: contact.title,
         description: activity.description,
         days,
         goalDays,
-        ...(!isUserActivity && {
-          contactCreatedAt: activity.date.toISOString(),
-        }),
+        isNewUser: !isUserActivity
       };
 
       const pastDueThreshold = isUserActivity ? goalDays : 0;

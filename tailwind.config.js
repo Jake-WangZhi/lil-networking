@@ -30,6 +30,10 @@ module.exports = {
         "grey-30": "#C5C6C7",
         magenta: "#ED3293",
         error: "#F42010",
+        "medium-overlay": "#2C353E",
+        "low-overlay": "#1B252F",
+        "supporting-text": "#BBBEC1",
+        "primary-yellow":"#FDB913"
       },
       screens: {
         xs: "400px",

@@ -1,6 +1,6 @@
 import { Tooltip, Typography } from "@mui/material";
 import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
-import { Info, X } from "react-feather";
+import { Info, X } from "@phosphor-icons/react";
 import { Button } from "./Button";
 
 export const InfoTooltipButton = () => {
@@ -34,12 +34,12 @@ export const InfoTooltipButton = () => {
     <div ref={tooltipRef} className="flex justify-between p-2">
       <div>
         <Typography variant="body1">
-          <span className="font-bold">Priority:</span> Items that have been
+          <span className="font-bold">Past Due:</span> Items that have been
           actionable for 10+ days
         </Typography>
         <br />
         <Typography variant="body1">
-          <span className="font-bold">Upcoming:</span> Items that have been
+          <span className="font-bold">New Actions:</span> Items that have been
           actionable between 0-10 days.
         </Typography>
       </div>
@@ -67,7 +67,7 @@ export const InfoTooltipButton = () => {
           size={32}
           fill="white"
           color="#0F1A24"
-          className="md:w-10 md:h-10 lg:w-12 lg:h-12 "
+          className="md:w-10 md:h-10 lg:w-12 lg:h-12"
         />
       </Tooltip>
     </Button>

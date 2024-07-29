@@ -10,6 +10,7 @@ type ActionType = {
   pastActions: Array<Action>;
   upcomingActions: Array<Action>;
   hasContacts: boolean;
+  isMeetGoals: boolean;
 };
 
 export const useActions = ({ email }: Args) => {

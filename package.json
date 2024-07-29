@@ -12,8 +12,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@fontsource/metropolis": "^4.5.3",
     "@headlessui/react": "^1.7.14",
     "@mui/material": "^5.13.3",
@@ -29,6 +29,8 @@
     "next-pwa": "^5.6.0",
     "nextjs-google-analytics": "^2.3.3",
     "react": "^18.2.0",
+    "react-circular-progressbar": "^2.1.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
     "react-lottie": "^1.2.3",

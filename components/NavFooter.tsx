@@ -1,11 +1,11 @@
 "use client";
 
-import { Home, Users, Settings } from "react-feather";
 import { useRouter } from "next/navigation";
 import { useBackPath } from "@/contexts/BackPathContext";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useState } from "react";
 import { AddToHomeScreenBanner } from "./AddToHomeScreenBanner";
+import { House, Users, Gear } from "@phosphor-icons/react";
 
 export const NavFooter = () => {
   const { backPath, setBackPath } = useBackPath();
@@ -35,8 +35,10 @@ export const NavFooter = () => {
         sx={{
           backgroundColor: "#0F1A24",
           margin: "auto",
+          px: "16px",
           justifyContent: "space-between",
-          pb: "4px",
+          pb: "34px",
+          height: "90px",
           "& .MuiBottomNavigationAction-root.Mui-selected": {
             color: "white",
           },
@@ -50,37 +52,52 @@ export const NavFooter = () => {
       >
         <BottomNavigationAction
           label="Dashboard"
-          icon={<Home />}
+          icon={<House className="text-2xl md:text-3xl lg:text-4xl" />}
           value={"/dashboard"}
           sx={{
             color: "#C5C6C7",
-            padding: 0,
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
+              "@media (min-width: 768px)": {
+                fontSize: "13px !important",
+              },
+              "@media (min-width: 1024px)": {
+                fontSize: "15px !important",
+              },
             },
           }}
         />
         <BottomNavigationAction
           label="Contacts"
-          icon={<Users />}
+          icon={<Users className="text-2xl md:text-3xl lg:text-4xl" />}
           value={"/contacts"}
           sx={{
             color: "#C5C6C7",
-            mx: "48px",
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
+              "@media (min-width: 768px)": {
+                fontSize: "13px !important",
+              },
+              "@media (min-width: 1024px)": {
+                fontSize: "15px !important",
+              },
             },
           }}
         />
         <BottomNavigationAction
           label="Settings"
-          icon={<Settings />}
+          icon={<Gear className="text-2xl md:text-3xl lg:text-4xl" />}
           value={"/settings"}
           sx={{
             color: "#C5C6C7",
-            padding: 0,
             "& .MuiBottomNavigationAction-label": {
               fontSize: "11px !important",
+              "@media (min-width: 768px)": {
+                fontSize: "13px !important",
+              },
+              "@media (min-width: 1024px)": {
+                fontSize: "15px !important",
+              },
             },
           }}
         />
