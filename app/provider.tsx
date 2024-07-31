@@ -151,7 +151,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
           paper: {
             margin: "16px",
             position: "relative",
-            backgroundColor: "#0F1A24",
+            backgroundColor: "#2C353E",
             "&::after": {
               borderRadius: "4px",
               content: '""',
@@ -160,7 +160,6 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
               left: 0,
               width: "100%",
               height: "100%",
-              backgroundColor: "rgba(255, 255, 255, 0.16)",
             },
           },
         },

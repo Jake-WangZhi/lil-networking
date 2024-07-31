@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
 import Confetti from "react-confetti";
+import { DashboardTutorial } from "@/components/DashboardTutorial";
 
 export default function DashboardPage() {
   const { email, name } = useUser();
@@ -22,8 +23,22 @@ export default function DashboardPage() {
     width: 0,
     height: 0,
   });
-
   const [confettiShown, setConfettiShown] = useState(false);
+  const [hasViewedDashboardTutorial, setHasViewedDashboardTutorial] =
+    useState(true);
+
+  const pauseFor = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  useEffect(() => {
+    pauseFor(3000).then(() => {
+      const value = localStorage.getItem("hasViewedDashboardTutorial");
+      if (value !== "true") {
+        setHasViewedDashboardTutorial(false);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const updateWindowDimensions = () => {
@@ -91,7 +106,6 @@ export default function DashboardPage() {
         const lastClearedMonth = lastCleared.getMonth();
         const lastClearedYear = lastCleared.getFullYear();
 
-        // Check if the month or year has changed
         if (
           currentMonth !== lastClearedMonth ||
           currentYear !== lastClearedYear
@@ -99,15 +113,12 @@ export default function DashboardPage() {
           shouldClear = true;
         }
       } else {
-        // If there's no record of the last clear, we need to clear
         shouldClear = true;
       }
 
       if (shouldClear) {
-        // Perform your localStorage cleanup here
         localStorage.removeItem("confettiShown");
 
-        // Update the last cleared date in localStorage
         localStorage.setItem("lastClearedDate", currentDate.toISOString());
       }
     };
@@ -137,6 +148,7 @@ export default function DashboardPage() {
       )}
       <ActionList actions={actions} isLoading={isLoading} isError={isError} />
       <NavFooter />
+      {!hasViewedDashboardTutorial && <DashboardTutorial />}
     </main>
   );
 }
