@@ -12,6 +12,7 @@ import { ContactInterests } from "@/components/ContactInterests";
 import { useEffect, useState } from "react";
 import { ProfileTutorial } from "@/components/ProfileTutorial";
 import { pauseFor } from "@/lib/utils";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export default function ContactPage({
   params,
@@ -19,6 +20,7 @@ export default function ContactPage({
   params: { contactId: string };
 }) {
   const [showTutorial, setShowTutorial] = useState(false);
+  const { isProfileTutorialShown } = useSettings();
 
   const { contactProfile, isLoading, isError } = useContact({
     id: params.contactId,
@@ -26,7 +28,7 @@ export default function ContactPage({
 
   useEffect(() => {
     if (contactProfile?.hasViewedProfileTutorial === false) {
-      pauseFor(1000).then(() => {
+      pauseFor(3000).then(() => {
         setShowTutorial(true);
       });
     }
@@ -85,7 +87,7 @@ export default function ContactPage({
       <ContactInfo contact={contact} />
       {interests.length !== 0 && <ContactInterests interests={interests} />}
       <ContactActivites activities={activities} contactId={contact.id} />
-      {showTutorial && <ProfileTutorial />}
+      {showTutorial && isProfileTutorialShown && <ProfileTutorial />}
       <NavFooter />
     </main>
   );

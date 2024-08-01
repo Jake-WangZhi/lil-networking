@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { UserProvider } from "@/contexts/UserContext";
+import { SettingsProvider } from "@/contexts/SettingsContext";
 
 export default function MainLayout({
   children,
@@ -24,9 +25,13 @@ export default function MainLayout({
 
     return (
       <section>
-        <BackPathContext.Provider value={{ backPath, setBackPath }}>
-          <UserProvider user={{ name, image, email }}>{children}</UserProvider>
-        </BackPathContext.Provider>
+        <SettingsProvider>
+          <BackPathContext.Provider value={{ backPath, setBackPath }}>
+            <UserProvider user={{ name, image, email }}>
+              {children}
+            </UserProvider>
+          </BackPathContext.Provider>
+        </SettingsProvider>
       </section>
     );
   }

@@ -9,6 +9,7 @@ import { Swiper as SwiperRef } from "swiper";
 import "swiper/css";
 import { useTutorialMutation } from "@/hooks/useTutorialMutation";
 import { useUser } from "@/contexts/UserContext";
+import { useSettings } from "@/contexts/SettingsContext";
 
 interface Props {
   slides: Slide[];
@@ -20,9 +21,27 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(true);
   const { email } = useUser();
+  const {
+    setIsDashboardTutorialShown,
+    setIsContactsTutorialShown,
+    setIsProfileTutorialShown,
+  } = useSettings();
 
   const tutorialMutation = useTutorialMutation({
-    onSuccess: () => {},
+    onSuccess: () => {
+      switch (tutorialType) {
+        case TutorialType.Dashboard:
+          setIsDashboardTutorialShown(false);
+          break;
+        case TutorialType.Contacts:
+          setIsContactsTutorialShown(false);
+          break;
+        case TutorialType.Profile:
+          setIsProfileTutorialShown(false);
+          break;
+      }
+      setIsOpen(false);
+    },
     onError: (error) => {
       console.log(error);
     },
@@ -34,60 +53,22 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
 
   const handleNextClick = useCallback(() => {
     if (activeIndex === slides.length - 1) {
-      switch (tutorialType) {
-        case TutorialType.Dashboard:
-          tutorialMutation.mutate({
-            email: email || "",
-            type: TutorialType.Dashboard,
-            status: true,
-          });
-          break;
-        case TutorialType.Contacts:
-          tutorialMutation.mutate({
-            email: email || "",
-            type: TutorialType.Contacts,
-            status: true,
-          });
-          break;
-        case TutorialType.Profile:
-          tutorialMutation.mutate({
-            email: email || "",
-            type: TutorialType.Profile,
-            status: true,
-          });
-          break;
-      }
-      setIsOpen(false);
+      tutorialMutation.mutate({
+        email: email || "",
+        type: tutorialType,
+        status: true,
+      });
     } else {
       swiperRef.current?.slideNext();
     }
   }, [activeIndex, slides.length, tutorialType, tutorialMutation, email]);
 
   const handleSkipClick = useCallback(() => {
-    switch (tutorialType) {
-      case TutorialType.Dashboard:
-        tutorialMutation.mutate({
-          email: email || "",
-          type: TutorialType.Dashboard,
-          status: true,
-        });
-        break;
-      case TutorialType.Contacts:
-        tutorialMutation.mutate({
-          email: email || "",
-          type: TutorialType.Contacts,
-          status: true,
-        });
-        break;
-      case TutorialType.Profile:
-        tutorialMutation.mutate({
-          email: email || "",
-          type: TutorialType.Profile,
-          status: true,
-        });
-        break;
-    }
-    setIsOpen(false);
+    tutorialMutation.mutate({
+      email: email || "",
+      type: tutorialType,
+      status: true,
+    });
   }, [tutorialType, tutorialMutation, email]);
 
   const handleDotClick = useCallback((index: number) => {

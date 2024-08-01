@@ -10,11 +10,13 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { ContactsTutorial } from "@/components/ContactsTutorial";
 import { pauseFor } from "@/lib/utils";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export default function ContactsPage() {
   const { email } = useUser();
   const [name, setName] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
+  const { isContactsTutorialShown } = useSettings();
 
   const { contactList, isLoading, isError } = useContacts({
     userEmail: email,
@@ -23,7 +25,7 @@ export default function ContactsPage() {
 
   useEffect(() => {
     if (contactList?.hasViewedContactsTutorial === false) {
-      pauseFor(1000).then(() => {
+      pauseFor(3000).then(() => {
         setShowTutorial(true);
       });
     }
@@ -36,6 +38,7 @@ export default function ContactsPage() {
           <Typography variant="h1">All Contacts</Typography>
           <AddContactTooltipButton
             hasContacts={contactList?.contacts.length !== 0}
+            hasShownTutorial={contactList?.hasViewedContactsTutorial}
           />
         </div>
         {(name ||
@@ -49,7 +52,7 @@ export default function ContactsPage() {
         isError={isError}
         name={name}
       />
-      {showTutorial && <ContactsTutorial />}
+      {showTutorial && isContactsTutorialShown && <ContactsTutorial />}
       <NavFooter />
     </main>
   );
