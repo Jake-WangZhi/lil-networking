@@ -103,3 +103,10 @@ export interface Slide {
   description: string;
   image: StaticImageData;
 }
+
+
+export enum TutorialType {
+  Dashboard = "dashboard",
+  Contacts = "contacts",
+  Profile = "profile"
+}
