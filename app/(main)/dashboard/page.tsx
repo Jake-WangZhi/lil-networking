@@ -14,6 +14,7 @@ import Confetti from "react-confetti";
 import { DashboardTutorial } from "@/components/DashboardTutorial";
 import { useWindowHeight, useWindowWidth } from "@react-hook/window-size";
 import { getVisibleWidth, pauseFor } from "@/lib/utils";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export default function DashboardPage() {
   const { email, name } = useUser();
@@ -21,6 +22,7 @@ export default function DashboardPage() {
     email,
   });
   const [showTutorial, setShowTutorial] = useState(false);
+  const { isDashboardTutorialShown } = useSettings();
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -77,7 +79,7 @@ export default function DashboardPage() {
       )}
       <ActionList actions={actions} isLoading={isLoading} isError={isError} />
       <NavFooter />
-      {showTutorial && <DashboardTutorial />}
+      {showTutorial && isDashboardTutorialShown && <DashboardTutorial />}
     </main>
   );
 }

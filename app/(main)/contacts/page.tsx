@@ -10,11 +10,13 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { ContactsTutorial } from "@/components/ContactsTutorial";
 import { pauseFor } from "@/lib/utils";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export default function ContactsPage() {
   const { email } = useUser();
   const [name, setName] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
+  const { isContactsTutorialShown } = useSettings();
 
   const { contactList, isLoading, isError } = useContacts({
     userEmail: email,
@@ -50,7 +52,7 @@ export default function ContactsPage() {
         isError={isError}
         name={name}
       />
-      {showTutorial && <ContactsTutorial />}
+      {showTutorial && isContactsTutorialShown && <ContactsTutorial />}
       <NavFooter />
     </main>
   );
