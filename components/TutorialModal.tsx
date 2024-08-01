@@ -14,9 +14,9 @@ interface Props {
 }
 
 export const TutorialModal = ({ slides, tutorialType }: Props) => {
+  const swiperRef = useRef<SwiperRef>();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(true);
-  const swiperRef = useRef<SwiperRef>();
 
   const handleSlideChange = (swiper: SwiperRef) => {
     setActiveIndex(swiper.activeIndex);
