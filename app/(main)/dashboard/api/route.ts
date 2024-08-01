@@ -56,15 +56,20 @@ export async function GET(request: Request) {
     },
   });
 
-
-
   const sortedActivities = activities.sort(
     (a, b) => b.date.getTime() - a.date.getTime()
   );
 
   const actions = parseActions(activeContacts, sortedActivities);
 
-  return NextResponse.json({ ...actions, hasContacts: !!contacts.length, isMeetGoals: goals?.connections === goals?.goalConnections && goals?.messages===goals?.goalMessages });
+  return NextResponse.json({
+    ...actions,
+    hasContacts: !!contacts.length,
+    isMeetGoals:
+      goals?.connections === goals?.goalConnections &&
+      goals?.messages === goals?.goalMessages,
+    hasViewedDashboardTutorial: user.hasViewedDashboardTutorial,
+  });
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {
@@ -92,7 +97,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         description: activity.description,
         days,
         goalDays,
-        isNewUser: !isUserActivity
+        isNewUser: !isUserActivity,
       };
 
       const pastDueThreshold = isUserActivity ? goalDays : 0;

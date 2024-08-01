@@ -13,30 +13,15 @@ import { useUser } from "@/contexts/UserContext";
 import Confetti from "react-confetti";
 import { DashboardTutorial } from "@/components/DashboardTutorial";
 import { useWindowHeight, useWindowWidth } from "@react-hook/window-size";
-import { getVisibleWidth } from "@/lib/utils";
+import { getVisibleWidth, pauseFor } from "@/lib/utils";
 
 export default function DashboardPage() {
   const { email, name } = useUser();
   const { actions, isLoading, isError } = useActions({
     email,
   });
-
+  const [showTutorial, setShowTutorial] = useState(false);
   const [confettiShown, setConfettiShown] = useState(false);
-  const [hasViewedDashboardTutorial, setHasViewedDashboardTutorial] =
-    useState(true);
-
-  const pauseFor = (ms: number) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
-
-  useEffect(() => {
-    pauseFor(2000).then(() => {
-      const value = localStorage.getItem("hasViewedDashboardTutorial");
-      if (value !== "true") {
-        setHasViewedDashboardTutorial(false);
-      }
-    });
-  }, []);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -100,6 +85,14 @@ export default function DashboardPage() {
     clearLocalStorageIfNewMonth();
   }, []);
 
+  useEffect(() => {
+    if (actions?.hasViewedDashboardTutorial === false) {
+      pauseFor(2000).then(() => {
+        setShowTutorial(true);
+      });
+    }
+  }, [actions?.hasViewedDashboardTutorial]);
+
   const visbleWidth = getVisibleWidth(useWindowWidth());
   const visibleHeight = useWindowHeight();
 
@@ -125,7 +118,7 @@ export default function DashboardPage() {
       )}
       <ActionList actions={actions} isLoading={isLoading} isError={isError} />
       <NavFooter />
-      {!hasViewedDashboardTutorial && <DashboardTutorial />}
+      {showTutorial && <DashboardTutorial />}
     </main>
   );
 }
