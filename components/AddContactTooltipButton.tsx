@@ -3,21 +3,29 @@ import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
 import { PlusSquare, X } from "@phosphor-icons/react";
 import { Button } from "./Button";
 import { useRouter } from "next/navigation";
+import { pauseFor } from "@/lib/utils";
 
 interface Props {
   hasContacts?: boolean;
+  hasShownTutorial?: boolean;
 }
 
-export const AddContactTooltipButton = ({ hasContacts }: Props) => {
+export const AddContactTooltipButton = ({
+  hasContacts,
+  hasShownTutorial,
+}: Props) => {
   const [open, setOpen] = useState(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (hasContacts === false) return setOpen(true);
+    pauseFor(3000).then(() => {
+      if (hasContacts === false && hasShownTutorial === true)
+        return setOpen(true);
 
-    setOpen(false);
-  }, [hasContacts]);
+      setOpen(false);
+    });
+  }, [hasContacts, hasShownTutorial]);
 
   const handleClick = useCallback(() => {
     setOpen(false);
@@ -44,7 +52,10 @@ export const AddContactTooltipButton = ({ hasContacts }: Props) => {
   }, []);
 
   const tooltipContent = (
-    <div ref={tooltipRef} className="flex justify-between space-x-2">
+    <div
+      ref={tooltipRef}
+      className="flex justify-between space-x-2 items-center"
+    >
       <div>
         <Typography variant="body1">Add contacts here</Typography>
       </div>

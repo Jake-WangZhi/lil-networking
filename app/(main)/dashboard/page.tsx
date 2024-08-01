@@ -43,7 +43,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (actions?.hasViewedDashboardTutorial === false) {
-      pauseFor(1000).then(() => {
+      pauseFor(3000).then(() => {
         setShowTutorial(true);
       });
     }
@@ -59,7 +59,10 @@ export default function DashboardPage() {
           <Typography variant="h1">Hi, {name?.split(" ")[0]}!</Typography>
           <div className="flex items-center space-x-2">
             <InfoTooltipButton />
-            <AddContactTooltipButton hasContacts={actions?.hasContacts} />
+            <AddContactTooltipButton
+              hasContacts={actions?.hasContacts}
+              hasShownTutorial={actions?.hasViewedDashboardTutorial}
+            />
           </div>
         </div>
         <GoalSummary isMeetGoals={actions?.isMeetGoals} />

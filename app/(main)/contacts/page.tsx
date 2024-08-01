@@ -23,7 +23,7 @@ export default function ContactsPage() {
 
   useEffect(() => {
     if (contactList?.hasViewedContactsTutorial === false) {
-      pauseFor(1000).then(() => {
+      pauseFor(3000).then(() => {
         setShowTutorial(true);
       });
     }
@@ -36,6 +36,7 @@ export default function ContactsPage() {
           <Typography variant="h1">All Contacts</Typography>
           <AddContactTooltipButton
             hasContacts={contactList?.contacts.length !== 0}
+            hasShownTutorial={contactList?.hasViewedContactsTutorial}
           />
         </div>
         {(name ||
