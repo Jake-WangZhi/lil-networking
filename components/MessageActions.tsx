@@ -102,7 +102,7 @@ export const MessageActions = ({ contact }: Props) => {
     postActivityMutation.mutate({
       ...preFilledFormData,
       contactId: contact.id,
-      type: ActivityType.USER,
+      type: ActivityType.User,
       date: localizedISODate,
     });
   }, [contact.id, postActivityMutation, preFilledFormData]);

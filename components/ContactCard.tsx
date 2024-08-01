@@ -47,7 +47,7 @@ export const ContactCard = ({ contact }: Props) => {
                 WebkitLineClamp: 2,
               }}
             >
-              {contact.activities[0].type === ActivityType.USER
+              {contact.activities[0].type === ActivityType.User
                 ? contact.activities[0].description
                 : `Contact added ${formatDate(contact.activities[0].date)}`}
             </Typography>
