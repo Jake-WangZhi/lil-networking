@@ -1,5 +1,5 @@
 import { Slide, TutorialType } from "@/types";
-import { Dialog, DialogContent } from "@mui/material";
+import { Dialog, DialogActions } from "@mui/material";
 import { TutorialSlide } from "./TutorialSlide";
 import { Button } from "./Button";
 import { useCallback, useRef, useState } from "react";
@@ -59,7 +59,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
   return (
     <div>
       <Dialog open={isOpen}>
-        <DialogContent>
+        <DialogActions>
           <Swiper
             spaceBetween={0}
             slidesPerView={1}
@@ -107,7 +107,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
               </div>
             </div>
           </Swiper>
-        </DialogContent>
+        </DialogActions>
       </Dialog>
     </div>
   );
