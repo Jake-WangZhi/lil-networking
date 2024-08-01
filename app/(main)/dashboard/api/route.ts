@@ -56,7 +56,21 @@ export async function GET(request: Request) {
     },
   });
 
+  const isMeetGoals =
+    goals &&
+    goals.connections === goals.goalConnections &&
+    goals.messages === goals.goalMessages;
 
+  if (goals && goals.hasShownConfetti === false && isMeetGoals) {
+    await prisma.goals.update({
+      where: {
+        userId: user.id,
+      },
+      data: {
+        hasShownConfetti: true,
+      },
+    });
+  }
 
   const sortedActivities = activities.sort(
     (a, b) => b.date.getTime() - a.date.getTime()
@@ -64,7 +78,13 @@ export async function GET(request: Request) {
 
   const actions = parseActions(activeContacts, sortedActivities);
 
-  return NextResponse.json({ ...actions, hasContacts: !!contacts.length, isMeetGoals: goals?.connections === goals?.goalConnections && goals?.messages===goals?.goalMessages });
+  return NextResponse.json({
+    ...actions,
+    hasContacts: !!contacts.length,
+    isMeetGoals,
+    hasViewedDashboardTutorial: user.hasViewedDashboardTutorial,
+    showConfetti: !goals?.hasShownConfetti && isMeetGoals,
+  });
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {
@@ -92,7 +112,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         description: activity.description,
         days,
         goalDays,
-        isNewUser: !isUserActivity
+        isNewUser: !isUserActivity,
       };
 
       const pastDueThreshold = isUserActivity ? goalDays : 0;

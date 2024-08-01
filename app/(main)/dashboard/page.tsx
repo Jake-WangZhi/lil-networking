@@ -13,30 +13,14 @@ import { useUser } from "@/contexts/UserContext";
 import Confetti from "react-confetti";
 import { DashboardTutorial } from "@/components/DashboardTutorial";
 import { useWindowHeight, useWindowWidth } from "@react-hook/window-size";
-import { getVisibleWidth } from "@/lib/utils";
+import { getVisibleWidth, pauseFor } from "@/lib/utils";
 
 export default function DashboardPage() {
   const { email, name } = useUser();
   const { actions, isLoading, isError } = useActions({
     email,
   });
-
-  const [confettiShown, setConfettiShown] = useState(false);
-  const [hasViewedDashboardTutorial, setHasViewedDashboardTutorial] =
-    useState(true);
-
-  const pauseFor = (ms: number) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
-
-  useEffect(() => {
-    pauseFor(2000).then(() => {
-      const value = localStorage.getItem("hasViewedDashboardTutorial");
-      if (value !== "true") {
-        setHasViewedDashboardTutorial(false);
-      }
-    });
-  }, []);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -58,47 +42,12 @@ export default function DashboardPage() {
   }, [email]);
 
   useEffect(() => {
-    const confettiAlreadyShown = localStorage.getItem("confettiShown");
-    if (confettiAlreadyShown !== "true" && actions?.isMeetGoals) {
-      setConfettiShown(true);
-      localStorage.setItem("confettiShown", "true");
+    if (actions?.hasViewedDashboardTutorial === false) {
+      pauseFor(2000).then(() => {
+        setShowTutorial(true);
+      });
     }
-  }, [actions?.isMeetGoals]);
-
-  useEffect(() => {
-    const clearLocalStorageIfNewMonth = () => {
-      const lastClearedDate = localStorage.getItem("lastClearedDate");
-
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth();
-      const currentYear = currentDate.getFullYear();
-
-      let shouldClear = false;
-
-      if (lastClearedDate) {
-        const lastCleared = new Date(lastClearedDate);
-        const lastClearedMonth = lastCleared.getMonth();
-        const lastClearedYear = lastCleared.getFullYear();
-
-        if (
-          currentMonth !== lastClearedMonth ||
-          currentYear !== lastClearedYear
-        ) {
-          shouldClear = true;
-        }
-      } else {
-        shouldClear = true;
-      }
-
-      if (shouldClear) {
-        localStorage.removeItem("confettiShown");
-
-        localStorage.setItem("lastClearedDate", currentDate.toISOString());
-      }
-    };
-
-    clearLocalStorageIfNewMonth();
-  }, []);
+  }, [actions?.hasViewedDashboardTutorial]);
 
   const visbleWidth = getVisibleWidth(useWindowWidth());
   const visibleHeight = useWindowHeight();
@@ -115,7 +64,7 @@ export default function DashboardPage() {
         </div>
         <GoalSummary isMeetGoals={actions?.isMeetGoals} />
       </div>
-      {actions?.isMeetGoals && confettiShown && (
+      {actions?.showConfetti && (
         <Confetti
           width={visbleWidth}
           height={visibleHeight}
@@ -125,7 +74,7 @@ export default function DashboardPage() {
       )}
       <ActionList actions={actions} isLoading={isLoading} isError={isError} />
       <NavFooter />
-      {!hasViewedDashboardTutorial && <DashboardTutorial />}
+      {showTutorial && <DashboardTutorial />}
     </main>
   );
 }

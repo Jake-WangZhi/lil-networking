@@ -149,7 +149,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
       MuiDialog: {
         styleOverrides: {
           paper: {
-            margin: "16px",
+            padding: "8px",
             position: "relative",
             backgroundColor: "#2C353E",
             "&::after": {
@@ -160,6 +160,12 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
               left: 0,
               width: "100%",
               height: "100%",
+            },
+            "@media (min-width:768px)": {
+              padding: "16px",
+            },
+            "@media (min-width:1024px)": {
+              padding: "24px",
             },
           },
         },

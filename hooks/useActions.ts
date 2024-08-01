@@ -11,6 +11,8 @@ type ActionType = {
   upcomingActions: Array<Action>;
   hasContacts: boolean;
   isMeetGoals: boolean;
+  hasViewedDashboardTutorial: boolean;
+  showConfetti: boolean;
 };
 
 export const useActions = ({ email }: Args) => {

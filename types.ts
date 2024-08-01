@@ -96,7 +96,6 @@ export interface NotificationSettingsArgs {
   subscriptionId: string;
 }
 
-
 export interface Slide {
   id: string;
   title: string;
@@ -104,9 +103,13 @@ export interface Slide {
   image: StaticImageData;
 }
 
-
 export enum TutorialType {
   Dashboard = "dashboard",
   Contacts = "contacts",
-  Profile = "profile"
+  Profile = "profile",
+}
+
+export interface TutorialArgs {
+  type: TutorialType;
+  status: string;
 }
