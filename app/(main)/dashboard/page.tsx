@@ -21,7 +21,6 @@ export default function DashboardPage() {
     email,
   });
   const [showTutorial, setShowTutorial] = useState(false);
-  const [localShowTutorial, setLocalShowTutorial] = useState(true);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -75,9 +74,7 @@ export default function DashboardPage() {
       )}
       <ActionList actions={actions} isLoading={isLoading} isError={isError} />
       <NavFooter />
-      {showTutorial && localShowTutorial && (
-        <DashboardTutorial setLocalShowTutorial={setLocalShowTutorial} />
-      )}
+      {showTutorial && <DashboardTutorial />}
     </main>
   );
 }

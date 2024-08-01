@@ -19,7 +19,6 @@ export default function ContactPage({
   params: { contactId: string };
 }) {
   const [showTutorial, setShowTutorial] = useState(false);
-  const [localShowTutorial, setLocalShowTutorial] = useState(true);
 
   const { contactProfile, isLoading, isError } = useContact({
     id: params.contactId,
@@ -86,9 +85,7 @@ export default function ContactPage({
       <ContactInfo contact={contact} />
       {interests.length !== 0 && <ContactInterests interests={interests} />}
       <ContactActivites activities={activities} contactId={contact.id} />
-      {showTutorial && localShowTutorial && (
-        <ProfileTutorial setLocalShowTutorial={setLocalShowTutorial} />
-      )}
+      {showTutorial && <ProfileTutorial />}
       <NavFooter />
     </main>
   );

@@ -3,13 +3,8 @@ import img3 from "@/public/tutorials/dashboard/priority.png";
 import img2 from "@/public/tutorials/dashboard/stats.png";
 import { TutorialModal } from "./TutorialModal";
 import { TutorialType } from "@/types";
-import { Dispatch, SetStateAction } from "react";
 
-export const DashboardTutorial = ({
-  setLocalShowTutorial,
-}: {
-  setLocalShowTutorial: Dispatch<SetStateAction<boolean>>;
-}) => {
+export const DashboardTutorial = () => {
   const slides = [
     {
       id: "1",
@@ -34,10 +29,6 @@ export const DashboardTutorial = ({
   ];
 
   return (
-    <TutorialModal
-      slides={slides}
-      tutorialType={TutorialType.Dashboard}
-      setLocalShowTutorial={setLocalShowTutorial}
-    />
+    <TutorialModal slides={slides} tutorialType={TutorialType.Dashboard} />
   );
 };
