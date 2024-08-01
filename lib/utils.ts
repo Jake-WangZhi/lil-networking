@@ -77,3 +77,14 @@ export const formatBaseUrl = (url: string) => {
 
   return formattedUrl;
 };
+
+
+export const getVisibleWidth = (windowWidth: number) => {
+  if (windowWidth >= 1024) {
+    return 768;
+  } else if (windowWidth >= 768) {
+    return 576;
+  } else {
+    return windowWidth;
+  }
+};
