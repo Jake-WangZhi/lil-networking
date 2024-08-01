@@ -106,7 +106,7 @@ export default function CreateActivityPage({
         date: localizedISODate,
         description: prefilledDescription,
         contactId: params.contactId,
-        type: ActivityType.USER,
+        type: ActivityType.User,
       });
     } else {
       router.back();

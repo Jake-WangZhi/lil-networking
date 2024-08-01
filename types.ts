@@ -58,8 +58,8 @@ export interface ActivityArgs {
 }
 
 export enum ActivityType {
-  USER = "USER",
-  SYSTEM = "SYSTEM",
+  User = "USER",
+  System = "SYSTEM",
 }
 
 export interface GoalsArgs {
