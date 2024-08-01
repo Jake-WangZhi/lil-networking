@@ -2,13 +2,20 @@ import { Slide } from "@/types";
 import { Typography } from "@mui/material";
 import Image from "next/image";
 import { useWindowWidth } from "@react-hook/window-size";
-import { getVisibleWidth } from "@/lib/utils";
 
 interface Props {
   slide: Slide;
 }
 
 export const TutorialSlide = ({ slide }: Props) => {
+  const getVisibleWidth = (windowWidth: number) => {
+    if (windowWidth >= 1024) {
+      return 768;
+    } else {
+      return windowWidth;
+    }
+  };
+
   const containerWidth =
     Math.floor(getVisibleWidth(useWindowWidth()) * 0.9) - 32;
 
