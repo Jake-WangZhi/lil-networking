@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface Action {
   contactId: string;
   contactFirstName: string;
@@ -92,4 +94,19 @@ export interface NotificationSettingsArgs {
   streak: boolean;
   meetGoal: boolean;
   subscriptionId: string;
+}
+
+
+export interface Slide {
+  id: string;
+  title: string;
+  description: string;
+  image: StaticImageData;
+}
+
+
+export enum TutorialType {
+  Dashboard = "dashboard",
+  Contacts = "contacts",
+  Profile = "profile"
 }
