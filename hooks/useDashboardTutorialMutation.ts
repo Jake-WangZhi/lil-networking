@@ -8,17 +8,19 @@ type Args = {
 
 type HandleDashboardTutorialArgs = {
   email: string;
+  status: boolean;
 };
 
 export const useDashboardTutorialMutation = ({ onSuccess, onError }: Args) =>
   useMutation({
-    mutationFn: async ({ email }: HandleDashboardTutorialArgs) => {
+    mutationFn: async ({ email, status }: HandleDashboardTutorialArgs) => {
       const response = await fetch(
         `/dashboard/api?${SearchParams.Email}=${email}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({ status }),
           method: "PUT",
         }
       );

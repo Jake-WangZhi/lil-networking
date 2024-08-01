@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { Action, ActivityType, SearchParams } from "@/types";
+import { Action, ActivityType, SearchParams, TutorialArgs } from "@/types";
 import { differenceInDays } from "date-fns";
 
 const DAYS_BEFORE_PAST_DUE = 10;
@@ -117,6 +117,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
 export async function PUT(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get(SearchParams.Email);
+  const tutorialArgs: TutorialArgs = await request.json();
 
   if (!email)
     return new NextResponse(
@@ -127,7 +128,7 @@ export async function PUT(request: Request) {
   const user = await prisma.user.update({
     where: { email },
     data: {
-      hasViewedDashboardTutorial: true,
+      hasViewedDashboardTutorial: Boolean(tutorialArgs.status),
     },
   });
 

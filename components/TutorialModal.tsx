@@ -38,6 +38,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
         case TutorialType.Dashboard:
           dashboardTutorialMutation.mutate({
             email: email || "",
+            status: true,
           });
           break;
         case TutorialType.Contacts:
@@ -64,6 +65,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
       case TutorialType.Dashboard:
         dashboardTutorialMutation.mutate({
           email: email || "",
+          status: true,
         });
         break;
       case TutorialType.Contacts:
