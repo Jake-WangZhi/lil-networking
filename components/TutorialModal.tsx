@@ -15,12 +15,10 @@ interface Props {
 
 export const TutorialModal = ({ slides, tutorialType }: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const swiperRef = useRef<SwiperRef>();
   const [isOpen, setIsOpen] = useState(true);
+  const swiperRef = useRef<SwiperRef>();
 
   const handleSlideChange = (swiper: SwiperRef) => {
-    console.log("swiper.activeIndex", swiper.activeIndex);
     setActiveIndex(swiper.activeIndex);
   };
 

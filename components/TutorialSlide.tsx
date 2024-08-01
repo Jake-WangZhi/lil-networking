@@ -21,8 +21,6 @@ export const TutorialSlide = ({ slide }: Props) => {
   const containerWidth =
     Math.floor(getVisibleWidth(useWindowWidth()) * 0.9) - 32;
 
-  console.log("containerWidth", containerWidth);
-
   return (
     <div className="space-y-2 flex flex-col justify-center items-center">
       <div

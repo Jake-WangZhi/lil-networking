@@ -12,6 +12,8 @@ import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
 import Confetti from "react-confetti";
 import { DashboardTutorial } from "@/components/DashboardTutorial";
+import { useWindowHeight, useWindowWidth } from "@react-hook/window-size";
+import { getVisibleWidth } from "@/lib/utils";
 
 export default function DashboardPage() {
   const { email, name } = useUser();
@@ -19,10 +21,6 @@ export default function DashboardPage() {
     email,
   });
 
-  const [windowDimensions, setWindowDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
   const [confettiShown, setConfettiShown] = useState(false);
   const [hasViewedDashboardTutorial, setHasViewedDashboardTutorial] =
     useState(true);
@@ -32,36 +30,12 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    pauseFor(3000).then(() => {
+    pauseFor(2000).then(() => {
       const value = localStorage.getItem("hasViewedDashboardTutorial");
       if (value !== "true") {
         setHasViewedDashboardTutorial(false);
       }
     });
-  }, []);
-
-  useEffect(() => {
-    const updateWindowDimensions = () => {
-      let width;
-      if (window.innerWidth >= 1024) {
-        width = 768;
-      } else if (window.innerWidth >= 768) {
-        width = 576;
-      } else {
-        width = window.innerWidth;
-      }
-
-      setWindowDimensions({
-        width,
-        height: window.innerHeight,
-      });
-    };
-
-    updateWindowDimensions();
-
-    window.addEventListener("resize", updateWindowDimensions);
-
-    return () => window.removeEventListener("resize", updateWindowDimensions);
   }, []);
 
   useEffect(() => {
@@ -85,7 +59,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const confettiAlreadyShown = localStorage.getItem("confettiShown");
-    if (!confettiAlreadyShown && actions?.isMeetGoals) {
+    if (confettiAlreadyShown !== "true" && actions?.isMeetGoals) {
       setConfettiShown(true);
       localStorage.setItem("confettiShown", "true");
     }
@@ -126,6 +100,9 @@ export default function DashboardPage() {
     clearLocalStorageIfNewMonth();
   }, []);
 
+  const visbleWidth = getVisibleWidth(useWindowWidth());
+  const visibleHeight = useWindowHeight();
+
   return (
     <main className="relative flex flex-col items-center text-white px-4">
       <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
@@ -140,8 +117,8 @@ export default function DashboardPage() {
       </div>
       {actions?.isMeetGoals && confettiShown && (
         <Confetti
-          width={windowDimensions.width}
-          height={windowDimensions.height}
+          width={visbleWidth}
+          height={visibleHeight}
           style={{ zIndex: "20" }}
           recycle={false}
         />
