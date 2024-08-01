@@ -12,6 +12,7 @@ type ActionType = {
   hasContacts: boolean;
   isMeetGoals: boolean;
   hasViewedDashboardTutorial: boolean;
+  showConfetti: boolean;
 };
 
 export const useActions = ({ email }: Args) => {
