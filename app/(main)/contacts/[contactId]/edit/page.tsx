@@ -12,7 +12,7 @@ export default function EditPage({
 }: {
   params: { contactId: string };
 }) {
-  const { contact, isLoading, isError } = useContact({
+  const { contactProfile, isLoading, isError } = useContact({
     id: params.contactId,
   });
 
@@ -42,7 +42,7 @@ export default function EditPage({
     );
   }
 
-  if (!contact) {
+  if (!contactProfile?.contact) {
     return (
       <Typography
         variant="h3"
@@ -60,5 +60,5 @@ export default function EditPage({
     );
   }
 
-  return <ContactForm contact={contact} />;
+  return <ContactForm contact={contactProfile.contact} />;
 }
