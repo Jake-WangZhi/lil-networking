@@ -7,6 +7,8 @@ import { Paginator } from "./Paginator";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperRef } from "swiper";
 import "swiper/css";
+import { useDashboardTutorialMutation } from "@/hooks/useDashboardTutorialMutation";
+import { useUser } from "@/contexts/UserContext";
 
 interface Props {
   slides: Slide[];
@@ -17,6 +19,14 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
   const swiperRef = useRef<SwiperRef>();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(true);
+  const { email } = useUser();
+
+  const dashboardTutorialMutation = useDashboardTutorialMutation({
+    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   const handleSlideChange = (swiper: SwiperRef) => {
     setActiveIndex(swiper.activeIndex);
@@ -26,7 +36,9 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
     if (activeIndex === slides.length - 1) {
       switch (tutorialType) {
         case TutorialType.Dashboard:
-          localStorage.setItem("hasViewedDashboardTutorial", "true");
+          dashboardTutorialMutation.mutate({
+            email: email || "",
+          });
           break;
         case TutorialType.Contacts:
           localStorage.setItem("hasViewedContactsTutorial", "true");
@@ -39,12 +51,20 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
     } else {
       swiperRef.current?.slideNext();
     }
-  }, [activeIndex, slides.length, tutorialType]);
+  }, [
+    activeIndex,
+    dashboardTutorialMutation,
+    email,
+    slides.length,
+    tutorialType,
+  ]);
 
   const handleSkipClick = useCallback(() => {
     switch (tutorialType) {
       case TutorialType.Dashboard:
-        localStorage.setItem("hasViewedDashboardTutorial", "true");
+        dashboardTutorialMutation.mutate({
+          email: email || "",
+        });
         break;
       case TutorialType.Contacts:
         localStorage.setItem("hasViewedContactsTutorial", "true");
@@ -54,7 +74,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
         break;
     }
     setIsOpen(false);
-  }, [tutorialType]);
+  }, [dashboardTutorialMutation, email, tutorialType]);
 
   return (
     <div>

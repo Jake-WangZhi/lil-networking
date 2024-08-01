@@ -56,15 +56,20 @@ export async function GET(request: Request) {
     },
   });
 
-
-
   const sortedActivities = activities.sort(
     (a, b) => b.date.getTime() - a.date.getTime()
   );
 
   const actions = parseActions(activeContacts, sortedActivities);
 
-  return NextResponse.json({ ...actions, hasContacts: !!contacts.length, isMeetGoals: goals?.connections === goals?.goalConnections && goals?.messages===goals?.goalMessages });
+  return NextResponse.json({
+    ...actions,
+    hasContacts: !!contacts.length,
+    isMeetGoals:
+      goals?.connections === goals?.goalConnections &&
+      goals?.messages === goals?.goalMessages,
+    hasViewedDashboardTutorial: user.hasViewedDashboardTutorial,
+  });
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {
@@ -92,7 +97,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         description: activity.description,
         days,
         goalDays,
-        isNewUser: !isUserActivity
+        isNewUser: !isUserActivity,
       };
 
       const pastDueThreshold = isUserActivity ? goalDays : 0;
@@ -108,3 +113,23 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
 
   return { pastActions, upcomingActions };
 };
+
+export async function PUT(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const email = searchParams.get(SearchParams.Email);
+
+  if (!email)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "Missing Email" }),
+      { status: 400, headers: { "content-type": "application/json" } }
+    );
+
+  const user = await prisma.user.update({
+    where: { email },
+    data: {
+      hasViewedDashboardTutorial: true,
+    },
+  });
+
+  return NextResponse.json(user);
+}

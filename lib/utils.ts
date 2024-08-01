@@ -78,7 +78,6 @@ export const formatBaseUrl = (url: string) => {
   return formattedUrl;
 };
 
-
 export const getVisibleWidth = (windowWidth: number) => {
   if (windowWidth >= 1024) {
     return 768;
@@ -87,4 +86,8 @@ export const getVisibleWidth = (windowWidth: number) => {
   } else {
     return windowWidth;
   }
+};
+
+export const pauseFor = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
