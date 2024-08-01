@@ -21,7 +21,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
   const { email } = useUser();
 
-  const dashboardTutorialMutation = useTutorialMutation({
+  const tutorialMutation = useTutorialMutation({
     onSuccess: () => {},
     onError: (error) => {
       console.log(error);
@@ -36,49 +36,59 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
     if (activeIndex === slides.length - 1) {
       switch (tutorialType) {
         case TutorialType.Dashboard:
-          dashboardTutorialMutation.mutate({
+          tutorialMutation.mutate({
             email: email || "",
             type: TutorialType.Dashboard,
             status: true,
           });
           break;
         case TutorialType.Contacts:
-          localStorage.setItem("hasViewedContactsTutorial", "true");
+          tutorialMutation.mutate({
+            email: email || "",
+            type: TutorialType.Contacts,
+            status: true,
+          });
           break;
         case TutorialType.Profile:
-          localStorage.setItem("hasViewedProfileTutorial", "true");
+          tutorialMutation.mutate({
+            email: email || "",
+            type: TutorialType.Profile,
+            status: true,
+          });
           break;
       }
       setIsOpen(false);
     } else {
       swiperRef.current?.slideNext();
     }
-  }, [
-    activeIndex,
-    dashboardTutorialMutation,
-    email,
-    slides.length,
-    tutorialType,
-  ]);
+  }, [activeIndex, slides.length, tutorialType, tutorialMutation, email]);
 
   const handleSkipClick = useCallback(() => {
     switch (tutorialType) {
       case TutorialType.Dashboard:
-        dashboardTutorialMutation.mutate({
+        tutorialMutation.mutate({
           email: email || "",
           type: TutorialType.Dashboard,
           status: true,
         });
         break;
       case TutorialType.Contacts:
-        localStorage.setItem("hasViewedContactsTutorial", "true");
+        tutorialMutation.mutate({
+          email: email || "",
+          type: TutorialType.Contacts,
+          status: true,
+        });
         break;
       case TutorialType.Profile:
-        localStorage.setItem("hasViewedProfileTutorial", "true");
+        tutorialMutation.mutate({
+          email: email || "",
+          type: TutorialType.Profile,
+          status: true,
+        });
         break;
     }
     setIsOpen(false);
-  }, [dashboardTutorialMutation, email, tutorialType]);
+  }, [tutorialType, tutorialMutation, email]);
 
   return (
     <div>

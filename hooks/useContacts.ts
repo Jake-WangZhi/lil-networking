@@ -7,12 +7,17 @@ type Args = {
   name?: string | null;
 };
 
+type ContactsType = {
+  contacts: Contact[];
+  hasViewedContactsTutorial: boolean;
+};
+
 export const useContacts = ({ userEmail, name }: Args) => {
   const {
     isLoading,
-    data: contacts,
+    data: contactList,
     isError,
-  } = useQuery<Contact[]>({
+  } = useQuery<ContactsType>({
     queryKey: ["contacts", userEmail, name],
     queryFn: () =>
       fetcher(
@@ -22,7 +27,7 @@ export const useContacts = ({ userEmail, name }: Args) => {
   });
 
   return {
-    contacts,
+    contactList,
     isLoading,
     isError,
   };

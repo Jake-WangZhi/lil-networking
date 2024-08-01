@@ -9,15 +9,28 @@ import { NavFooter } from "@/components/NavFooter";
 import { ContactActivites } from "@/components/ContactActivities";
 import { ContactInfo } from "@/components/ContactInfo";
 import { ContactInterests } from "@/components/ContactInterests";
+import { useEffect, useState } from "react";
+import { ProfileTutorial } from "@/components/ProfileTutorial";
+import { pauseFor } from "@/lib/utils";
 
 export default function ContactPage({
   params,
 }: {
   params: { contactId: string };
 }) {
-  const { contact, isLoading, isError } = useContact({
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  const { contactProfile, isLoading, isError } = useContact({
     id: params.contactId,
   });
+
+  useEffect(() => {
+    if (contactProfile?.hasViewedProfileTutorial === false) {
+      pauseFor(2000).then(() => {
+        setShowTutorial(true);
+      });
+    }
+  }, [contactProfile?.hasViewedProfileTutorial]);
 
   if (isError) {
     return (
@@ -45,7 +58,7 @@ export default function ContactPage({
     );
   }
 
-  if (!contact) {
+  if (!contactProfile?.contact) {
     return (
       <Typography
         variant="h3"
@@ -63,6 +76,7 @@ export default function ContactPage({
     );
   }
 
+  const { contact } = contactProfile;
   const { interests, activities } = contact;
 
   return (
@@ -71,6 +85,7 @@ export default function ContactPage({
       <ContactInfo contact={contact} />
       {interests.length !== 0 && <ContactInterests interests={interests} />}
       <ContactActivites activities={activities} contactId={contact.id} />
+      {showTutorial && <ProfileTutorial />}
       <NavFooter />
     </main>
   );
