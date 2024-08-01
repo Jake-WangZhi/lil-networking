@@ -44,7 +44,10 @@ export async function GET(request: Request) {
 
   const parsedContacts = parseContacts(contacts, activities);
 
-  return NextResponse.json(parsedContacts);
+  return NextResponse.json({
+    contacts: parsedContacts,
+    hasViewedContactsTutorial: user.hasViewedContactsTutorial,
+  });
 }
 
 const parseContacts = (contacts: Contact[], activities: Activity[]) => {
