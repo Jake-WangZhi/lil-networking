@@ -56,6 +56,22 @@ export async function GET(request: Request) {
     },
   });
 
+  const isMeetGoals =
+    goals &&
+    goals.connections === goals.goalConnections &&
+    goals.messages === goals.goalMessages;
+
+  if (goals && goals.hasShownConfetti === false && isMeetGoals) {
+    await prisma.goals.update({
+      where: {
+        userId: user.id,
+      },
+      data: {
+        hasShownConfetti: true,
+      },
+    });
+  }
+
   const sortedActivities = activities.sort(
     (a, b) => b.date.getTime() - a.date.getTime()
   );
@@ -65,10 +81,9 @@ export async function GET(request: Request) {
   return NextResponse.json({
     ...actions,
     hasContacts: !!contacts.length,
-    isMeetGoals:
-      goals?.connections === goals?.goalConnections &&
-      goals?.messages === goals?.goalMessages,
+    isMeetGoals,
     hasViewedDashboardTutorial: user.hasViewedDashboardTutorial,
+    showConfetti: !goals?.hasShownConfetti && isMeetGoals,
   });
 }
 

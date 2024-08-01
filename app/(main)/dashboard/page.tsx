@@ -21,7 +21,6 @@ export default function DashboardPage() {
     email,
   });
   const [showTutorial, setShowTutorial] = useState(false);
-  const [confettiShown, setConfettiShown] = useState(false);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -41,49 +40,6 @@ export default function DashboardPage() {
       sessionStorage.setItem("lastOpenedEventSent", "true");
     }
   }, [email]);
-
-  useEffect(() => {
-    const confettiAlreadyShown = localStorage.getItem("confettiShown");
-    if (confettiAlreadyShown !== "true" && actions?.isMeetGoals) {
-      setConfettiShown(true);
-      localStorage.setItem("confettiShown", "true");
-    }
-  }, [actions?.isMeetGoals]);
-
-  useEffect(() => {
-    const clearLocalStorageIfNewMonth = () => {
-      const lastClearedDate = localStorage.getItem("lastClearedDate");
-
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth();
-      const currentYear = currentDate.getFullYear();
-
-      let shouldClear = false;
-
-      if (lastClearedDate) {
-        const lastCleared = new Date(lastClearedDate);
-        const lastClearedMonth = lastCleared.getMonth();
-        const lastClearedYear = lastCleared.getFullYear();
-
-        if (
-          currentMonth !== lastClearedMonth ||
-          currentYear !== lastClearedYear
-        ) {
-          shouldClear = true;
-        }
-      } else {
-        shouldClear = true;
-      }
-
-      if (shouldClear) {
-        localStorage.removeItem("confettiShown");
-
-        localStorage.setItem("lastClearedDate", currentDate.toISOString());
-      }
-    };
-
-    clearLocalStorageIfNewMonth();
-  }, []);
 
   useEffect(() => {
     if (actions?.hasViewedDashboardTutorial === false) {
@@ -108,7 +64,7 @@ export default function DashboardPage() {
         </div>
         <GoalSummary isMeetGoals={actions?.isMeetGoals} />
       </div>
-      {actions?.isMeetGoals && confettiShown && (
+      {actions?.showConfetti && (
         <Confetti
           width={visbleWidth}
           height={visibleHeight}
