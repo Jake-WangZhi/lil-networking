@@ -1,4 +1,4 @@
-import { SearchParams } from "@/types";
+import { SearchParams, TutorialType } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {
@@ -8,19 +8,24 @@ type Args = {
 
 type HandleDashboardTutorialArgs = {
   email: string;
+  type: TutorialType;
   status: boolean;
 };
 
-export const useDashboardTutorialMutation = ({ onSuccess, onError }: Args) =>
+export const useTutorialMutation = ({ onSuccess, onError }: Args) =>
   useMutation({
-    mutationFn: async ({ email, status }: HandleDashboardTutorialArgs) => {
+    mutationFn: async ({
+      email,
+      type,
+      status,
+    }: HandleDashboardTutorialArgs) => {
       const response = await fetch(
-        `/dashboard/api?${SearchParams.Email}=${email}`,
+        `/api/tutorial?${SearchParams.Email}=${email}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ status }),
+          body: JSON.stringify({ type, status }),
           method: "PUT",
         }
       );

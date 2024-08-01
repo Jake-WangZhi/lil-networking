@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { Action, ActivityType, SearchParams, TutorialArgs } from "@/types";
+import { Action, ActivityType, SearchParams } from "@/types";
 import { differenceInDays } from "date-fns";
 
 const DAYS_BEFORE_PAST_DUE = 10;
@@ -113,24 +113,3 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
 
   return { pastActions, upcomingActions };
 };
-
-export async function PUT(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const email = searchParams.get(SearchParams.Email);
-  const tutorialArgs: TutorialArgs = await request.json();
-
-  if (!email)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing Email" }),
-      { status: 400, headers: { "content-type": "application/json" } }
-    );
-
-  const user = await prisma.user.update({
-    where: { email },
-    data: {
-      hasViewedDashboardTutorial: Boolean(tutorialArgs.status),
-    },
-  });
-
-  return NextResponse.json(user);
-}

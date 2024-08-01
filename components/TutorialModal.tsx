@@ -7,7 +7,7 @@ import { Paginator } from "./Paginator";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperRef } from "swiper";
 import "swiper/css";
-import { useDashboardTutorialMutation } from "@/hooks/useDashboardTutorialMutation";
+import { useTutorialMutation } from "@/hooks/useTutorialMutation";
 import { useUser } from "@/contexts/UserContext";
 
 interface Props {
@@ -21,7 +21,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
   const { email } = useUser();
 
-  const dashboardTutorialMutation = useDashboardTutorialMutation({
+  const dashboardTutorialMutation = useTutorialMutation({
     onSuccess: () => {},
     onError: (error) => {
       console.log(error);
@@ -38,6 +38,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
         case TutorialType.Dashboard:
           dashboardTutorialMutation.mutate({
             email: email || "",
+            type: TutorialType.Dashboard,
             status: true,
           });
           break;
@@ -65,6 +66,7 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
       case TutorialType.Dashboard:
         dashboardTutorialMutation.mutate({
           email: email || "",
+          type: TutorialType.Dashboard,
           status: true,
         });
         break;

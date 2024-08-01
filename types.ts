@@ -110,5 +110,6 @@ export enum TutorialType {
 }
 
 export interface TutorialArgs {
+  type: TutorialType;
   status: string;
 }
