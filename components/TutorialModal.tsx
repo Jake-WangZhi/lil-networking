@@ -2,7 +2,7 @@ import { Slide, TutorialType } from "@/types";
 import { Dialog, DialogActions } from "@mui/material";
 import { TutorialSlide } from "./TutorialSlide";
 import { Button } from "./Button";
-import { useCallback, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
 import { Paginator } from "./Paginator";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperRef } from "swiper";
@@ -13,9 +13,14 @@ import { useUser } from "@/contexts/UserContext";
 interface Props {
   slides: Slide[];
   tutorialType: TutorialType;
+  setLocalShowTutorial: Dispatch<SetStateAction<boolean>>;
 }
 
-export const TutorialModal = ({ slides, tutorialType }: Props) => {
+export const TutorialModal = ({
+  slides,
+  tutorialType,
+  setLocalShowTutorial,
+}: Props) => {
   const swiperRef = useRef<SwiperRef>();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(true);
@@ -58,10 +63,18 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
           break;
       }
       setIsOpen(false);
+      setLocalShowTutorial(false);
     } else {
       swiperRef.current?.slideNext();
     }
-  }, [activeIndex, slides.length, tutorialType, tutorialMutation, email]);
+  }, [
+    activeIndex,
+    slides.length,
+    tutorialType,
+    setLocalShowTutorial,
+    tutorialMutation,
+    email,
+  ]);
 
   const handleSkipClick = useCallback(() => {
     switch (tutorialType) {
@@ -87,8 +100,9 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
         });
         break;
     }
+    setLocalShowTutorial(false);
     setIsOpen(false);
-  }, [tutorialType, tutorialMutation, email]);
+  }, [tutorialType, setLocalShowTutorial, tutorialMutation, email]);
 
   const handleDotClick = useCallback((index: number) => {
     swiperRef.current?.slideTo(index);

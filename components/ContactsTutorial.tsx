@@ -3,8 +3,13 @@ import img3 from "@/public/tutorials/contacts/lists.png";
 import img2 from "@/public/tutorials/contacts/search.png";
 import { TutorialModal } from "./TutorialModal";
 import { TutorialType } from "@/types";
+import { Dispatch, SetStateAction } from "react";
 
-export const ContactsTutorial = () => {
+export const ContactsTutorial = ({
+  setLocalShowTutorial,
+}: {
+  setLocalShowTutorial: Dispatch<SetStateAction<boolean>>;
+}) => {
   const slides = [
     {
       id: "1",
@@ -29,5 +34,11 @@ export const ContactsTutorial = () => {
     },
   ];
 
-  return <TutorialModal slides={slides} tutorialType={TutorialType.Contacts} />;
+  return (
+    <TutorialModal
+      slides={slides}
+      tutorialType={TutorialType.Contacts}
+      setLocalShowTutorial={setLocalShowTutorial}
+    />
+  );
 };

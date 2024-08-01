@@ -3,8 +3,13 @@ import img3 from "@/public/tutorials/profile/tags.png";
 import img2 from "@/public/tutorials/profile/history.png";
 import { TutorialModal } from "./TutorialModal";
 import { TutorialType } from "@/types";
+import { Dispatch, SetStateAction } from "react";
 
-export const ProfileTutorial = () => {
+export const ProfileTutorial = ({
+  setLocalShowTutorial,
+}: {
+  setLocalShowTutorial: Dispatch<SetStateAction<boolean>>;
+}) => {
   const slides = [
     {
       id: "1",
@@ -28,5 +33,11 @@ export const ProfileTutorial = () => {
     },
   ];
 
-  return <TutorialModal slides={slides} tutorialType={TutorialType.Profile} />;
+  return (
+    <TutorialModal
+      slides={slides}
+      tutorialType={TutorialType.Profile}
+      setLocalShowTutorial={setLocalShowTutorial}
+    />
+  );
 };

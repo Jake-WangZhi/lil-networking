@@ -15,6 +15,7 @@ export default function ContactsPage() {
   const { email } = useUser();
   const [name, setName] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
+  const [localShowTutorial, setLocalShowTutorial] = useState(true);
 
   const { contactList, isLoading, isError } = useContacts({
     userEmail: email,
@@ -49,7 +50,9 @@ export default function ContactsPage() {
         isError={isError}
         name={name}
       />
-      {showTutorial && <ContactsTutorial />}
+      {showTutorial && localShowTutorial && (
+        <ContactsTutorial setLocalShowTutorial={setLocalShowTutorial} />
+      )}
       <NavFooter />
     </main>
   );
