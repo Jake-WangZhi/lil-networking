@@ -43,7 +43,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (actions?.hasViewedDashboardTutorial === false) {
-      pauseFor(2000).then(() => {
+      pauseFor(1000).then(() => {
         setShowTutorial(true);
       });
     }

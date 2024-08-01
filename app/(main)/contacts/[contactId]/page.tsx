@@ -26,7 +26,7 @@ export default function ContactPage({
 
   useEffect(() => {
     if (contactProfile?.hasViewedProfileTutorial === false) {
-      pauseFor(2000).then(() => {
+      pauseFor(1000).then(() => {
         setShowTutorial(true);
       });
     }
