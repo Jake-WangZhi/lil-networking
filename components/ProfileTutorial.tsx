@@ -22,7 +22,7 @@ export const ProfileTutorial = () => {
     },
     {
       id: "3",
-      title: "Log Activity",
+      title: "Log Activities",
       description: "Clear your reminder and visualize your connection history",
       image: img3,
     },

@@ -23,7 +23,7 @@ export default function ContactsPage() {
 
   useEffect(() => {
     if (contactList?.hasViewedContactsTutorial === false) {
-      pauseFor(2000).then(() => {
+      pauseFor(1000).then(() => {
         setShowTutorial(true);
       });
     }

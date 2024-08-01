@@ -90,6 +90,10 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
     setIsOpen(false);
   }, [tutorialType, tutorialMutation, email]);
 
+  const handleDotClick = useCallback((index: number) => {
+    swiperRef.current?.slideTo(index);
+  }, []);
+
   return (
     <div>
       <Dialog open={isOpen}>
@@ -110,7 +114,11 @@ export const TutorialModal = ({ slides, tutorialType }: Props) => {
               ))}
             </div>
             <div className="flex justify-between">
-              <Paginator activeIndex={activeIndex} numDots={slides.length} />
+              <Paginator
+                activeIndex={activeIndex}
+                numDots={slides.length}
+                onDotClick={handleDotClick}
+              />
               <div>
                 <Button
                   variant="text"
