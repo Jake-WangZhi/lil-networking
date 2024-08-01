@@ -16,7 +16,7 @@ export default function MessagePage({
 }: {
   params: { contactId: string };
 }) {
-  const { contact, isLoading, isError } = useContact({
+  const { contactProfile, isLoading, isError } = useContact({
     id: params.contactId,
   });
 
@@ -46,7 +46,7 @@ export default function MessagePage({
     );
   }
 
-  if (!contact) {
+  if (!contactProfile?.contact) {
     return (
       <Typography
         variant="h3"
@@ -64,6 +64,7 @@ export default function MessagePage({
     );
   }
 
+  const { contact } = contactProfile;
   const { firstName, activities, interests } = contact;
 
   return (

@@ -30,9 +30,14 @@ export async function GET(
     ],
   });
 
-  const parsedContacts = parseContact(contact, activities);
+  const user = await prisma.user.findUnique({ where: { id: contact.userId } });
 
-  return NextResponse.json(parsedContacts);
+  const parsedContact = parseContact(contact, activities);
+
+  return NextResponse.json({
+    contact: parsedContact,
+    hasViewedProfileTutorial: user?.hasViewedProfileTutorial,
+  });
 }
 
 export async function DELETE(

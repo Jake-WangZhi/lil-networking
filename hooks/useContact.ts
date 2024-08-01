@@ -6,19 +6,24 @@ type Args = {
   id: string;
 };
 
+type ContactsType = {
+  contact: Contact;
+  hasViewedProfileTutorial: boolean;
+};
+
 export const useContact = ({ id }: Args) => {
   const {
     isLoading,
-    data: contact,
+    data: contactProfile,
     isError,
-  } = useQuery<Contact>({
+  } = useQuery<ContactsType>({
     queryKey: ["contact", id],
     queryFn: () => fetcher(`/contacts/${id}/api`),
     enabled: !!id,
   });
 
   return {
-    contact,
+    contactProfile,
     isLoading,
     isError,
   };
