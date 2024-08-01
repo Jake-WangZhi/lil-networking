@@ -2,6 +2,7 @@ import img1 from "@/public/tutorials/dashboard/add_contacts.png";
 import img3 from "@/public/tutorials/dashboard/priority.png";
 import img2 from "@/public/tutorials/dashboard/stats.png";
 import { TutorialModal } from "./TutorialModal";
+import { TutorialType } from "@/types";
 
 export const DashboardTutorial = () => {
   const slides = [
@@ -27,5 +28,7 @@ export const DashboardTutorial = () => {
     },
   ];
 
-  return <TutorialModal slides={slides} />;
+  return (
+    <TutorialModal slides={slides} tutorialType={TutorialType.Dashboard} />
+  );
 };

@@ -8,7 +8,20 @@ interface Props {
 }
 
 export const TutorialSlide = ({ slide }: Props) => {
-  const containerWidth = Math.floor(useWindowWidth() * 0.9) - 32;
+  const getVisibleWidth = (windowWidth: number) => {
+    if (windowWidth >= 1024) {
+      return 768;
+    } else if (windowWidth >= 768) {
+      return 576;
+    } else {
+      return windowWidth;
+    }
+  };
+
+  const containerWidth =
+    Math.floor(getVisibleWidth(useWindowWidth()) * 0.9) - 32;
+
+  console.log("containerWidth", containerWidth);
 
   return (
     <div className="space-y-2 flex flex-col justify-center items-center">
