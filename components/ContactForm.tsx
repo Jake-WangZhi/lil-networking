@@ -187,7 +187,7 @@ export const ContactForm = ({ contact }: Props) => {
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    "@media (max-width:360px)": {
+                    "@media (max-width:380px)": {
                       fontSize: 14,
                     },
                   }}
@@ -230,7 +230,7 @@ export const ContactForm = ({ contact }: Props) => {
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    "@media (max-width:360px)": {
+                    "@media (max-width:380px)": {
                       fontSize: 14,
                     },
                   }}
@@ -271,7 +271,7 @@ export const ContactForm = ({ contact }: Props) => {
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    "@media (max-width:360px)": {
+                    "@media (max-width:380px)": {
                       fontSize: 14,
                     },
                   }}
@@ -310,7 +310,7 @@ export const ContactForm = ({ contact }: Props) => {
             <Typography
               variant="subtitle1"
               sx={{
-                "@media (max-width:360px)": {
+                "@media (max-width:380px)": {
                   fontSize: 14,
                 },
               }}
@@ -332,7 +332,7 @@ export const ContactForm = ({ contact }: Props) => {
             <Typography
               variant="subtitle1"
               sx={{
-                "@media (max-width:360px)": {
+                "@media (max-width:380px)": {
                   fontSize: 14,
                 },
               }}
@@ -354,7 +354,7 @@ export const ContactForm = ({ contact }: Props) => {
             <Typography
               variant="subtitle1"
               sx={{
-                "@media (max-width:360px)": {
+                "@media (max-width:380px)": {
                   fontSize: 14,
                 },
               }}
@@ -414,7 +414,7 @@ export const ContactForm = ({ contact }: Props) => {
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    "@media (max-width:360px)": {
+                    "@media (max-width:380px)": {
                       fontSize: 14,
                     },
                   }}
@@ -455,7 +455,7 @@ export const ContactForm = ({ contact }: Props) => {
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    "@media (max-width:360px)": {
+                    "@media (max-width:380px)": {
                       fontSize: 14,
                     },
                   }}
@@ -498,7 +498,7 @@ export const ContactForm = ({ contact }: Props) => {
                   <Typography
                     variant="subtitle1"
                     sx={{
-                      "@media (max-width:360px)": {
+                      "@media (max-width:380px)": {
                         fontSize: 14,
                       },
                     }}
