@@ -11,12 +11,13 @@ import Image from "next/image";
 
 export default function SignInPage() {
   const handleLinkedinClick = useCallback(
-    () => signIn("linkedin", { callbackUrl: "/dashboard" }),
+    () =>
+      signIn("linkedin", { callbackUrl: "/dashboard" }, { prompt: "login" }),
     []
   );
 
   const handleGoogleClick = useCallback(
-    () => signIn("google", { callbackUrl: "/dashboard" }),
+    () => signIn("google", { callbackUrl: "/dashboard" }, { prompt: "login" }),
     []
   );
 
