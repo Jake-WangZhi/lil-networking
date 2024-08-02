@@ -11,8 +11,9 @@ import { ContactInfo } from "@/components/ContactInfo";
 import { ContactInterests } from "@/components/ContactInterests";
 import { useEffect, useState } from "react";
 import { ProfileTutorial } from "@/components/ProfileTutorial";
-import { pauseFor } from "@/lib/utils";
+import { handleRefresh, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
+import PullToRefresh from "react-simple-pull-to-refresh";
 
 export default function ContactPage({
   params,
@@ -22,7 +23,7 @@ export default function ContactPage({
   const [showTutorial, setShowTutorial] = useState(false);
   const { isProfileTutorialShown } = useSettings();
 
-  const { contactProfile, isLoading, isError } = useContact({
+  const { contactProfile, isLoading, isError, refetch } = useContact({
     id: params.contactId,
   });
 
@@ -83,10 +84,19 @@ export default function ContactPage({
 
   return (
     <main className="relative min-h-screen pb-8 text-white">
-      <ContactHeader contact={contact} />
-      <ContactInfo contact={contact} />
-      {interests.length !== 0 && <ContactInterests interests={interests} />}
-      <ContactActivites activities={activities} contactId={contact.id} />
+      <PullToRefresh
+        onRefresh={handleRefresh(refetch)}
+        refreshingContent={
+          <ClipLoader color="#38ACE2" size={50} className="mt-5" />
+        }
+      >
+        <>
+          <ContactHeader contact={contact} />
+          <ContactInfo contact={contact} />
+          {interests.length !== 0 && <ContactInterests interests={interests} />}
+          <ContactActivites activities={activities} contactId={contact.id} />
+        </>
+      </PullToRefresh>
       {showTutorial && isProfileTutorialShown && <ProfileTutorial />}
       <NavFooter />
     </main>

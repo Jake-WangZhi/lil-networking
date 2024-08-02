@@ -1,3 +1,4 @@
+import { QueryObserverResult } from "@tanstack/react-query";
 import { parseISO, format, formatISO } from "date-fns";
 import validator from "validator";
 
@@ -90,4 +91,19 @@ export const getVisibleWidth = (windowWidth: number) => {
 
 export const pauseFor = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const handleRefresh = (
+  refetch: () => Promise<QueryObserverResult<any, any>>
+): (() => Promise<any>) => {
+  return async (): Promise<any> => {
+    try {
+      await pauseFor(1000).then(async () => {
+        await refetch();
+      });
+    } catch (error) {
+      console.error("Error during refresh:", error);
+      throw error; // Rethrow the error to maintain proper error handling
+    }
+  };
 };

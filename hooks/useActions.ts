@@ -20,6 +20,7 @@ export const useActions = ({ email }: Args) => {
     isError,
     data: actions,
     isLoading,
+    refetch,
   } = useQuery<ActionType>({
     queryKey: ["actions", email],
     queryFn: () => fetcher(`/dashboard/api?${SearchParams.Email}=${email}`),
@@ -30,5 +31,6 @@ export const useActions = ({ email }: Args) => {
     actions,
     isLoading,
     isError,
+    refetch,
   };
 };

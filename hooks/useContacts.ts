@@ -17,6 +17,7 @@ export const useContacts = ({ userEmail, name }: Args) => {
     isLoading,
     data: contactList,
     isError,
+    refetch,
   } = useQuery<ContactsType>({
     queryKey: ["contacts", userEmail, name],
     queryFn: () =>
@@ -30,5 +31,6 @@ export const useContacts = ({ userEmail, name }: Args) => {
     contactList,
     isLoading,
     isError,
+    refetch,
   };
 };
