@@ -188,7 +188,7 @@ export const ContactForm = ({ contact }: Props) => {
                   variant="subtitle1"
                   sx={{
                     "@media (max-width:380px)": {
-                      fontSize: 14,
+                      fontSize: 13,
                     },
                   }}
                 >
@@ -231,7 +231,7 @@ export const ContactForm = ({ contact }: Props) => {
                   variant="subtitle1"
                   sx={{
                     "@media (max-width:380px)": {
-                      fontSize: 14,
+                      fontSize: 13,
                     },
                   }}
                 >
@@ -272,7 +272,7 @@ export const ContactForm = ({ contact }: Props) => {
                   variant="subtitle1"
                   sx={{
                     "@media (max-width:380px)": {
-                      fontSize: 14,
+                      fontSize: 13,
                     },
                   }}
                 >
@@ -311,7 +311,7 @@ export const ContactForm = ({ contact }: Props) => {
               variant="subtitle1"
               sx={{
                 "@media (max-width:380px)": {
-                  fontSize: 14,
+                  fontSize: 13,
                 },
               }}
             >
@@ -333,7 +333,7 @@ export const ContactForm = ({ contact }: Props) => {
               variant="subtitle1"
               sx={{
                 "@media (max-width:380px)": {
-                  fontSize: 14,
+                  fontSize: 13,
                 },
               }}
             >
@@ -414,8 +414,8 @@ export const ContactForm = ({ contact }: Props) => {
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    "@media (max-width:390px)": {
-                      fontSize: 14,
+                    "@media (max-width:380px)": {
+                      fontSize: 13,
                     },
                   }}
                 >
@@ -456,7 +456,7 @@ export const ContactForm = ({ contact }: Props) => {
                   variant="subtitle1"
                   sx={{
                     "@media (max-width:380px)": {
-                      fontSize: 14,
+                      fontSize: 13,
                     },
                   }}
                 >
@@ -499,7 +499,7 @@ export const ContactForm = ({ contact }: Props) => {
                     variant="subtitle1"
                     sx={{
                       "@media (max-width:380px)": {
-                        fontSize: 14,
+                        fontSize: 13,
                       },
                     }}
                   >
