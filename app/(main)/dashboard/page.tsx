@@ -15,8 +15,12 @@ import { DashboardTutorial } from "@/components/DashboardTutorial";
 import { useWindowHeight, useWindowWidth } from "@react-hook/window-size";
 import { getVisibleWidth, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
+import PullToRefresh from "react-simple-pull-to-refresh";
+import { useRouter } from "next/router";
 
 export default function DashboardPage() {
+  const router = useRouter();
+
   const { email, name } = useUser();
   const { actions, isLoading, isError } = useActions({
     email,
@@ -54,32 +58,42 @@ export default function DashboardPage() {
   const visbleWidth = getVisibleWidth(useWindowWidth());
   const visibleHeight = useWindowHeight();
 
+  const handleRefresh = (): Promise<void> => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        router.reload();
+      }, 1500);
+    });
+  };
+
   return (
-    <main className="relative flex flex-col items-center text-white px-4">
-      <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
-        <div className="flex justify-between items-center">
-          <Typography variant="h1">Hi, {name?.split(" ")[0]}!</Typography>
-          <div className="flex items-center space-x-2">
-            <InfoTooltipButton />
-            <AddContactTooltipButton
-              hasContacts={actions?.hasContacts}
-              hasShownTutorial={actions?.hasViewedDashboardTutorial}
-            />
+    <PullToRefresh onRefresh={handleRefresh}>
+      <main className="relative flex flex-col items-center text-white px-4">
+        <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
+          <div className="flex justify-between items-center">
+            <Typography variant="h1">Hi, {name?.split(" ")[0]}!</Typography>
+            <div className="flex items-center space-x-2">
+              <InfoTooltipButton />
+              <AddContactTooltipButton
+                hasContacts={actions?.hasContacts}
+                hasShownTutorial={actions?.hasViewedDashboardTutorial}
+              />
+            </div>
           </div>
+          <GoalSummary isMeetGoals={actions?.isMeetGoals} />
         </div>
-        <GoalSummary isMeetGoals={actions?.isMeetGoals} />
-      </div>
-      {actions?.showConfetti && (
-        <Confetti
-          width={visbleWidth}
-          height={visibleHeight}
-          style={{ zIndex: "20" }}
-          recycle={false}
-        />
-      )}
-      <ActionList actions={actions} isLoading={isLoading} isError={isError} />
-      <NavFooter />
-      {showTutorial && isDashboardTutorialShown && <DashboardTutorial />}
-    </main>
+        {actions?.showConfetti && (
+          <Confetti
+            width={visbleWidth}
+            height={visibleHeight}
+            style={{ zIndex: "20" }}
+            recycle={false}
+          />
+        )}
+        <ActionList actions={actions} isLoading={isLoading} isError={isError} />
+        <NavFooter />
+        {showTutorial && isDashboardTutorialShown && <DashboardTutorial />}
+      </main>
+    </PullToRefresh>
   );
 }
