@@ -82,21 +82,32 @@ export default function ContactPage({
   const { contact } = contactProfile;
   const { interests, activities } = contact;
 
+  const renderProfile = () => {
+    return (
+      <>
+        <ContactHeader contact={contact} />
+        <ContactInfo contact={contact} />
+        {interests.length !== 0 && <ContactInterests interests={interests} />}
+        <ContactActivites activities={activities} contactId={contact.id} />
+      </>
+    );
+  };
+
   return (
     <main className="relative min-h-screen pb-8 text-white">
-      <PullToRefresh
-        onRefresh={handleRefresh(refetch)}
-        refreshingContent={
-          <ClipLoader color="#38ACE2" size={50} className="mt-5" />
-        }
-      >
-        <>
-          <ContactHeader contact={contact} />
-          <ContactInfo contact={contact} />
-          {interests.length !== 0 && <ContactInterests interests={interests} />}
-          <ContactActivites activities={activities} contactId={contact.id} />
-        </>
-      </PullToRefresh>
+      {isLoading ? (
+        renderProfile()
+      ) : (
+        <PullToRefresh
+          onRefresh={handleRefresh(refetch)}
+          resistance={3}
+          refreshingContent={
+            <ClipLoader color="#38ACE2" size={50} className="mt-5" />
+          }
+        >
+          {renderProfile()}
+        </PullToRefresh>
+      )}
       {showTutorial && isProfileTutorialShown && <ProfileTutorial />}
       <NavFooter />
     </main>

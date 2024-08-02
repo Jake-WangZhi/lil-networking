@@ -27,7 +27,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
       h1: {
         fontSize: 33,
         fontWeight: 600,
-        lineHeight: "40px",
+        lineHeight: "48px",
         color: "white",
         "@media (min-width:768px)": {
           fontSize: 40,
