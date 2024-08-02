@@ -67,7 +67,9 @@ export default function ContactsPage() {
         <PullToRefresh
           onRefresh={handleRefresh(refetch)}
           resistance={3}
-          refreshingContent={<ClipLoader color="#38ACE2" size={50} />}
+          refreshingContent={
+            <ClipLoader color="#38ACE2" size={50} className="mt-5" />
+          }
         >
           {renderContacts()}
         </PullToRefresh>
