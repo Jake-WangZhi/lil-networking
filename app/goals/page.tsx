@@ -127,7 +127,7 @@ export default function GoalsPage() {
 
   return (
     <main
-      className={`relative px-8 py-8 ${
+      className={`relative px-8 ${
         isNavigatingBack
           ? "animate-slide-out-bottom"
           : "animate-slide-in-bottom"
