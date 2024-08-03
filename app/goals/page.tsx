@@ -17,6 +17,7 @@ import { event } from "nextjs-google-analytics";
 import { X, Lightning } from "@phosphor-icons/react";
 
 import "swiper/css";
+import { pauseFor } from "@/lib/utils";
 
 export default function GoalsPage() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function GoalsPage() {
   const [goalConnections, setGoalConnections] = useState(2);
   const [goalMessages, setGoalMessages] = useState(2);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isNavigatingBack, setIsNavigatingBack] = useState(false);
 
   const postGoalsMutation = useGoalsMutation({
     method: "POST",
@@ -119,11 +121,19 @@ export default function GoalsPage() {
   }, []);
 
   const handleBackClick = useCallback(() => {
-    router.back();
+    setIsNavigatingBack(true);
+    pauseFor(1000).then(() => router.back());
   }, [router]);
 
   return (
-    <main className="relative px-8 py-8">
+    <main
+      className={`relative px-8 py-8 ${
+        isNavigatingBack
+          ? "animate-slide-out-bottom"
+          : "animate-slide-in-bottom"
+      }`}
+      onAnimationEnd={() => setIsNavigatingBack(false)}
+    >
       <Button
         variant="text"
         onClick={handleBackClick}
