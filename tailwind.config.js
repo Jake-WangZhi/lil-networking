@@ -33,10 +33,36 @@ module.exports = {
         "medium-overlay": "#2C353E",
         "low-overlay": "#1B252F",
         "supporting-text": "#BBBEC1",
-        "primary-yellow":"#FDB913"
+        "primary-yellow": "#FDB913",
       },
       screens: {
         xs: "400px",
+      },
+      animation: {
+        "slide-in-bottom": "slideInBottom 1s ease-out",
+        "slide-out-bottom": "slideOutBottom 1s ease-in",
+      },
+      keyframes: {
+        slideInBottom: {
+          "0%": {
+            transform: "translateY(100%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        },
+        slideOutBottom: {
+          "0%": {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+          "100%": {
+            transform: "translateY(100%)",
+            opacity: "0",
+          },
+        },
       },
     },
   },

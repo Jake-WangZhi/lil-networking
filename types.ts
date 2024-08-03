@@ -63,7 +63,6 @@ export enum ActivityType {
 }
 
 export interface GoalsArgs {
-  networkingComfortLevel?: number;
   goalConnections: number;
   goalMessages: number;
 }
