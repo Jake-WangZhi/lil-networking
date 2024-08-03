@@ -10,6 +10,7 @@ type Props = {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   sx?: {};
   type?: "button" | "submit" | "reset";
+  turnOffRipple?: boolean;
 };
 
 const VARIANTS: Record<string, {}> = {
@@ -73,6 +74,7 @@ export const Button = ({
   onClick,
   sx = {},
   type = "button",
+  turnOffRipple = false,
 }: Props) => {
   return (
     <MuiButton
@@ -93,6 +95,7 @@ export const Button = ({
         ...VARIANTS[variant],
         ...sx,
       }}
+      disableRipple={turnOffRipple}
     >
       {children}
     </MuiButton>

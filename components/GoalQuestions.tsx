@@ -116,6 +116,7 @@ export const GoalQuestions = ({
             }}
             onClick={handleCustomClick}
             disabled={isDisabled}
+            turnOffRipple={isCustomInput}
           >
             {isCustomInput ? (
               <div className="bg-dark-blue">
