@@ -39,8 +39,8 @@ module.exports = {
         xs: "400px",
       },
       animation: {
-        "slide-in-bottom": "slideInBottom 1s ease-out",
-        "slide-out-bottom": "slideOutBottom 1s ease-in",
+        "slide-in-bottom": "slideInBottom 0.5s ease-out",
+        "slide-out-bottom": "slideOutBottom 0.5s ease-in",
       },
       keyframes: {
         slideInBottom: {
