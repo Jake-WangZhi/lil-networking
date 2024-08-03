@@ -118,9 +118,17 @@ export default function GoalsPage() {
     setProgress((prev) => prev - 1);
   }, []);
 
+  const handleBackClick = useCallback(() => {
+    router.back();
+  }, [router]);
+
   return (
     <main className="relative px-8 py-8">
-      <Button variant="text" sx={{ px: "12px", ml: "-12px", mb: "4px" }}>
+      <Button
+        variant="text"
+        onClick={handleBackClick}
+        sx={{ px: "12px", ml: "-12px", mb: "4px" }}
+      >
         <X className="text-2xl md:text-3xl lg:text-4xl" />
       </Button>
       <ProgressBar
