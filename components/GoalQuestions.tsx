@@ -42,9 +42,9 @@ export const GoalQuestions = ({
   );
 
   const handleCustomClick = useCallback(() => {
-    setValue(0);
+    setValue(selectedValue);
     setIsCustomInput(true);
-  }, [setValue]);
+  }, [selectedValue, setValue]);
 
   useEffect(() => {
     if (isCustomInput && inputRef.current) {
