@@ -184,7 +184,16 @@ export const ContactForm = ({ contact }: Props) => {
           <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
-                <Typography variant="subtitle1">First *</Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    "@media (max-width:380px)": {
+                      fontSize: 13,
+                    },
+                  }}
+                >
+                  First *
+                </Typography>
               </Grid>
               <Grid item xs={9}>
                 <input
@@ -218,7 +227,16 @@ export const ContactForm = ({ contact }: Props) => {
           <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
-                <Typography variant="subtitle1">Last *</Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    "@media (max-width:380px)": {
+                      fontSize: 13,
+                    },
+                  }}
+                >
+                  Last *
+                </Typography>
               </Grid>
               <Grid item xs={9}>
                 <input
@@ -250,7 +268,16 @@ export const ContactForm = ({ contact }: Props) => {
           <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
-                <Typography variant="subtitle1">Industry *</Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    "@media (max-width:380px)": {
+                      fontSize: 13,
+                    },
+                  }}
+                >
+                  Industry *
+                </Typography>
               </Grid>
               <Grid item xs={9}>
                 <input
@@ -280,7 +307,16 @@ export const ContactForm = ({ contact }: Props) => {
           </Grid>
 
           <Grid item xs={3}>
-            <Typography variant="subtitle1">Title</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                "@media (max-width:380px)": {
+                  fontSize: 13,
+                },
+              }}
+            >
+              Title
+            </Typography>
           </Grid>
           <Grid item xs={9}>
             <input
@@ -293,7 +329,16 @@ export const ContactForm = ({ contact }: Props) => {
           </Grid>
 
           <Grid item xs={3}>
-            <Typography variant="subtitle1">Company</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                "@media (max-width:380px)": {
+                  fontSize: 13,
+                },
+              }}
+            >
+              Company
+            </Typography>
           </Grid>
           <Grid item xs={9}>
             <input
@@ -306,7 +351,16 @@ export const ContactForm = ({ contact }: Props) => {
           </Grid>
 
           <Grid item xs={3}>
-            <Typography variant="subtitle1">Cadence *</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                "@media (max-width:380px)": {
+                  fontSize: 13,
+                },
+              }}
+            >
+              Cadence *
+            </Typography>
           </Grid>
           <Grid
             item
@@ -357,7 +411,16 @@ export const ContactForm = ({ contact }: Props) => {
           <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
-                <Typography variant="subtitle1">Email</Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    "@media (max-width:380px)": {
+                      fontSize: 13,
+                    },
+                  }}
+                >
+                  Email
+                </Typography>
               </Grid>
               <Grid item xs={9}>
                 <input
@@ -389,7 +452,16 @@ export const ContactForm = ({ contact }: Props) => {
           <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
-                <Typography variant="subtitle1">Phone</Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    "@media (max-width:380px)": {
+                      fontSize: 13,
+                    },
+                  }}
+                >
+                  Phone
+                </Typography>
               </Grid>
               <Grid item xs={9}>
                 <input
@@ -423,7 +495,14 @@ export const ContactForm = ({ contact }: Props) => {
             <Grid item xs={12} key={`link-${index}`}>
               <Grid container alignItems="center">
                 <Grid item xs={3}>
-                  <Typography variant="subtitle1">
+                  <Typography
+                    variant="subtitle1"
+                    sx={{
+                      "@media (max-width:380px)": {
+                        fontSize: 13,
+                      },
+                    }}
+                  >
                     {index === 0 && "LinkedIn"}
                   </Typography>
                 </Grid>
