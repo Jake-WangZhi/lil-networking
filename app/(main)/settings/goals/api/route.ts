@@ -21,12 +21,11 @@ export async function POST(request: Request) {
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
-  const { networkingComfortLevel, goalConnections, goalMessages } = goalsArgs;
+  const { goalConnections, goalMessages } = goalsArgs;
 
   const newGoals = await prisma.goals.create({
     data: {
       userId: user.id,
-      networkingComfortLevel: networkingComfortLevel ?? 1,
       goalConnections,
       goalMessages,
     },

@@ -92,14 +92,13 @@ model Goals {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  networkingComfortLevel Int
-  goalConnections        Int
-  goalMessages           Int
-  connections            Int     @default(0)
-  messages               Int     @default(0)
-  streak                 Int     @default(0)
-  highestStreak          Int     @default(0)
-  hasShownConfetti       Boolean @default(false)
+  goalConnections  Int
+  goalMessages     Int
+  connections      Int     @default(0)
+  messages         Int     @default(0)
+  streak           Int     @default(0)
+  highestStreak    Int     @default(0)
+  hasShownConfetti Boolean @default(false)
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
