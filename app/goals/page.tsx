@@ -1,5 +1,6 @@
 "use client";
 
+import "./styles.css";
 import { Typography } from "@mui/material";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { GoalQuestions } from "@/components/GoalQuestions";
 import { SearchParams } from "@/types";
 import { event } from "nextjs-google-analytics";
+import { X, Lightning } from "@phosphor-icons/react";
 
 import "swiper/css";
 
@@ -24,7 +26,6 @@ export default function GoalsPage() {
   const swiperRef = useRef<SwiperRef>();
 
   const [progress, setProgress] = useState(0);
-  const [networkingComfortLevel, setNetworkingComfortLevel] = useState(1);
   const [goalConnections, setGoalConnections] = useState(2);
   const [goalMessages, setGoalMessages] = useState(2);
   const [errorMessage, setErrorMessage] = useState("");
@@ -53,44 +54,19 @@ export default function GoalsPage() {
     () =>
       postGoalsMutation.mutate({
         goalsArgs: {
-          networkingComfortLevel,
           goalConnections,
           goalMessages,
         },
         email: session?.user?.email || "",
       }),
-    [
-      goalConnections,
-      goalMessages,
-      networkingComfortLevel,
-      postGoalsMutation,
-      session?.user?.email,
-    ]
+    [goalConnections, goalMessages, postGoalsMutation, session?.user?.email]
   );
 
   const GOAL_QUESTIONS = useMemo(
     () => [
       {
-        title: "How comfortable are you with networking?",
-        setValue: setNetworkingComfortLevel,
-        selectedValue: networkingComfortLevel,
-        buttonContents: [
-          {
-            label: "Beginner",
-            value: 1,
-          },
-          {
-            label: "Advanced",
-            value: 2,
-          },
-          {
-            label: "Power networker",
-            value: 3,
-          },
-        ],
-      },
-      {
-        title: "How many new contacts do you want to make per month?",
+        title: "Contacts",
+        description: "How many new contacts do you want to make per month?",
         setValue: setGoalConnections,
         selectedValue: goalConnections,
         buttonContents: [
@@ -109,7 +85,8 @@ export default function GoalsPage() {
         ],
       },
       {
-        title: "How many contacts do you want to reach out to per month?",
+        title: "Messages",
+        description: "How many messages do you want to reach out to per month?",
         setValue: setGoalMessages,
         selectedValue: goalMessages,
         buttonContents: [
@@ -128,7 +105,7 @@ export default function GoalsPage() {
         ],
       },
     ],
-    [goalConnections, goalMessages, networkingComfortLevel]
+    [goalConnections, goalMessages]
   );
 
   const handleNextClick = useCallback(() => {
@@ -143,7 +120,14 @@ export default function GoalsPage() {
 
   return (
     <main className="relative px-8 py-8">
-      <ProgressBar title={"Goal"} progress={progress} />
+      <Button variant="text" sx={{ px: "12px", ml: "-12px", mb: "4px" }}>
+        <X className="text-2xl md:text-3xl lg:text-4xl" />
+      </Button>
+      <ProgressBar
+        title={"Goal"}
+        progress={progress}
+        stepCount={GOAL_QUESTIONS.length + 1}
+      />
       <div className="px-4">
         <Swiper
           allowTouchMove={false}
@@ -151,11 +135,15 @@ export default function GoalsPage() {
           onSwiper={(swiper) => (swiperRef.current = swiper)}
         >
           {GOAL_QUESTIONS.map(
-            ({ title, selectedValue, setValue, buttonContents }, index) => {
+            (
+              { title, description, selectedValue, setValue, buttonContents },
+              index
+            ) => {
               return (
                 <SwiperSlide key={`question-${index}`}>
                   <GoalQuestions
                     title={title}
+                    description={description}
                     setValue={setValue}
                     selectedValue={selectedValue}
                     buttonContents={buttonContents}
@@ -165,20 +153,23 @@ export default function GoalsPage() {
             }
           )}
           <SwiperSlide>
-            <div className="mt-60 flex flex-col justify-center items-center">
+            <div className="mt-20 flex flex-col justify-center items-center">
               {errorMessage && (
                 <Typography variant="subtitle2">{errorMessage}</Typography>
               )}
-              <div className="mb-6 space-y-2">
-                <Typography
-                  variant="h2"
-                  sx={{ fontWeight: 600, textAlign: "center" }}
-                >
-                  You’re all set to connect!
-                </Typography>
-                <Typography variant="body1" sx={{ textAlign: "center" }}>
-                  you can edit your goals at any time.
-                </Typography>
+              <div className="mb-6 space-y-12 flex flex-col justify-center items-center">
+                <Lightning className="text-primary-yellow text-[86px] md:text-[90px] lg:text-[94px]" />
+                <div className="text-center space-y-4 flex flex-col items-center">
+                  <div className="space-y-2 w-56 md:w-60 lg:w-64">
+                    <Typography variant="h2">Maintain Your Streak</Typography>
+                    <Typography variant="body1">
+                      Increase your streak by meeting your monthly goals!
+                    </Typography>
+                  </div>
+                  <Typography variant="body1">
+                    you can edit your goals at any time
+                  </Typography>
+                </div>
               </div>
               <div className="space-y-4">
                 <div className="flex justify-center">
@@ -204,7 +195,7 @@ export default function GoalsPage() {
               </div>
             </div>
           </SwiperSlide>
-          {progress !== 3 && (
+          {progress !== 2 && (
             <div className="flex justify-between items-center">
               <div>
                 {progress !== 0 && (
