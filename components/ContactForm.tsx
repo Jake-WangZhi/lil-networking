@@ -34,8 +34,6 @@ export const ContactForm = ({ contact }: Props) => {
   const [tags, setTags] = useState<string[]>(contact?.interests ?? []);
 
   const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-  const [industryError, setIndustryError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -68,23 +66,11 @@ export const ContactForm = ({ contact }: Props) => {
     let hasError = false;
 
     setFirstNameError("");
-    setLastNameError("");
-    setIndustryError("");
     setEmailError("");
     setPhoneError("");
 
     if (!firstName) {
       setFirstNameError("Required field");
-      hasError = true;
-    }
-
-    if (!lastName) {
-      setLastNameError("Required field");
-      hasError = true;
-    }
-
-    if (!industry) {
-      setIndustryError("Required field");
       hasError = true;
     }
 
@@ -109,7 +95,7 @@ export const ContactForm = ({ contact }: Props) => {
     } else {
       setIsSaving(false);
     }
-  }, [firstName, lastName, industry, email, phone, contact, userEmail]);
+  }, [firstName, email, phone, contact, userEmail]);
 
   const handleBackClick = useCallback(() => router.back(), [router]);
 
@@ -196,7 +182,7 @@ export const ContactForm = ({ contact }: Props) => {
                   First *
                 </Typography>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={9} sx={{ paddingLeft: "4px" }}>
                 <input
                   type="text"
                   id="firstName"
@@ -225,86 +211,48 @@ export const ContactForm = ({ contact }: Props) => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12}>
-            <Grid container alignItems="center" rowSpacing={"4px"}>
-              <Grid item xs={3}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    "@media (max-width:380px)": {
-                      fontSize: 13,
-                    },
-                  }}
-                >
-                  Last *
-                </Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={3} />
-              <Grid item xs={9}>
-                {lastNameError && (
-                  <div className=" flex items-center space-x-1">
-                    <AlertTriangle
-                      size={16}
-                      fill="#F42010"
-                      color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
-                    />
-                    <Typography variant="subtitle2">{lastNameError}</Typography>
-                  </div>
-                )}
-              </Grid>
-            </Grid>
+          <Grid item xs={3}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                "@media (max-width:380px)": {
+                  fontSize: 13,
+                },
+              }}
+            >
+              Last
+            </Typography>
+          </Grid>
+          <Grid item xs={9}>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
           </Grid>
 
-          <Grid item xs={12}>
-            <Grid container alignItems="center" rowSpacing={"4px"}>
-              <Grid item xs={3}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    "@media (max-width:380px)": {
-                      fontSize: 13,
-                    },
-                  }}
-                >
-                  Industry *
-                </Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <input
-                  type="text"
-                  id="industry"
-                  name="industry"
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={3} />
-              <Grid item xs={9}>
-                {industryError && (
-                  <div className=" flex items-center space-x-1">
-                    <AlertTriangle
-                      size={16}
-                      fill="#F42010"
-                      color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
-                    />
-                    <Typography variant="subtitle2">{industryError}</Typography>
-                  </div>
-                )}
-              </Grid>
-            </Grid>
+          <Grid item xs={3}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                "@media (max-width:380px)": {
+                  fontSize: 13,
+                },
+              }}
+            >
+              Industry
+            </Typography>
+          </Grid>
+          <Grid item xs={9}>
+            <input
+              type="text"
+              id="industry"
+              name="industry"
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
+            />
           </Grid>
 
           <Grid item xs={3}>
@@ -360,7 +308,7 @@ export const ContactForm = ({ contact }: Props) => {
                 },
               }}
             >
-              Cadence *
+              Reminder *
             </Typography>
           </Grid>
           <Grid
@@ -589,18 +537,17 @@ export const ContactForm = ({ contact }: Props) => {
             }}
           >
             <Typography variant="h3" sx={{ fontWeight: 600 }}>
-              Interests
+              Tags
             </Typography>
           </Grid>
 
           <Grid item xs={12}>
             <div className="space-y-1">
               <Typography variant="subtitle1">
-                What are their interests?
+                Add tags to remember important details
               </Typography>
               <Typography variant="body1">
-                Taking note of your contacts interests will help you build more
-                impactful conversations
+                Interests, Industries, notes, priorities, etc.
               </Typography>
             </div>
           </Grid>
