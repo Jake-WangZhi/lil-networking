@@ -126,6 +126,34 @@ export const ContactForm = ({ contact }: Props) => {
 
   const handleBackClick = useCallback(() => router.back(), [router]);
 
+  useEffect(() => {
+    if (firstNameError) {
+      firstName && setFirstNameError("");
+    }
+    if (linkedInError) {
+      ((linkedIn && isValidLinkedInUrl(linkedIn)) || !linkedIn) &&
+        setLinkedInError("");
+    }
+    if (emailError) {
+      (email && validator.isEmail(email)) || (!email && setEmailError(""));
+    }
+    if (phoneError) {
+      (phone &&
+        validator.isLength(phone, { min: 10, max: 10 }) &&
+        validator.isMobilePhone(phone, "en-US")) ||
+        (!phone && setPhoneError(""));
+    }
+  }, [
+    email,
+    emailError,
+    firstName,
+    firstNameError,
+    linkedIn,
+    linkedInError,
+    phone,
+    phoneError,
+  ]);
+
   return (
     <main className="relative flex flex-col items-center text-white pb-8">
       {/* @ts-expect-error Async Server Component */}
@@ -216,13 +244,18 @@ export const ContactForm = ({ contact }: Props) => {
                   name="firstName"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  style={{
+                    ...(firstNameError && {
+                      border: "1px solid #FB5913",
+                    }),
+                  }}
                 />
               </Grid>
 
               <Grid item xs={3} />
               <Grid item xs={9}>
                 {firstNameError && (
-                  <div className="flex items-center space-x-1">
+                  <div className="mt-1 flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
                       fill="#FB5913"
@@ -405,6 +438,11 @@ export const ContactForm = ({ contact }: Props) => {
                   name="linkedIn"
                   value={linkedIn}
                   onChange={(e) => setLinkedIn(e.target.value)}
+                  style={{
+                    ...(linkedInError && {
+                      border: "1px solid #FB5913",
+                    }),
+                  }}
                 />
               </Grid>
 
@@ -446,6 +484,11 @@ export const ContactForm = ({ contact }: Props) => {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    ...(emailError && {
+                      border: "1px solid #FB5913",
+                    }),
+                  }}
                 />
               </Grid>
 
@@ -488,6 +531,11 @@ export const ContactForm = ({ contact }: Props) => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   autoComplete="tel"
+                  style={{
+                    ...(phoneError && {
+                      border: "1px solid #FB5913",
+                    }),
+                  }}
                 />
               </Grid>
 
