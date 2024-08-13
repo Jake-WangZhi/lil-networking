@@ -270,7 +270,7 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={3} />
               <Grid item xs={9}>
                 {firstNameError && (
-                  <div className="mt-1 flex items-center space-x-1">
+                  <div className="flex items-center space-x-1 mt-1">
                     <Warning
                       size={16}
                       fill="#FB5913"
@@ -508,7 +508,7 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={3} />
               <Grid item xs={9}>
                 {emailError && (
-                  <div className=" flex items-center space-x-1">
+                  <div className="flex items-center space-x-1  mt-1">
                     <Warning
                       size={16}
                       fill="#FB5913"
@@ -554,7 +554,7 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={3} />
               <Grid item xs={9}>
                 {phoneError && (
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-1 mt-1">
                     <Warning
                       size={16}
                       fill="#FB5913"
@@ -601,7 +601,7 @@ export const ContactForm = ({ contact }: Props) => {
                 <Grid item xs={3} />
                 <Grid item xs={9}>
                   {linkError && link && !validator.isURL(link) && (
-                    <div className="mt-1 flex items-center space-x-1">
+                    <div className="flex items-center space-x-1 mt-2">
                       <Warning
                         size={16}
                         fill="#FB5913"
