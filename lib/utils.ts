@@ -121,12 +121,12 @@ export const getActionType = (lastActivity: Activity, goalDays: number) => {
   const days = differenceInDays(new Date(), lastActivity.date);
   const isUserActivity = lastActivity.type === ActivityType.User;
 
-  const pastDueThreshold = isUserActivity ? goalDays : 0;
+  const priorityDueThreshold = isUserActivity ? goalDays : 0;
   const upcomingThreshold = goalDays + DAYS_BEFORE_PAST_DUE;
 
   if (days > upcomingThreshold) {
-    return ActionType.Past;
-  } else if (pastDueThreshold <= days && days <= upcomingThreshold) {
+    return ActionType.Priority;
+  } else if (priorityDueThreshold <= days && days <= upcomingThreshold) {
     return ActionType.Upcoming;
   } else {
     return "";

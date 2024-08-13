@@ -12,7 +12,7 @@ export interface Action {
 }
 
 export enum ActionType {
-  Past = "past",
+  Priority = "priority",
   Upcoming = "upcoming",
 }
 

@@ -87,7 +87,7 @@ export async function GET(request: Request) {
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {
-  const pastActions: Array<Action> = [];
+  const priorityActions: Array<Action> = [];
   const upcomingActions: Array<Action> = [];
 
   const contactIndex: Record<string, Contact> = {};
@@ -116,13 +116,13 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
 
       const type = getActionType(activity, goalDays);
 
-      if (type === ActionType.Past) {
-        pastActions.push(action);
+      if (type === ActionType.Priority) {
+        priorityActions.push(action);
       } else if (type === ActionType.Upcoming) {
         upcomingActions.push(action);
       }
     }
   }
 
-  return { pastActions, upcomingActions };
+  return { priorityActions, upcomingActions };
 };
