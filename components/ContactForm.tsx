@@ -1,6 +1,6 @@
 import { Typography, Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
@@ -9,6 +9,7 @@ import TagsInput from "react-tagsinput";
 import { upsertContact } from "@/app/_actions";
 import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
+import { isValidLinkedInUrl } from "@/lib/utils";
 
 interface Props {
   contact?: Contact;
@@ -26,18 +27,39 @@ export const ContactForm = ({ contact }: Props) => {
   const [industry, setIndustry] = useState(contact?.industry);
   const [email, setEmail] = useState(contact?.email);
   const [phone, setPhone] = useState(contact?.phone);
-  const [links, setLinks] = useState<string[]>(contact?.links ?? [""]);
+  const [linkedIn, setLinkedIn] = useState(contact?.linkedIn);
+  const [links, setLinks] = useState<string[]>(contact?.links ?? []);
   const [selectedGoalDays, setSelectedGoalDays] = useState(
     contact?.goalDays ?? 30
   );
   const [tags, setTags] = useState<string[]>(contact?.interests ?? []);
+  const [history, setHistory] = useState(contact?.history);
 
   const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-  const [industryError, setIndustryError] = useState("");
+  const [linkedInError, setLinkedInError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [linkError, setLinkError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    const adjustHeight = () => {
+      if (textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      }
+    };
+
+    adjustHeight();
+
+    window.addEventListener("resize", adjustHeight);
+    return () => {
+      window.removeEventListener("resize", adjustHeight);
+    };
+  }, [history]);
 
   const handleChange = useCallback((tags: string[]) => {
     setTags(tags);
@@ -67,28 +89,21 @@ export const ContactForm = ({ contact }: Props) => {
     let hasError = false;
 
     setFirstNameError("");
-    setLastNameError("");
-    setIndustryError("");
     setEmailError("");
     setPhoneError("");
 
     if (!firstName) {
-      setFirstNameError("Required field");
+      setFirstNameError("Required Field");
       hasError = true;
     }
 
-    if (!lastName) {
-      setLastNameError("Required field");
-      hasError = true;
-    }
-
-    if (!industry) {
-      setIndustryError("Required field");
+    if (linkedIn && !isValidLinkedInUrl(linkedIn)) {
+      setLinkedInError("Invalid LinkedIn Link");
       hasError = true;
     }
 
     if (email && !validator.isEmail(email)) {
-      setEmailError("Invalid entry");
+      setEmailError("Invalid Email");
       hasError = true;
     }
 
@@ -97,7 +112,12 @@ export const ContactForm = ({ contact }: Props) => {
       (!validator.isLength(phone, { min: 10, max: 10 }) ||
         !validator.isMobilePhone(phone, "en-US"))
     ) {
-      setPhoneError("Invalid entry");
+      setPhoneError("Invalid Phone Number");
+      hasError = true;
+    }
+
+    if (links.some((link) => link && !validator.isURL(link))) {
+      setLinkError("Invalid Link");
       hasError = true;
     }
 
@@ -108,9 +128,46 @@ export const ContactForm = ({ contact }: Props) => {
     } else {
       setIsSaving(false);
     }
-  }, [firstName, lastName, industry, email, phone, contact, userEmail]);
+  }, [firstName, linkedIn, email, phone, links, contact, userEmail]);
 
   const handleBackClick = useCallback(() => router.back(), [router]);
+
+  useEffect(() => {
+    if (firstNameError) {
+      firstName && setFirstNameError("");
+    }
+    if (linkedInError) {
+      ((linkedIn && isValidLinkedInUrl(linkedIn)) || !linkedIn) &&
+        setLinkedInError("");
+    }
+    if (emailError) {
+      (email && validator.isEmail(email)) || (!email && setEmailError(""));
+    }
+    if (phoneError) {
+      (phone &&
+        validator.isLength(phone, { min: 10, max: 10 }) &&
+        validator.isMobilePhone(phone, "en-US")) ||
+        (!phone && setPhoneError(""));
+    }
+    if (linkError) {
+      links.forEach((link) => {
+        if (link && !validator.isURL(link)) {
+          setLinkError("Invalid Link");
+        }
+      });
+    }
+  }, [
+    email,
+    emailError,
+    firstName,
+    firstNameError,
+    linkError,
+    linkedIn,
+    linkedInError,
+    links,
+    phone,
+    phoneError,
+  ]);
 
   return (
     <main className="relative flex flex-col items-center text-white pb-8">
@@ -195,25 +252,30 @@ export const ContactForm = ({ contact }: Props) => {
                   First *
                 </Typography>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={9} sx={{ paddingLeft: "4px" }}>
                 <input
                   type="text"
                   id="firstName"
                   name="firstName"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  style={{
+                    ...(firstNameError && {
+                      border: "1px solid #FB5913",
+                    }),
+                  }}
                 />
               </Grid>
 
               <Grid item xs={3} />
               <Grid item xs={9}>
                 {firstNameError && (
-                  <div className=" flex items-center space-x-1">
+                  <div className="mt-1 flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      className="-mt-0.5 ml-1 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">
                       {firstNameError}
@@ -224,86 +286,48 @@ export const ContactForm = ({ contact }: Props) => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12}>
-            <Grid container alignItems="center" rowSpacing={"4px"}>
-              <Grid item xs={3}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    "@media (max-width:380px)": {
-                      fontSize: 13,
-                    },
-                  }}
-                >
-                  Last *
-                </Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={3} />
-              <Grid item xs={9}>
-                {lastNameError && (
-                  <div className=" flex items-center space-x-1">
-                    <AlertTriangle
-                      size={16}
-                      fill="#F42010"
-                      color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
-                    />
-                    <Typography variant="subtitle2">{lastNameError}</Typography>
-                  </div>
-                )}
-              </Grid>
-            </Grid>
+          <Grid item xs={3}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                "@media (max-width:380px)": {
+                  fontSize: 13,
+                },
+              }}
+            >
+              Last
+            </Typography>
+          </Grid>
+          <Grid item xs={9}>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
           </Grid>
 
-          <Grid item xs={12}>
-            <Grid container alignItems="center" rowSpacing={"4px"}>
-              <Grid item xs={3}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    "@media (max-width:380px)": {
-                      fontSize: 13,
-                    },
-                  }}
-                >
-                  Industry *
-                </Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <input
-                  type="text"
-                  id="industry"
-                  name="industry"
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={3} />
-              <Grid item xs={9}>
-                {industryError && (
-                  <div className=" flex items-center space-x-1">
-                    <AlertTriangle
-                      size={16}
-                      fill="#F42010"
-                      color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
-                    />
-                    <Typography variant="subtitle2">{industryError}</Typography>
-                  </div>
-                )}
-              </Grid>
-            </Grid>
+          <Grid item xs={3}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                "@media (max-width:380px)": {
+                  fontSize: 13,
+                },
+              }}
+            >
+              Industry
+            </Typography>
+          </Grid>
+          <Grid item xs={9}>
+            <input
+              type="text"
+              id="industry"
+              name="industry"
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
+            />
           </Grid>
 
           <Grid item xs={3}>
@@ -359,7 +383,7 @@ export const ContactForm = ({ contact }: Props) => {
                 },
               }}
             >
-              Cadence *
+              Reminder *
             </Typography>
           </Grid>
           <Grid
@@ -419,6 +443,52 @@ export const ContactForm = ({ contact }: Props) => {
                     },
                   }}
                 >
+                  LinkedIn
+                </Typography>
+              </Grid>
+              <Grid item xs={9}>
+                <input
+                  type="text"
+                  id="linkedIn"
+                  name="linkedIn"
+                  value={linkedIn}
+                  onChange={(e) => setLinkedIn(e.target.value)}
+                  style={{
+                    ...(linkedInError && {
+                      border: "1px solid #FB5913",
+                    }),
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={3} />
+              <Grid item xs={9}>
+                {linkedInError && (
+                  <div className="flex items-center space-x-1 mt-1">
+                    <AlertTriangle
+                      size={16}
+                      fill="#FB5913"
+                      color="black"
+                      className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
+                    />
+                    <Typography variant="subtitle2">{linkedInError}</Typography>
+                  </div>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container alignItems="center" rowSpacing={"4px"}>
+              <Grid item xs={3}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    "@media (max-width:380px)": {
+                      fontSize: 13,
+                    },
+                  }}
+                >
                   Email
                 </Typography>
               </Grid>
@@ -429,6 +499,11 @@ export const ContactForm = ({ contact }: Props) => {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    ...(emailError && {
+                      border: "1px solid #FB5913",
+                    }),
+                  }}
                 />
               </Grid>
 
@@ -438,9 +513,9 @@ export const ContactForm = ({ contact }: Props) => {
                   <div className=" flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{emailError}</Typography>
                   </div>
@@ -471,18 +546,23 @@ export const ContactForm = ({ contact }: Props) => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   autoComplete="tel"
+                  style={{
+                    ...(phoneError && {
+                      border: "1px solid #FB5913",
+                    }),
+                  }}
                 />
               </Grid>
 
               <Grid item xs={3} />
               <Grid item xs={9}>
                 {phoneError && (
-                  <div className=" flex items-center space-x-1">
+                  <div className="flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{phoneError}</Typography>
                   </div>
@@ -503,7 +583,7 @@ export const ContactForm = ({ contact }: Props) => {
                       },
                     }}
                   >
-                    {index === 0 && "LinkedIn"}
+                    {`Link ${index + 1}`}
                   </Typography>
                 </Grid>
                 <Grid item xs={9}>
@@ -512,7 +592,29 @@ export const ContactForm = ({ contact }: Props) => {
                     value={link}
                     className="text-base rounded-[4px] block w-full h-12 px-2 py-3 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
                     onChange={(e) => handleLinkChange(index, e.target.value)}
+                    style={{
+                      ...(linkError &&
+                        link &&
+                        !validator.isURL(link) && {
+                          border: "1px solid #FB5913",
+                        }),
+                    }}
                   />
+                </Grid>
+
+                <Grid item xs={3} />
+                <Grid item xs={9}>
+                  {linkError && link && !validator.isURL(link) && (
+                    <div className="mt-1 flex items-center space-x-1">
+                      <AlertTriangle
+                        size={16}
+                        fill="#FB5913"
+                        color="black"
+                        className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      />
+                      <Typography variant="subtitle2">{linkError}</Typography>
+                    </div>
+                  )}
                 </Grid>
               </Grid>
             </Grid>
@@ -528,8 +630,13 @@ export const ContactForm = ({ contact }: Props) => {
               }}
               onClick={handleAddLink}
             >
-              <PlusCircle size={24} className="md:w-8 md:h-8 lg:w-10 lg:h-10" />
-              <div>Add Link</div>
+              <PlusCircle
+                size={24}
+                className="text-light-blue md:w-8 md:h-8 lg:w-10 lg:h-10"
+              />
+              <Typography variant="subtitle1" sx={{ color: "#38ACE2" }}>
+                Add Link
+              </Typography>
             </Button>
           </Grid>
 
@@ -542,18 +649,17 @@ export const ContactForm = ({ contact }: Props) => {
             }}
           >
             <Typography variant="h3" sx={{ fontWeight: 600 }}>
-              Interests
+              Tags
             </Typography>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginTop: "-4px" }}>
             <div className="space-y-1">
               <Typography variant="subtitle1">
-                What are their interests?
+                Add tags to remember important details
               </Typography>
               <Typography variant="body1">
-                Taking note of your contacts interests will help you build more
-                impactful conversations
+                Interests, Industries, notes, priorities, etc.
               </Typography>
             </div>
           </Grid>
@@ -567,7 +673,41 @@ export const ContactForm = ({ contact }: Props) => {
                 placeholder: tags.length ? "" : "Type interest here...",
               }}
               focusedClassName="ring-1 ring-white outline-none appearance-none caret-white"
-              className="rounded-[4px] block w-full min-h-12 h-auto p-4 bg-white bg-opacity-5"
+              className="rounded-[4px] block w-full min-h-[64px] h-auto p-2 bg-white bg-opacity-5"
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            sx={{
+              marginTop: "16px",
+              position: "relative",
+            }}
+          >
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              History
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sx={{ marginTop: "-4px" }}>
+            <div className="space-y-1">
+              <Typography variant="subtitle1">How did you meet?</Typography>
+              <Typography variant="body1">
+                Never forget where you met a contact again.
+              </Typography>
+            </div>
+          </Grid>
+
+          <Grid item xs={12}>
+            <textarea
+              id="history"
+              name="history"
+              value={history}
+              onChange={(e) => setHistory(e.target.value)}
+              ref={textareaRef}
+              placeholder="Add where you met here..."
+              className="p-2 min-h-[48px] w-full box-border resize-none overflow-hidden"
             />
           </Grid>
         </Grid>

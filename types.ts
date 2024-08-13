@@ -24,10 +24,12 @@ export interface Contact {
   company: string;
   industry: string;
   goalDays: number;
+  linkedIn: string;
   email: string;
   phone: string;
   links: string[];
   interests: string[];
+  history: string;
   activities: Activity[];
   isArchived: boolean;
 }

@@ -30,7 +30,7 @@ export default function MessagePage({
           alignItems: "center",
           justifyContent: "center",
           padding: "32px",
-          color: "#F42010",
+          color: "#FB5913",
         }}
       >
         Something went wrong, please try again later
@@ -56,7 +56,7 @@ export default function MessagePage({
           alignItems: "center",
           justifyContent: "center",
           padding: "32px",
-          color: "#F42010",
+          color: "#FB5913",
         }}
       >
         No contact available

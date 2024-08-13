@@ -14,10 +14,12 @@ interface FormDataOptions {
   company: string;
   industry: string;
   goalDays: number;
+  linkedIn: string;
   email: string;
   phone: string;
   links: string;
   interests: string;
+  history: string;
   userEmail: string;
   description: string;
   contactId: string;
@@ -41,6 +43,7 @@ export async function upsertContact(formData: FormData) {
   const company = formData.get("company");
   const industry = formData.get("industry");
   const goalDays = Number(formData.get("goalDays"));
+  const linkedIn = formData.get("linkedIn");
   const email = formData.get("email");
   const phone = formData.get("phone");
   const links = formData
@@ -51,6 +54,7 @@ export async function upsertContact(formData: FormData) {
     .get("interests")
     .split(",")
     .filter((link) => link !== "");
+  const history = formData.get("history");
 
   const user = await prisma.user.findUnique({
     where: { email: userEmail },
@@ -71,6 +75,7 @@ export async function upsertContact(formData: FormData) {
         company,
         industry,
         goalDays,
+        linkedIn,
         email,
         phone,
         links,
@@ -83,7 +88,7 @@ export async function upsertContact(formData: FormData) {
       data: {
         contactId: contact.id,
         title: "Contact created",
-        description: "",
+        description: history || "",
         date: new Date(),
         type: "SYSTEM",
       },
@@ -109,12 +114,26 @@ export async function upsertContact(formData: FormData) {
         company,
         industry,
         goalDays,
+        linkedIn,
         email,
         phone,
         links,
         interests,
       },
     });
+
+    if (history) {
+      const creationActivity = await prisma.activity.findFirst({
+        where: { contactId: id, type: "SYSTEM" },
+        select: { id: true },
+      });
+
+      creationActivity?.id &&
+        (await prisma.activity.updateMany({
+          where: { id: creationActivity.id },
+          data: { description: history },
+        }));
+    }
 
     if (!contact) throw new Error("Contact not found");
   }

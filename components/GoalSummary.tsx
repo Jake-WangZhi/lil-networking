@@ -51,7 +51,7 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "#F42010",
+          color: "#FB5913",
           marginTop: "24px",
           marginBottom: "4px",
           width: "100%",
