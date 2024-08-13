@@ -610,7 +610,7 @@ export const ContactForm = ({ contact }: Props) => {
                         size={16}
                         fill="#FB5913"
                         color="black"
-                        className="-mt-0.5 ml-1 md:w-5 md:h-5 lg:w-6 lg:h-6"
+                        className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                       />
                       <Typography variant="subtitle2">{linkError}</Typography>
                     </div>
