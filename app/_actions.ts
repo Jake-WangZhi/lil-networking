@@ -19,6 +19,7 @@ interface FormDataOptions {
   phone: string;
   links: string;
   interests: string;
+  history: string;
   userEmail: string;
   description: string;
   contactId: string;
@@ -53,6 +54,7 @@ export async function upsertContact(formData: FormData) {
     .get("interests")
     .split(",")
     .filter((link) => link !== "");
+  const history = formData.get("history");
 
   const user = await prisma.user.findUnique({
     where: { email: userEmail },
@@ -86,7 +88,7 @@ export async function upsertContact(formData: FormData) {
       data: {
         contactId: contact.id,
         title: "Contact created",
-        description: "",
+        description: history || "",
         date: new Date(),
         type: "SYSTEM",
       },

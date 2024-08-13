@@ -1,63 +1,71 @@
 .react-tagsinput-tag {
-    background-color: rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    color: rgba(255, 255, 255, 0.87);;
-    border-width: 0px;
-    font-size: 14px;
-    line-height: 20px;
-    padding-left: 16px;
-    padding-right: 16px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  color: rgba(255, 255, 255, 0.87);
+  border-width: 0px;
+  font-size: 14px;
+  line-height: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 @media (min-width: 768px) {
-    .react-tagsinput-tag {
-      font-size: 16px;
-    }
-
-    .react-tagsinput-input {
-        font-size: 16px !important;
-    }
-
-    input:not([id="tagsInput"]):not([id="searchBarInput"]) {
-      font-size: 18px !important;
-    }
+  .react-tagsinput-tag {
+    font-size: 16px;
   }
-  
-  @media (min-width: 1024px) {
-    .react-tagsinput-tag {
-      font-size: 18px;
-    }
 
-    .react-tagsinput-input {
-        font-size: 18px !important;
-    }
-
-    input:not([id="tagsInput"]):not([id="searchBarInput"]) {
-      font-size: 20px !important;
-    }
+  .react-tagsinput-input {
+    font-size: 16px !important;
   }
-  
+
+  input:not([id="tagsInput"]):not([id="searchBarInput"]) {
+    font-size: 18px !important;
+  }
+
+  textarea {
+    font-size: 18px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .react-tagsinput-tag {
+    font-size: 18px;
+  }
+
+  .react-tagsinput-input {
+    font-size: 18px !important;
+  }
+
+  input:not([id="tagsInput"]):not([id="searchBarInput"]) {
+    font-size: 20px !important;
+  }
+
+  textarea {
+    font-size: 20px !important;
+  }
+}
+
 .react-tagsinput-remove {
-    color: black;
-    background-color: rgba(255, 255, 255, 0.6);
-    margin-left: 5px;
-    padding-right: 6px;
-    padding-left: 6px;
-    padding-bottom: 2px;
-    border-radius: 50%;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.6);
+  margin-left: 5px;
+  padding-right: 6px;
+  padding-left: 6px;
+  padding-bottom: 2px;
+  border-radius: 50%;
 }
 
 .react-tagsinput-tag a::before {
-    content: "×";
+  content: "×";
 }
 
 .react-tagsinput-input {
-    color: white;
-    font-size: 16px !important;
-    line-height: 24px;
-    width: auto;
-    padding: 0px;
-    margin: 0px;
+  color: white;
+  font-size: 16px !important;
+  line-height: 24px;
+  width: auto;
+  padding: 0px;
+  margin: 0px;
 }
 
 input:not([id="tagsInput"]):not([id="searchBarInput"]) {
@@ -89,6 +97,32 @@ input::-webkit-date-and-time-value {
 .swiper-pagination-bullet {
   width: 10px;
   height: 10px;
-  background-color: #38ACE2;
+  background-color: #38ace2;
   margin: 0 9px !important;
+}
+
+textarea {
+  font-size: 16px;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  height: 48px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  caret-color: #fff;
+  outline: none;
+  appearance: none;
+}
+
+textarea:focus {
+  box-shadow: 0 0 0 1px #fff;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+textarea::-webkit-date-and-time-value {
+  text-align: left;
 }

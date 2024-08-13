@@ -29,6 +29,7 @@ export interface Contact {
   phone: string;
   links: string[];
   interests: string[];
+  history: string;
   activities: Activity[];
   isArchived: boolean;
 }

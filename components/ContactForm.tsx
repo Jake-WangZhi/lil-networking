@@ -1,6 +1,6 @@
 import { Typography, Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
@@ -32,11 +32,31 @@ export const ContactForm = ({ contact }: Props) => {
     contact?.goalDays ?? 30
   );
   const [tags, setTags] = useState<string[]>(contact?.interests ?? []);
+  const [history, setHistory] = useState(contact?.history);
 
   const [firstNameError, setFirstNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    const adjustHeight = () => {
+      if (textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      }
+    };
+
+    adjustHeight();
+
+    window.addEventListener("resize", adjustHeight);
+    return () => {
+      window.removeEventListener("resize", adjustHeight);
+    };
+  }, [history]);
 
   const handleChange = useCallback((tags: string[]) => {
     setTags(tags);
@@ -373,7 +393,7 @@ export const ContactForm = ({ contact }: Props) => {
               </Grid>
               <Grid item xs={9}>
                 <input
-                  type="linkedIn"
+                  type="text"
                   id="linkedIn"
                   name="linkedIn"
                   value={linkedIn}
@@ -541,7 +561,7 @@ export const ContactForm = ({ contact }: Props) => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginTop: "-4px" }}>
             <div className="space-y-1">
               <Typography variant="subtitle1">
                 Add tags to remember important details
@@ -561,7 +581,41 @@ export const ContactForm = ({ contact }: Props) => {
                 placeholder: tags.length ? "" : "Type interest here...",
               }}
               focusedClassName="ring-1 ring-white outline-none appearance-none caret-white"
-              className="rounded-[4px] block w-full min-h-12 h-auto p-4 bg-white bg-opacity-5"
+              className="rounded-[4px] block w-full min-h-[64px] h-auto p-2 bg-white bg-opacity-5"
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            sx={{
+              marginTop: "16px",
+              position: "relative",
+            }}
+          >
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              History
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sx={{ marginTop: "-4px" }}>
+            <div className="space-y-1">
+              <Typography variant="subtitle1">How did you meet?</Typography>
+              <Typography variant="body1">
+                Never forget where you met a contact again.
+              </Typography>
+            </div>
+          </Grid>
+
+          <Grid item xs={12}>
+            <textarea
+              id="history"
+              name="history"
+              value={history}
+              onChange={(e) => setHistory(e.target.value)}
+              ref={textareaRef}
+              placeholder="Add where you met here..."
+              className="p-2 min-h-[48px] w-full box-border resize-none overflow-hidden"
             />
           </Grid>
         </Grid>
