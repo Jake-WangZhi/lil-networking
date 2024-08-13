@@ -122,6 +122,19 @@ export async function upsertContact(formData: FormData) {
       },
     });
 
+    if (history) {
+      const creationActivity = await prisma.activity.findFirst({
+        where: { contactId: id, type: "SYSTEM" },
+        select: { id: true },
+      });
+
+      creationActivity?.id &&
+        (await prisma.activity.updateMany({
+          where: { id: creationActivity.id },
+          data: { description: history },
+        }));
+    }
+
     if (!contact) throw new Error("Contact not found");
   }
 
