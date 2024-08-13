@@ -14,6 +14,7 @@ import { ProfileTutorial } from "@/components/ProfileTutorial";
 import { handleRefresh, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
+import { ContactReminder } from "@/components/ContactReminder";
 
 export default function ContactPage({
   params,
@@ -87,6 +88,11 @@ export default function ContactPage({
       <>
         <ContactHeader contact={contact} />
         <ContactInfo contact={contact} />
+        <ContactReminder
+          goalDays={contact.goalDays}
+          lastActivityDate={contact.activities[0].date}
+        />
+        {/* <ContactConnect /> */}
         {interests.length !== 0 && <ContactInterests interests={interests} />}
         <ContactActivites activities={activities} contactId={contact.id} />
       </>
