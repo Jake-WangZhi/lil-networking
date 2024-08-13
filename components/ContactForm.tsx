@@ -27,7 +27,7 @@ export const ContactForm = ({ contact }: Props) => {
   const [email, setEmail] = useState(contact?.email);
   const [phone, setPhone] = useState(contact?.phone);
   const [linkedIn, setLinkedIn] = useState(contact?.linkedIn);
-  const [links, setLinks] = useState<string[]>(contact?.links ?? [""]);
+  const [links, setLinks] = useState<string[]>(contact?.links ?? []);
   const [selectedGoalDays, setSelectedGoalDays] = useState(
     contact?.goalDays ?? 30
   );
@@ -545,7 +545,7 @@ export const ContactForm = ({ contact }: Props) => {
                       },
                     }}
                   >
-                    {index === 0 && "LinkedIn"}
+                    {`Link ${index + 1}`}
                   </Typography>
                 </Grid>
                 <Grid item xs={9}>
