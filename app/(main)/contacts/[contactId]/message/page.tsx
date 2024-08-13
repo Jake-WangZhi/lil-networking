@@ -2,7 +2,7 @@
 
 import { useContact } from "@/hooks/useContact";
 import { Typography } from "@mui/material";
-import { ContactInterests } from "@/components/ContactInterests";
+import { ContactTags } from "@/components/ContactTags";
 import { SwipeableActivities } from "@/components/SwipeableActivities";
 import { ClipLoader } from "react-spinners";
 import { MessageCard } from "@/components/MessageCard";
@@ -73,7 +73,7 @@ export default function MessagePage({
         <MessageHeader firstName={firstName} contactId={params.contactId} />
         <MessageCard contact={contact} />
         <SwipeableActivities activities={activities.slice(0, 3)} />
-        {interests.length !== 0 && <ContactInterests interests={interests} />}
+        {interests.length !== 0 && <ContactTags interests={interests} />}
       </div>
       <MessageActions contact={contact} />
     </main>

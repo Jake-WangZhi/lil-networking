@@ -8,7 +8,7 @@ import { Typography } from "@mui/material";
 import { NavFooter } from "@/components/NavFooter";
 import { ContactActivites } from "@/components/ContactActivities";
 import { ContactInfo } from "@/components/ContactInfo";
-import { ContactInterests } from "@/components/ContactInterests";
+import { ContactTags } from "@/components/ContactTags";
 import { useEffect, useState } from "react";
 import { ProfileTutorial } from "@/components/ProfileTutorial";
 import { handleRefresh, pauseFor } from "@/lib/utils";
@@ -94,7 +94,7 @@ export default function ContactPage({
           lastActivityDate={contact.activities[0].date}
         />
         <ContactConnect linkedIn={linkedIn} email={email} phone={phone} />
-        {interests.length !== 0 && <ContactInterests interests={interests} />}
+        {interests.length !== 0 && <ContactTags interests={interests} />}
         <ContactActivites activities={activities} contactId={contact.id} />
       </>
     );

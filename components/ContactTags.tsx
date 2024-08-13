@@ -8,11 +8,11 @@ interface Props {
   interests: String[];
 }
 
-export const ContactInterests = ({ interests }: Props) => {
+export const ContactTags = ({ interests }: Props) => {
   return (
     <div className="space-y-3 mb-8">
       <Typography variant="h3" sx={{ mx: "16px", fontWeight: 600 }}>
-        Interests
+        Tags
       </Typography>
       <Swiper
         slidesPerView={"auto"}
