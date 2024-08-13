@@ -162,14 +162,16 @@ export const ContactHeader = ({ contact }: Props) => {
         {!isFromMessage && (
           <div className="relative">
             <div className="flex items-center">
-              <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
-                <Typography
-                  variant="body1"
-                  sx={{ textTransform: "capitalize" }}
-                >
-                  {contact.isArchived ? "archived" : contact.type}
-                </Typography>
-              </div>
+              {(contact.type || contact.isArchived) && (
+                <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
+                  <Typography
+                    variant="body1"
+                    sx={{ textTransform: "capitalize" }}
+                  >
+                    {contact.isArchived ? "archived" : contact.type}
+                  </Typography>
+                </div>
+              )}
               <Button
                 variant="text"
                 sx={{
