@@ -73,16 +73,15 @@ export const convertToLocalizedISODate = (date: string) => {
 };
 
 export const formatBaseUrl = (url: string) => {
-  let formattedUrl = url.replace(/^https?:\/\//, "").replace(/^www\./, ""); //Remove "http://" or "https://" and  "www" prefix
+  let formattedUrl = url.replace(/^https?:\/\//, "");
 
   const index = formattedUrl.indexOf("/");
   if (index !== -1) {
-    formattedUrl = formattedUrl.slice(0, index); //Remove everything after the first "/"
+    formattedUrl = formattedUrl.slice(0, index);
   }
 
   return formattedUrl;
 };
-
 export const getVisibleWidth = (windowWidth: number) => {
   if (windowWidth >= 1024) {
     return 768;

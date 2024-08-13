@@ -30,10 +30,10 @@ module.exports = {
         "grey-30": "#C5C6C7",
         magenta: "#ED3293",
         error: "#FB5913",
+        "primary-yellow": "#FDB913",
         "medium-overlay": "rgba(255, 255, 255, 0.12)",
         "low-overlay": "rgba(255, 255, 255, 0.05)",
-        "supporting-text": "#BBBEC1",
-        "primary-yellow": "#FDB913",
+        "supporting-text": "rgba(255, 255, 255, 0.7)",
         "disabled-grey": "rgba(255, 255, 255, 0.38)",
       },
       screens: {
