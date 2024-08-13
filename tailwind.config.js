@@ -29,7 +29,7 @@ module.exports = {
         grey: "#EBEBF5",
         "grey-30": "#C5C6C7",
         magenta: "#ED3293",
-        error: "#F42010",
+        error: "#FB5913",
         "medium-overlay": "#2C353E",
         "low-overlay": "#1B252F",
         "supporting-text": "#BBBEC1",

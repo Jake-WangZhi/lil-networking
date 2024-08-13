@@ -100,7 +100,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
         fontSize: 11,
         fontWeight: 400,
         lineHeight: "16px",
-        color: "#F42010",
+        color: "#FB5913",
         "@media (min-width:768px)": {
           fontSize: 13,
         },

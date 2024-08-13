@@ -107,3 +107,8 @@ export const handleRefresh = (
     }
   };
 };
+
+export const isValidLinkedInUrl = (url: string) => {
+  const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/;
+  return linkedinRegex.test(url);
+};

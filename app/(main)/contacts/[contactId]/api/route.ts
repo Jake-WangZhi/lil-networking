@@ -78,6 +78,7 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
     company,
     industry,
     goalDays,
+    linkedIn,
     email,
     phone,
     links,
@@ -93,10 +94,12 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
     company,
     industry,
     goalDays,
+    linkedIn,
     email,
     phone,
     links,
     interests,
+    history: activities[activities.length - 1].description,
     activities: activities.filter(
       (activity) => activity.contactId === contact.id
     ),

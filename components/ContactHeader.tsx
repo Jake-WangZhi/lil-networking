@@ -276,7 +276,7 @@ export const ContactHeader = ({ contact }: Props) => {
               ...(action === "delete"
                 ? {
                     color: "white !important",
-                    backgroundColor: "#F42010 !important",
+                    backgroundColor: "#FB5913 !important",
                   }
                 : {
                     color: "#0F1A24 !important",
