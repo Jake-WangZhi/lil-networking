@@ -151,7 +151,7 @@ export default function CreateActivityPage({
                   <div className=" flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
                       className="md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
@@ -186,7 +186,7 @@ export default function CreateActivityPage({
                   <div className=" flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
                       className="md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />

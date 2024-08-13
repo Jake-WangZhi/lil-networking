@@ -222,12 +222,12 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={3} />
               <Grid item xs={9}>
                 {firstNameError && (
-                  <div className=" flex items-center space-x-1">
+                  <div className="flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      className="-mt-0.5 ml-1 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">
                       {firstNameError}
@@ -414,7 +414,7 @@ export const ContactForm = ({ contact }: Props) => {
                   <div className="flex items-center space-x-1 mt-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
@@ -455,7 +455,7 @@ export const ContactForm = ({ contact }: Props) => {
                   <div className=" flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
@@ -497,7 +497,7 @@ export const ContactForm = ({ contact }: Props) => {
                   <div className="flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
-                      fill="#F42010"
+                      fill="#FB5913"
                       color="black"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
