@@ -1,7 +1,6 @@
 import { Typography, Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState, useCallback, useRef, useEffect } from "react";
-import { AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
 import { Contact } from "@/types";
@@ -10,6 +9,7 @@ import { upsertContact } from "@/app/_actions";
 import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
 import { isValidLinkedInUrl } from "@/lib/utils";
+import { Warning, PlusCircle } from "@phosphor-icons/react";
 
 interface Props {
   contact?: Contact;
@@ -271,10 +271,9 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={9}>
                 {firstNameError && (
                   <div className="mt-1 flex items-center space-x-1">
-                    <AlertTriangle
+                    <Warning
                       size={16}
                       fill="#FB5913"
-                      color="black"
                       className="-mt-0.5 ml-1 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">
@@ -465,56 +464,9 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={9}>
                 {linkedInError && (
                   <div className="flex items-center space-x-1 mt-1">
-                    <AlertTriangle
+                    <Warning
                       size={16}
                       fill="#FB5913"
-                      color="black"
-                      className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
-                    />
-                    <Typography variant="subtitle2">{linkedInError}</Typography>
-                  </div>
-                )}
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Grid container alignItems="center" rowSpacing={"4px"}>
-              <Grid item xs={3}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    "@media (max-width:380px)": {
-                      fontSize: 13,
-                    },
-                  }}
-                >
-                  LinkedIn
-                </Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <input
-                  type="text"
-                  id="linkedIn"
-                  name="linkedIn"
-                  value={linkedIn}
-                  onChange={(e) => setLinkedIn(e.target.value)}
-                  style={{
-                    ...(linkedInError && {
-                      border: "1px solid #FB5913",
-                    }),
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={3} />
-              <Grid item xs={9}>
-                {linkedInError && (
-                  <div className="flex items-center space-x-1 mt-1">
-                    <AlertTriangle
-                      size={16}
-                      fill="#FB5913"
-                      color="black"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{linkedInError}</Typography>
@@ -557,10 +509,9 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={9}>
                 {emailError && (
                   <div className=" flex items-center space-x-1">
-                    <AlertTriangle
+                    <Warning
                       size={16}
                       fill="#FB5913"
-                      color="black"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{emailError}</Typography>
@@ -604,10 +555,9 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={9}>
                 {phoneError && (
                   <div className="flex items-center space-x-1">
-                    <AlertTriangle
+                    <Warning
                       size={16}
                       fill="#FB5913"
-                      color="black"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{phoneError}</Typography>
@@ -652,10 +602,9 @@ export const ContactForm = ({ contact }: Props) => {
                 <Grid item xs={9}>
                   {linkError && link && !validator.isURL(link) && (
                     <div className="mt-1 flex items-center space-x-1">
-                      <AlertTriangle
+                      <Warning
                         size={16}
                         fill="#FB5913"
-                        color="black"
                         className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                       />
                       <Typography variant="subtitle2">{linkError}</Typography>
@@ -678,9 +627,12 @@ export const ContactForm = ({ contact }: Props) => {
             >
               <PlusCircle
                 size={24}
-                className="text-light-blue md:w-8 md:h-8 lg:w-10 lg:h-10"
+                className="mb-1 text-light-blue md:w-8 md:h-8 lg:w-10 lg:h-10"
               />
-              <Typography variant="subtitle1" sx={{ color: "#38ACE2" }}>
+              <Typography
+                variant="subtitle1"
+                sx={{ color: "#38ACE2", fontWeight: 600 }}
+              >
                 Add Link
               </Typography>
             </Button>
