@@ -9,6 +9,7 @@ import TagsInput from "react-tagsinput";
 import { upsertContact } from "@/app/_actions";
 import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
+import { isValidLinkedInUrl } from "@/lib/utils";
 
 interface Props {
   contact?: Contact;
@@ -35,6 +36,7 @@ export const ContactForm = ({ contact }: Props) => {
   const [history, setHistory] = useState(contact?.history);
 
   const [firstNameError, setFirstNameError] = useState("");
+  const [linkedInError, setLinkedInError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -90,12 +92,17 @@ export const ContactForm = ({ contact }: Props) => {
     setPhoneError("");
 
     if (!firstName) {
-      setFirstNameError("Required field");
+      setFirstNameError("Required Field");
+      hasError = true;
+    }
+
+    if (linkedIn && !isValidLinkedInUrl(linkedIn)) {
+      setLinkedInError("Invalid LinkedIn Link");
       hasError = true;
     }
 
     if (email && !validator.isEmail(email)) {
-      setEmailError("Invalid entry");
+      setEmailError("Invalid Email");
       hasError = true;
     }
 
@@ -104,7 +111,7 @@ export const ContactForm = ({ contact }: Props) => {
       (!validator.isLength(phone, { min: 10, max: 10 }) ||
         !validator.isMobilePhone(phone, "en-US"))
     ) {
-      setPhoneError("Invalid entry");
+      setPhoneError("Invalid Phone Number");
       hasError = true;
     }
 
@@ -115,7 +122,7 @@ export const ContactForm = ({ contact }: Props) => {
     } else {
       setIsSaving(false);
     }
-  }, [firstName, email, phone, contact, userEmail]);
+  }, [firstName, linkedIn, email, phone, contact, userEmail]);
 
   const handleBackClick = useCallback(() => router.back(), [router]);
 
@@ -403,15 +410,15 @@ export const ContactForm = ({ contact }: Props) => {
 
               <Grid item xs={3} />
               <Grid item xs={9}>
-                {emailError && (
-                  <div className=" flex items-center space-x-1">
+                {linkedInError && (
+                  <div className="flex items-center space-x-1 mt-1">
                     <AlertTriangle
                       size={16}
                       fill="#F42010"
                       color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
-                    <Typography variant="subtitle2">{emailError}</Typography>
+                    <Typography variant="subtitle2">{linkedInError}</Typography>
                   </div>
                 )}
               </Grid>
@@ -450,7 +457,7 @@ export const ContactForm = ({ contact }: Props) => {
                       size={16}
                       fill="#F42010"
                       color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{emailError}</Typography>
                   </div>
@@ -487,12 +494,12 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={3} />
               <Grid item xs={9}>
                 {phoneError && (
-                  <div className=" flex items-center space-x-1">
+                  <div className="flex items-center space-x-1">
                     <AlertTriangle
                       size={16}
                       fill="#F42010"
                       color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{phoneError}</Typography>
                   </div>
