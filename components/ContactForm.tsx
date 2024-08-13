@@ -39,6 +39,7 @@ export const ContactForm = ({ contact }: Props) => {
   const [linkedInError, setLinkedInError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [linkError, setLinkError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -115,6 +116,11 @@ export const ContactForm = ({ contact }: Props) => {
       hasError = true;
     }
 
+    if (links.some((link) => link && !validator.isURL(link))) {
+      setLinkError("Invalid Link");
+      hasError = true;
+    }
+
     if (!hasError) {
       submitFormRef.current?.click();
 
@@ -122,7 +128,7 @@ export const ContactForm = ({ contact }: Props) => {
     } else {
       setIsSaving(false);
     }
-  }, [firstName, linkedIn, email, phone, contact, userEmail]);
+  }, [firstName, linkedIn, email, phone, links, contact, userEmail]);
 
   const handleBackClick = useCallback(() => router.back(), [router]);
 
@@ -143,13 +149,22 @@ export const ContactForm = ({ contact }: Props) => {
         validator.isMobilePhone(phone, "en-US")) ||
         (!phone && setPhoneError(""));
     }
+    if (linkError) {
+      links.forEach((link) => {
+        if (link && !validator.isURL(link)) {
+          setLinkError("Invalid Link");
+        }
+      });
+    }
   }, [
     email,
     emailError,
     firstName,
     firstNameError,
+    linkError,
     linkedIn,
     linkedInError,
+    links,
     phone,
     phoneError,
   ]);
@@ -577,7 +592,29 @@ export const ContactForm = ({ contact }: Props) => {
                     value={link}
                     className="text-base rounded-[4px] block w-full h-12 px-2 py-3 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
                     onChange={(e) => handleLinkChange(index, e.target.value)}
+                    style={{
+                      ...(linkError &&
+                        link &&
+                        !validator.isURL(link) && {
+                          border: "1px solid #FB5913",
+                        }),
+                    }}
                   />
+                </Grid>
+
+                <Grid item xs={3} />
+                <Grid item xs={9}>
+                  {linkError && link && !validator.isURL(link) && (
+                    <div className="mt-1 flex items-center space-x-1">
+                      <AlertTriangle
+                        size={16}
+                        fill="#FB5913"
+                        color="black"
+                        className="-mt-0.5 ml-1 md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      />
+                      <Typography variant="subtitle2">{linkError}</Typography>
+                    </div>
+                  )}
                 </Grid>
               </Grid>
             </Grid>
