@@ -87,7 +87,6 @@ export default function ContactPage({
   const renderProfile = () => {
     return (
       <>
-        <ContactHeader contact={contact} />
         <ContactInfo contact={contact} />
         <ContactReminder
           goalDays={goalDays}
@@ -102,19 +101,16 @@ export default function ContactPage({
 
   return (
     <main className="relative min-h-screen pb-8 text-white">
-      {isLoading ? (
-        renderProfile()
-      ) : (
-        <PullToRefresh
-          onRefresh={handleRefresh(refetch)}
-          resistance={3}
-          refreshingContent={
-            <ClipLoader color="#38ACE2" size={50} className="mt-5" />
-          }
-        >
-          {renderProfile()}
-        </PullToRefresh>
-      )}
+      <ContactHeader contact={contact} />
+      <PullToRefresh
+        onRefresh={handleRefresh(refetch)}
+        resistance={3}
+        refreshingContent={
+          <ClipLoader color="#38ACE2" size={50} className="mt-5" />
+        }
+      >
+        {renderProfile()}
+      </PullToRefresh>
       {showTutorial && isProfileTutorialShown && <ProfileTutorial />}
       <NavFooter />
     </main>

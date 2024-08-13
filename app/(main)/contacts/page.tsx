@@ -36,19 +36,6 @@ export default function ContactsPage() {
   const renderContacts = () => {
     return (
       <>
-        <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
-          <div className="flex justify-between items-center">
-            <Typography variant="h1">All Contacts</Typography>
-            <AddContactTooltipButton
-              hasContacts={contactList?.contacts.length !== 0}
-              hasShownTutorial={contactList?.hasViewedContactsTutorial}
-            />
-          </div>
-          {(name ||
-            (!isError && !isLoading && contactList?.contacts.length !== 0)) && (
-            <SearchBar name={name} setName={setName} />
-          )}
-        </div>
         <ContactList
           contacts={contactList?.contacts}
           isLoading={isLoading}
@@ -62,19 +49,52 @@ export default function ContactsPage() {
   return (
     <main className="relative flex flex-col items-center text-white px-4">
       {isLoading ? (
-        renderContacts()
-      ) : (
-        <PullToRefresh
-          onRefresh={handleRefresh(refetch)}
-          resistance={3}
-          refreshingContent={
-            <ClipLoader color="#38ACE2" size={50} className="mt-5" />
-          }
-        >
+        <>
+          <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
+            <div className="flex justify-between items-center">
+              <Typography variant="h1">All Contacts</Typography>
+              <AddContactTooltipButton
+                hasContacts={contactList?.contacts.length !== 0}
+                hasShownTutorial={contactList?.hasViewedContactsTutorial}
+              />
+            </div>
+            {(name ||
+              (!isError &&
+                !isLoading &&
+                contactList?.contacts.length !== 0)) && (
+              <SearchBar name={name} setName={setName} />
+            )}
+          </div>
           {renderContacts()}
-        </PullToRefresh>
+        </>
+      ) : (
+        <>
+          <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
+            <div className="flex justify-between items-center">
+              <Typography variant="h1">All Contacts</Typography>
+              <AddContactTooltipButton
+                hasContacts={contactList?.contacts.length !== 0}
+                hasShownTutorial={contactList?.hasViewedContactsTutorial}
+              />
+            </div>
+            {(name ||
+              (!isError &&
+                !isLoading &&
+                contactList?.contacts.length !== 0)) && (
+              <SearchBar name={name} setName={setName} />
+            )}
+          </div>
+          <PullToRefresh
+            onRefresh={handleRefresh(refetch)}
+            resistance={3}
+            refreshingContent={
+              <ClipLoader color="#38ACE2" size={50} className="mt-5" />
+            }
+          >
+            {renderContacts()}
+          </PullToRefresh>
+        </>
       )}
-
       {showTutorial && isContactsTutorialShown && <ContactsTutorial />}
       <NavFooter />
     </main>
