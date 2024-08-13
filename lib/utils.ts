@@ -1,6 +1,10 @@
+import { ActionType, ActivityType } from "@/types";
+import { Activity } from "@prisma/client";
 import { QueryObserverResult } from "@tanstack/react-query";
-import { parseISO, format, formatISO } from "date-fns";
+import { parseISO, format, formatISO, differenceInDays } from "date-fns";
 import validator from "validator";
+
+const DAYS_BEFORE_PAST_DUE = 10;
 
 export const formatPhoneNumber = (phoneNumber: string) => {
   const cleaned = ("" + phoneNumber).replace(/\D/g, "");
@@ -111,4 +115,20 @@ export const handleRefresh = (
 export const isValidLinkedInUrl = (url: string) => {
   const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/;
   return linkedinRegex.test(url);
+};
+
+export const getActionType = (lastActivity: Activity, goalDays: number) => {
+  const days = differenceInDays(new Date(), lastActivity.date);
+  const isUserActivity = lastActivity.type === ActivityType.User;
+
+  const pastDueThreshold = isUserActivity ? goalDays : 0;
+  const upcomingThreshold = goalDays + DAYS_BEFORE_PAST_DUE;
+
+  if (days > upcomingThreshold) {
+    return ActionType.Past;
+  } else if (pastDueThreshold <= days && days <= upcomingThreshold) {
+    return ActionType.Upcoming;
+  } else {
+    return "";
+  }
 };

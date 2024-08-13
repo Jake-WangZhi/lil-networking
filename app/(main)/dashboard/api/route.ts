@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { Action, ActivityType, SearchParams } from "@/types";
+import { Action, ActionType, ActivityType, SearchParams } from "@/types";
 import { differenceInDays } from "date-fns";
-
-const DAYS_BEFORE_PAST_DUE = 10;
+import { getActionType } from "@/lib/utils";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -115,12 +114,11 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         isNewUser: !isUserActivity,
       };
 
-      const pastDueThreshold = isUserActivity ? goalDays : 0;
-      const upcomingThreshold = goalDays + DAYS_BEFORE_PAST_DUE;
+      const type = getActionType(activity, goalDays);
 
-      if (days > upcomingThreshold) {
+      if (type === ActionType.Past) {
         pastActions.push(action);
-      } else if (pastDueThreshold <= days && days <= upcomingThreshold) {
+      } else if (type === ActionType.Upcoming) {
         upcomingActions.push(action);
       }
     }

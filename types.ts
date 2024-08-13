@@ -18,6 +18,7 @@ export enum ActionType {
 
 export interface Contact {
   id: string;
+  type: ActionType;
   firstName: string;
   lastName: string;
   title: string;
