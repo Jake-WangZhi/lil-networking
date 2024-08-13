@@ -26,6 +26,7 @@ export const ContactForm = ({ contact }: Props) => {
   const [industry, setIndustry] = useState(contact?.industry);
   const [email, setEmail] = useState(contact?.email);
   const [phone, setPhone] = useState(contact?.phone);
+  const [linkedIn, setLinkedIn] = useState(contact?.linkedIn);
   const [links, setLinks] = useState<string[]>(contact?.links ?? [""]);
   const [selectedGoalDays, setSelectedGoalDays] = useState(
     contact?.goalDays ?? 30
@@ -419,6 +420,47 @@ export const ContactForm = ({ contact }: Props) => {
                     },
                   }}
                 >
+                  LinkedIn
+                </Typography>
+              </Grid>
+              <Grid item xs={9}>
+                <input
+                  type="linkedIn"
+                  id="linkedIn"
+                  name="linkedIn"
+                  value={linkedIn}
+                  onChange={(e) => setLinkedIn(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={3} />
+              <Grid item xs={9}>
+                {emailError && (
+                  <div className=" flex items-center space-x-1">
+                    <AlertTriangle
+                      size={16}
+                      fill="#F42010"
+                      color="black"
+                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                    />
+                    <Typography variant="subtitle2">{emailError}</Typography>
+                  </div>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container alignItems="center" rowSpacing={"4px"}>
+              <Grid item xs={3}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    "@media (max-width:380px)": {
+                      fontSize: 13,
+                    },
+                  }}
+                >
                   Email
                 </Typography>
               </Grid>
@@ -528,8 +570,13 @@ export const ContactForm = ({ contact }: Props) => {
               }}
               onClick={handleAddLink}
             >
-              <PlusCircle size={24} className="md:w-8 md:h-8 lg:w-10 lg:h-10" />
-              <div>Add Link</div>
+              <PlusCircle
+                size={24}
+                className="text-light-blue md:w-8 md:h-8 lg:w-10 lg:h-10"
+              />
+              <Typography variant="subtitle1" sx={{ color: "#38ACE2" }}>
+                Add Link
+              </Typography>
             </Button>
           </Grid>
 
