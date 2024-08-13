@@ -25,7 +25,3 @@ This app is using Vercel's Git integration, which gives the ability to test new 
 The `staging` branch automatically deploys to Vercel Preview when pushing to `staging` branch
 
 The `main` branch automatically deploys to Vercel Production when pushing to `main` branch, or triggering a one-time manual deploy of the `main` branch by `vercel --prod`
-
-## Additional Info
-
-The Vercel Project Link: https://vercel.com/foundry-makes/lil-networking
