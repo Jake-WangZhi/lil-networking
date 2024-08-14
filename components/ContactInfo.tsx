@@ -1,40 +1,26 @@
-import { Link, Mail, Phone } from "react-feather";
-import { Contact } from "@/types";
 import { Card, CardContent, Typography } from "@mui/material";
-import { Clock } from "@phosphor-icons/react";
 import { Button } from "./Button";
-import { formatBaseUrl, formatPhoneNumber } from "@/lib/utils";
+import { formatBaseUrl } from "@/lib/utils";
 import { useCallback } from "react";
+import { Link } from "@phosphor-icons/react";
 
 interface Props {
-  contact: Contact;
+  firstName: string;
+  lastName: string;
+  title: string;
+  company: string;
+  industry: string;
+  links: string[];
 }
 
-export const ContactInfo = ({ contact }: Props) => {
-  const {
-    firstName,
-    lastName,
-    title,
-    company,
-    industry,
-    goalDays,
-    email,
-    phone,
-    links,
-  } = contact;
-
-  const handlePhoneClick = useCallback(() => {
-    const phone = `tel:${contact.phone}`;
-
-    window.location.href = phone;
-  }, [contact.phone]);
-
-  const handleEmailClick = useCallback(() => {
-    const emailAddress = `mailto:${contact.email}`;
-
-    window.location.href = emailAddress;
-  }, [contact.email]);
-
+export const ContactInfo = ({
+  firstName,
+  lastName,
+  title,
+  company,
+  industry,
+  links,
+}: Props) => {
   const handleLinkedInClick = useCallback(
     (linkedInLink: string) => () => {
       const link = document.createElement("a");

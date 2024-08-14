@@ -82,12 +82,32 @@ export default function ContactPage({
   }
 
   const { contact } = contactProfile;
-  const { linkedIn, email, phone, goalDays, interests, activities } = contact;
+  const {
+    firstName,
+    lastName,
+    title,
+    company,
+    industry,
+    links,
+    linkedIn,
+    email,
+    phone,
+    goalDays,
+    interests,
+    activities,
+  } = contact;
 
   const renderProfile = () => {
     return (
       <>
-        <ContactInfo contact={contact} />
+        <ContactInfo
+          firstName={firstName}
+          lastName={lastName}
+          industry={industry}
+          title={title}
+          company={company}
+          links={links}
+        />
         <ContactReminder
           goalDays={goalDays}
           lastActivityDate={contact.activities[0].date}
