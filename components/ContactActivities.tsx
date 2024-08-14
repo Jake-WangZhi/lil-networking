@@ -96,10 +96,10 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
             fill="#38ACE2"
             weight="fill"
             color="#38ACE2"
-            className="absolute bg-dark-blue w-4 h-7 flex items-center -mt-2"
+            className="absolute bg-dark-blue w-4 h-7 flex items-center -mt-2 md:w-5 md:h-8 lg:w-6 lg:h-9"
           />
           <div
-            className={`flex pb-4 ml-[7px] bg-dark-blue ${
+            className={`flex pb-4 ml-[7px] md:ml-[9px] lg:ml-[11px] bg-dark-blue ${
               index + 1 !== activities?.length &&
               "border-l-2 border-light-blue border-dashed"
             }`}
@@ -134,10 +134,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                   {formatDate(date)}
                 </Typography>
                 {description && (
-                  <Typography
-                    variant="body1"
-                    sx={{ opacity: 0.7, marginTop: "8px" }}
-                  >
+                  <Typography variant="body1" sx={{ marginTop: "8px" }}>
                     {description}
                   </Typography>
                 )}
