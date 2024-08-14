@@ -32,7 +32,7 @@ export const ContactConnect = ({ linkedIn, email, phone }: Props) => {
   }, [phone]);
 
   const handleMessgeClick = useCallback(() => {
-    const messageLink = `message:${phone}`;
+    const messageLink = `sms:${phone}`;
 
     window.open(messageLink);
   }, [phone]);
