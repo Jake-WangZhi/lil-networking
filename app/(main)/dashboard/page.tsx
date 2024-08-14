@@ -71,7 +71,7 @@ export default function DashboardPage() {
           <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
             <div className="flex justify-between items-center">
               <Typography variant="h1">Hi, {name?.split(" ")[0]}!</Typography>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 -mr-3">
                 <InfoTooltipButton />
                 <AddContactTooltipButton
                   hasContacts={actions?.hasContacts}
@@ -88,7 +88,7 @@ export default function DashboardPage() {
           <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
             <div className="flex justify-between items-center">
               <Typography variant="h1">Hi, {name?.split(" ")[0]}!</Typography>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 -mr-3">
                 <InfoTooltipButton />
                 <AddContactTooltipButton
                   hasContacts={actions?.hasContacts}

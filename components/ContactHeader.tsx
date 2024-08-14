@@ -1,6 +1,5 @@
 import { useBackPath } from "@/contexts/BackPathContext";
 import { useContactMutation } from "@/hooks/useContactMutation";
-import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -16,6 +15,7 @@ import {
   Archive,
   Trash,
   X,
+  DotsThreeCircleVertical,
 } from "@phosphor-icons/react";
 
 interface Props {
@@ -135,7 +135,7 @@ export const ContactHeader = ({ contact }: Props) => {
   );
 
   return (
-    <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 py-2 mb-2 px-4">
+    <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 pb-2 mb-2 px-4">
       {errorMessage && (
         <Typography
           variant="subtitle2"
@@ -157,9 +157,9 @@ export const ContactHeader = ({ contact }: Props) => {
           }}
         >
           {isChanged ? (
-            <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+            <X size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           ) : (
-            <CaretLeft size={36} className="md:w-10 md:h-10 lg:w-11 lg:h-11" />
+            <CaretLeft size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           )}
         </Button>
         {!isFromMessage && (
@@ -184,8 +184,8 @@ export const ContactHeader = ({ contact }: Props) => {
                 onClick={handleDropdownClick}
               >
                 <DotsThreeCircleVertical
-                  size={24}
-                  className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                  size={32}
+                  className="md:w-9 md:h-9 lg:w-10 lg:h-10"
                 />
               </Button>
             </div>

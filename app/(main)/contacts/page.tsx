@@ -53,10 +53,12 @@ export default function ContactsPage() {
           <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
             <div className="flex justify-between items-center">
               <Typography variant="h1">All Contacts</Typography>
-              <AddContactTooltipButton
-                hasContacts={contactList?.contacts.length !== 0}
-                hasShownTutorial={contactList?.hasViewedContactsTutorial}
-              />
+              <div className="-mr-3">
+                <AddContactTooltipButton
+                  hasContacts={contactList?.contacts.length !== 0}
+                  hasShownTutorial={contactList?.hasViewedContactsTutorial}
+                />
+              </div>
             </div>
             {(name ||
               (!isError &&
@@ -72,10 +74,12 @@ export default function ContactsPage() {
           <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
             <div className="flex justify-between items-center">
               <Typography variant="h1">All Contacts</Typography>
-              <AddContactTooltipButton
-                hasContacts={contactList?.contacts.length !== 0}
-                hasShownTutorial={contactList?.hasViewedContactsTutorial}
-              />
+              <div className="-mr-3">
+                <AddContactTooltipButton
+                  hasContacts={contactList?.contacts.length !== 0}
+                  hasShownTutorial={contactList?.hasViewedContactsTutorial}
+                />
+              </div>
             </div>
             {(name ||
               (!isError &&
