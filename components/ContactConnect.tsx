@@ -44,22 +44,26 @@ export const ContactConnect = ({ linkedIn, email, phone }: Props) => {
       </Typography>
       <div className="flex justify-between">
         <ConnectButton
-          icon={<LinkedinLogo size={24} />}
+          icon={
+            <LinkedinLogo size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+          }
           label="LinkedIn"
           onClick={linkedIn ? handleLinkedInClick : undefined}
         />
         <ConnectButton
-          icon={<Envelope size={24} />}
+          icon={<Envelope size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />}
           label="Email"
           onClick={email ? handleEmailClick : undefined}
         />
         <ConnectButton
-          icon={<ChatCircle size={24} />}
+          icon={
+            <ChatCircle size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+          }
           label="Message"
           onClick={phone ? handleMessgeClick : undefined}
         />
         <ConnectButton
-          icon={<Phone size={24} />}
+          icon={<Phone size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />}
           label="Phone"
           onClick={phone ? handlePhoneClick : undefined}
         />

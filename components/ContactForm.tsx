@@ -274,6 +274,7 @@ export const ContactForm = ({ contact }: Props) => {
                     <Warning
                       size={16}
                       fill="#FB5913"
+                      weight="fill"
                       className="-mt-0.5 ml-1 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">
@@ -467,6 +468,7 @@ export const ContactForm = ({ contact }: Props) => {
                     <Warning
                       size={16}
                       fill="#FB5913"
+                      weight="fill"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{linkedInError}</Typography>
@@ -512,6 +514,7 @@ export const ContactForm = ({ contact }: Props) => {
                     <Warning
                       size={16}
                       fill="#FB5913"
+                      weight="fill"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{emailError}</Typography>
@@ -558,6 +561,7 @@ export const ContactForm = ({ contact }: Props) => {
                     <Warning
                       size={16}
                       fill="#FB5913"
+                      weight="fill"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{phoneError}</Typography>
@@ -605,6 +609,7 @@ export const ContactForm = ({ contact }: Props) => {
                       <Warning
                         size={16}
                         fill="#FB5913"
+                        weight="fill"
                         className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                       />
                       <Typography variant="subtitle2">{linkError}</Typography>

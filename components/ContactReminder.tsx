@@ -17,7 +17,7 @@ export const ContactReminder = ({ goalDays, lastActivityDate }: Props) => {
         Reminder
       </Typography>
       <div className="flex gap-3">
-        <CalendarBlank size={24} />
+        <CalendarBlank size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
         <div className="space-y-1">
           <Typography variant="subtitle1">{`Every ${goalDays} Days`}</Typography>
           <Typography
