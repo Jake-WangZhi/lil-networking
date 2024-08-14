@@ -20,13 +20,13 @@ export async function POST(
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
-  if (title && date && description && type)
+  if (date && type)
     await prisma.activity.create({
       data: {
         contactId: params.contactId,
-        title,
+        title: title || "",
         date,
-        description,
+        description: description || "",
         type,
       },
     });
