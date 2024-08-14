@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
 import { ContactArgs } from "@/types";
+import { getActionType } from "@/lib/utils";
 
 export async function GET(
   request: Request,
@@ -88,6 +89,7 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
 
   return {
     id,
+    type: getActionType(activities[0], goalDays),
     firstName,
     lastName,
     title,

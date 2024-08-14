@@ -12,12 +12,13 @@ export interface Action {
 }
 
 export enum ActionType {
-  Past = "past",
+  Priority = "priority",
   Upcoming = "upcoming",
 }
 
 export interface Contact {
   id: string;
+  type: ActionType;
   firstName: string;
   lastName: string;
   title: string;

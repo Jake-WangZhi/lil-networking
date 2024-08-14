@@ -1,16 +1,22 @@
 import { useBackPath } from "@/contexts/BackPathContext";
 import { useContactMutation } from "@/hooks/useContactMutation";
-import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { ChevronLeft, Edit, Archive, Trash2, X } from "react-feather";
 import { Contact, SearchParams } from "@/types";
 import { Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { AlertDialog } from "./AlertDialog";
 import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
+import {
+  CaretLeft,
+  PencilSimple,
+  Archive,
+  Trash,
+  X,
+  DotsThreeCircleVertical,
+} from "@phosphor-icons/react";
 
 interface Props {
   contact: Contact;
@@ -129,7 +135,7 @@ export const ContactHeader = ({ contact }: Props) => {
   );
 
   return (
-    <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-2 px-4">
+    <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 pb-2 mb-2 px-4">
       {errorMessage && (
         <Typography
           variant="subtitle2"
@@ -151,20 +157,22 @@ export const ContactHeader = ({ contact }: Props) => {
           }}
         >
           {isChanged ? (
-            <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+            <X size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           ) : (
-            <ChevronLeft
-              size={36}
-              className="md:w-10 md:h-10 lg:w-11 lg:h-11"
-            />
+            <CaretLeft size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           )}
         </Button>
         {!isFromMessage && (
           <div className="relative">
             <div className="flex items-center">
-              {contact.isArchived && (
+              {(contact.type || contact.isArchived) && (
                 <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
-                  <Typography variant="body1">Archived</Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{ textTransform: "capitalize" }}
+                  >
+                    {contact.isArchived ? "archived" : contact.type}
+                  </Typography>
                 </div>
               )}
               <Button
@@ -176,8 +184,8 @@ export const ContactHeader = ({ contact }: Props) => {
                 onClick={handleDropdownClick}
               >
                 <DotsThreeCircleVertical
-                  size={24}
-                  className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                  size={32}
+                  className="md:w-10 md:h-10 lg:w-12 lg:h-12"
                 />
               </Button>
             </div>
@@ -208,7 +216,10 @@ export const ContactHeader = ({ contact }: Props) => {
                   <Typography variant="subtitle1" sx={{ color: "black" }}>
                     Edit
                   </Typography>
-                  <Edit size={24} />
+                  <PencilSimple
+                    size={24}
+                    className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                  />
                 </Button>
               </MenuItem>
               <Divider />
@@ -231,7 +242,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   <Typography variant="subtitle1" sx={{ color: "black" }}>
                     {contact.isArchived ? "Unarchive" : "Archive"}
                   </Typography>
-                  <Archive size={24} />
+                  <Archive size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
                 </Button>
               </MenuItem>
               <Divider />
@@ -254,7 +265,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   <Typography variant="subtitle1" sx={{ color: "black" }}>
                     Delete
                   </Typography>
-                  <Trash2 size={24} />
+                  <Trash size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
                 </Button>
               </MenuItem>
             </Menu>

@@ -11,11 +11,11 @@ import Image from "next/image";
 import icon from "@/public/images/empty_state_icon.svg";
 import Lottie from "react-lottie";
 import animationData from "@/lottie/908-add-and-save.json";
-import { ChevronDown } from "react-feather";
+import { CaretDown } from "@phosphor-icons/react";
 
 interface Props {
   actions?: {
-    pastActions: Array<Action>;
+    priorityActions: Array<Action>;
     upcomingActions: Array<Action>;
     hasContacts: boolean;
   };
@@ -92,7 +92,10 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     );
   }
 
-  if (actions.pastActions.length === 0 && actions.upcomingActions.length === 0)
+  if (
+    actions.priorityActions.length === 0 &&
+    actions.upcomingActions.length === 0
+  )
     return (
       <div className="h-[50vh] flex flex-col items-center justify-center px-8">
         <Image src={icon} alt={"empty state"} />
@@ -112,7 +115,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
       <Accordion disableGutters defaultExpanded={true}>
         <AccordionSummary
           expandIcon={
-            <ChevronDown
+            <CaretDown
               color="white"
               size={24}
               className="md:w-7 md:h-7 lg:w-8 lg:h-8"
@@ -126,16 +129,16 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               sx={{
                 fontWeight: 600,
               }}
-            >{`Priority (${actions.pastActions.length})`}</Typography>
+            >{`Priority (${actions.priorityActions.length})`}</Typography>
           </div>
         </AccordionSummary>
         <AccordionDetails>
           <div className="space-y-4">
-            {actions.pastActions?.map((action, index) => (
+            {actions.priorityActions?.map((action, index) => (
               <ActionCard
                 key={index}
                 action={action}
-                actionType={ActionType.Past}
+                actionType={ActionType.Priority}
               />
             ))}
           </div>
@@ -144,7 +147,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
       <Accordion disableGutters defaultExpanded={true}>
         <AccordionSummary
           expandIcon={
-            <ChevronDown
+            <CaretDown
               color="white"
               size={24}
               className="md:w-7 md:h-7 lg:w-8 lg:h-8"

@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
-import { ChevronLeft } from "react-feather";
+import { CaretLeft } from "@phosphor-icons/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useBackPath } from "@/contexts/BackPathContext";
 import { useCallback } from "react";
@@ -38,10 +38,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
             onClick={handleBackClick}
             sx={{ px: "6px", ml: "-6px" }}
           >
-            <ChevronLeft
-              size={36}
-              className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-            />
+            <CaretLeft size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
           </Button>
         </Grid>
         <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>

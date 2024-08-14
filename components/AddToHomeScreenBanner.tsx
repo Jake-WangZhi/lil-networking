@@ -1,9 +1,9 @@
-import { X, Share } from "react-feather";
 import icon from "@/public/icons/icon-512x512.png";
 import Image from "next/image";
 import { Button } from "./Button";
 import { Typography } from "@mui/material";
 import { useState, useCallback, useEffect } from "react";
+import { X, Export } from "@phosphor-icons/react";
 
 interface Props {
   addBottomPadding: boolean;
@@ -98,7 +98,7 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
                   experience.
                   <span className="flex items-center space-x-1">
                     <span>Tap</span>
-                    <Share
+                    <Export
                       size={14}
                       className="md:w-4 md:h-4 lg:w-5 lg:h-5 flex-shrink-0"
                     />

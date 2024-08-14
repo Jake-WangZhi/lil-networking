@@ -1,5 +1,5 @@
 import { Typography, Card, CardContent } from "@mui/material";
-import { Mail, Linkedin } from "react-feather";
+import { Envelope, LinkedinLogo } from "@phosphor-icons/react";
 import { Button } from "@/components/Button";
 import { Contact } from "@/types";
 import { useCallback } from "react";
@@ -38,7 +38,10 @@ export const MessageCard = ({ contact }: Props) => {
                     sx={{ px: "12px" }}
                     onClick={handleEmailClick}
                   >
-                    <Mail size={24} />
+                    <Envelope
+                      size={24}
+                      className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                    />
                   </Button>
                 )}
                 {contact.links.length > 0 && (
@@ -47,7 +50,10 @@ export const MessageCard = ({ contact }: Props) => {
                     sx={{ px: "12px" }}
                     onClick={handleLinkedInClick}
                   >
-                    <Linkedin size={24} />
+                    <LinkedinLogo
+                      size={24}
+                      className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                    />
                   </Button>
                 )}
               </div>

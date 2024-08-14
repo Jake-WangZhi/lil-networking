@@ -34,12 +34,12 @@ export const InfoTooltipButton = () => {
     <div ref={tooltipRef} className="flex justify-between p-2">
       <div>
         <Typography variant="body1">
-          <span className="font-bold">Past Due:</span> Items that have been
+          <span className="font-bold">Priority:</span> Items that have been
           actionable for 10+ days
         </Typography>
         <br />
         <Typography variant="body1">
-          <span className="font-bold">New Actions:</span> Items that have been
+          <span className="font-bold">Upcoming:</span> Items that have been
           actionable between 0-10 days.
         </Typography>
       </div>

@@ -69,7 +69,8 @@ export const ActionCard = ({ action, actionType }: Props) => {
                 variant="body1"
                 sx={{
                   fontWeight: 600,
-                  color: actionType === "past" ? "#ED3293" : "#FFCF79",
+                  color:
+                    actionType === ActionType.Priority ? "#ED3293" : "#FFCF79",
                 }}
               >
                 Last Activity: {getLastActivityMessage(action.days)}
