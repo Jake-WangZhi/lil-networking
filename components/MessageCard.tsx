@@ -38,7 +38,7 @@ export const MessageCard = ({ contact }: Props) => {
                     sx={{ px: "12px" }}
                     onClick={handleEmailClick}
                   >
-                    <Mail size={24} />
+                    <Mail size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
                   </Button>
                 )}
                 {contact.links.length > 0 && (
@@ -47,7 +47,10 @@ export const MessageCard = ({ contact }: Props) => {
                     sx={{ px: "12px" }}
                     onClick={handleLinkedInClick}
                   >
-                    <Linkedin size={24} />
+                    <Linkedin
+                      size={24}
+                      className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                    />
                   </Button>
                 )}
               </div>

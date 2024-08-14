@@ -173,7 +173,7 @@ export const ContactForm = ({ contact }: Props) => {
     <main className="relative flex flex-col items-center text-white pb-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={upsertContact}>
-        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-4 mb-6 px-4">
+        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6 px-4">
           <Grid container alignItems="center">
             <Grid item xs={2}>
               <Button
@@ -274,6 +274,7 @@ export const ContactForm = ({ contact }: Props) => {
                     <Warning
                       size={16}
                       fill="#FB5913"
+                      weight="fill"
                       className="-mt-0.5 ml-1 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">
@@ -467,6 +468,7 @@ export const ContactForm = ({ contact }: Props) => {
                     <Warning
                       size={16}
                       fill="#FB5913"
+                      weight="fill"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{linkedInError}</Typography>
@@ -512,6 +514,7 @@ export const ContactForm = ({ contact }: Props) => {
                     <Warning
                       size={16}
                       fill="#FB5913"
+                      weight="fill"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{emailError}</Typography>
@@ -558,6 +561,7 @@ export const ContactForm = ({ contact }: Props) => {
                     <Warning
                       size={16}
                       fill="#FB5913"
+                      weight="fill"
                       className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     <Typography variant="subtitle2">{phoneError}</Typography>
@@ -605,6 +609,7 @@ export const ContactForm = ({ contact }: Props) => {
                       <Warning
                         size={16}
                         fill="#FB5913"
+                        weight="fill"
                         className="-mt-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
                       />
                       <Typography variant="subtitle2">{linkError}</Typography>

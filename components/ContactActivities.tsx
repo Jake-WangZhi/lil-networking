@@ -1,12 +1,12 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity, ActivityType, SearchParams } from "@/types";
-import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/lib/utils";
+import { PlusCircle, Circle, Trash } from "@phosphor-icons/react";
 
 interface Props {
   activities: Activity[];
@@ -63,7 +63,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
       )}
       <div className="flex items-center justify-between mb-3">
         <Typography variant="h3" sx={{ fontWeight: 600 }}>
-          Activities
+          History
         </Typography>
         {!isFromMessage && (
           <Button
@@ -76,9 +76,15 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
               px: "8px",
             }}
           >
-            <PlusCircle size={24} />
-            <Typography variant="body1" sx={{ fontWeight: 600 }}>
-              Log Activity
+            <PlusCircle
+              size={24}
+              className="text-light-blue md:w-7 md:h-7 lg:w-8 lg:h-8"
+            />
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: 600, color: "#38ACE2" }}
+            >
+              Add Activity
             </Typography>
           </Button>
         )}
@@ -88,11 +94,12 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
           <Circle
             size={16}
             fill="#38ACE2"
+            weight="fill"
             color="#38ACE2"
-            className="absolute bg-dark-blue w-4 h-7 flex items-center -mt-2"
+            className="absolute bg-dark-blue w-4 h-7 flex items-center -mt-2 md:w-5 md:h-8 lg:w-6 lg:h-9"
           />
           <div
-            className={`flex pb-4 ml-[7px] bg-dark-blue ${
+            className={`flex pb-4 ml-[7px] md:ml-[9px] lg:ml-[11px] bg-dark-blue ${
               index + 1 !== activities?.length &&
               "border-l-2 border-light-blue border-dashed"
             }`}
@@ -115,7 +122,10 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                         onClick={handleDeleteClick(id)}
                         sx={{ height: "auto" }}
                       >
-                        <Trash2 size={24} />
+                        <Trash
+                          size={24}
+                          className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                        />
                       </Button>
                     </div>
                   )}
@@ -124,10 +134,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                   {formatDate(date)}
                 </Typography>
                 {description && (
-                  <Typography
-                    variant="body1"
-                    sx={{ opacity: 0.7, marginTop: "8px" }}
-                  >
+                  <Typography variant="body1" sx={{ marginTop: "8px" }}>
                     {description}
                   </Typography>
                 )}

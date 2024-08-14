@@ -1,6 +1,10 @@
+import { ActionType, ActivityType } from "@/types";
+import { Activity } from "@prisma/client";
 import { QueryObserverResult } from "@tanstack/react-query";
-import { parseISO, format, formatISO } from "date-fns";
+import { parseISO, format, formatISO, differenceInDays } from "date-fns";
 import validator from "validator";
+
+const DAYS_BEFORE_PAST_DUE = 10;
 
 export const formatPhoneNumber = (phoneNumber: string) => {
   const cleaned = ("" + phoneNumber).replace(/\D/g, "");
@@ -69,16 +73,15 @@ export const convertToLocalizedISODate = (date: string) => {
 };
 
 export const formatBaseUrl = (url: string) => {
-  let formattedUrl = url.replace(/^https?:\/\//, "").replace(/^www\./, ""); //Remove "http://" or "https://" and  "www" prefix
+  let formattedUrl = url.replace(/^https?:\/\//, "");
 
   const index = formattedUrl.indexOf("/");
   if (index !== -1) {
-    formattedUrl = formattedUrl.slice(0, index); //Remove everything after the first "/"
+    formattedUrl = formattedUrl.slice(0, index);
   }
 
   return formattedUrl;
 };
-
 export const getVisibleWidth = (windowWidth: number) => {
   if (windowWidth >= 1024) {
     return 768;
@@ -111,4 +114,20 @@ export const handleRefresh = (
 export const isValidLinkedInUrl = (url: string) => {
   const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/;
   return linkedinRegex.test(url);
+};
+
+export const getActionType = (lastActivity: Activity, goalDays: number) => {
+  const days = differenceInDays(new Date(), lastActivity.date);
+  const isUserActivity = lastActivity.type === ActivityType.User;
+
+  const priorityDueThreshold = isUserActivity ? goalDays : 0;
+  const upcomingThreshold = goalDays + DAYS_BEFORE_PAST_DUE;
+
+  if (days > upcomingThreshold) {
+    return ActionType.Priority;
+  } else if (priorityDueThreshold <= days && days <= upcomingThreshold) {
+    return ActionType.Upcoming;
+  } else {
+    return "";
+  }
 };

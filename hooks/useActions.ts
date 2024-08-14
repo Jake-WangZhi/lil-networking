@@ -7,7 +7,7 @@ type Args = {
 };
 
 type ActionType = {
-  pastActions: Array<Action>;
+  priorityActions: Array<Action>;
   upcomingActions: Array<Action>;
   hasContacts: boolean;
   isMeetGoals: boolean;

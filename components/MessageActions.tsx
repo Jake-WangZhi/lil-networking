@@ -129,7 +129,11 @@ export const MessageActions = ({ contact }: Props) => {
           onClick={handleDoneClick}
         >
           <div className="w-12 h-12 bg-light-blue rounded-full flex justify-center items-center mb-1">
-            <Check size={24} color="#0F1A24" />
+            <Check
+              size={24}
+              color="#0F1A24"
+              className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+            />
           </div>
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Done
@@ -147,7 +151,7 @@ export const MessageActions = ({ contact }: Props) => {
           onClick={handleArchiveClick}
         >
           <div className="w-12 h-12 bg-white bg-opacity-5 rounded-full flex justify-center items-center mb-1">
-            <Archive size={24} />
+            <Archive size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           </div>
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Archive

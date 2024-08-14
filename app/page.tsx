@@ -31,7 +31,12 @@ export default function Home() {
       </div>
       <div className="absolute bottom-0 mb-20 flex items-center gap-2">
         <Typography variant="subtitle1">Made with</Typography>
-        <Heart color="red" size={24} weight="fill" className="mb-1" />
+        <Heart
+          color="red"
+          size={24}
+          weight="fill"
+          className="mb-1 md:w-7 md:h-7 lg:w-8 lg:h-8"
+        />
       </div>
     </main>
   );

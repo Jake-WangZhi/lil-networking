@@ -30,15 +30,27 @@ export default function SignInPage() {
 
       <div className="space-y-6">
         <div className="flex space-x-4 items-center">
-          <Notepad color="white" size={32} />
+          <Notepad
+            color="white"
+            size={32}
+            className="md:w-10 md:h-10 lg:w-12 lg:h-12"
+          />
           <Typography variant="h3">Build Networking Habits</Typography>
         </div>
         <div className="flex space-x-4 items-center">
-          <UsersThree color="white" size={32} />
+          <UsersThree
+            color="white"
+            size={32}
+            className="md:w-10 md:h-10 lg:w-12 lg:h-12"
+          />
           <Typography variant="h3">Maintain Relationships</Typography>
         </div>
         <div className="flex space-x-4 items-center">
-          <ArrowsClockwise color="white" size={32} />
+          <ArrowsClockwise
+            color="white"
+            size={32}
+            className="md:w-10 md:h-10 lg:w-12 lg:h-12"
+          />
           <Typography variant="h3">Stay Connected</Typography>
         </div>
       </div>

@@ -8,12 +8,14 @@ import { Typography } from "@mui/material";
 import { NavFooter } from "@/components/NavFooter";
 import { ContactActivites } from "@/components/ContactActivities";
 import { ContactInfo } from "@/components/ContactInfo";
-import { ContactInterests } from "@/components/ContactInterests";
+import { ContactTags } from "@/components/ContactTags";
 import { useEffect, useState } from "react";
 import { ProfileTutorial } from "@/components/ProfileTutorial";
 import { handleRefresh, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
+import { ContactReminder } from "@/components/ContactReminder";
+import { ContactConnect } from "@/components/ContactConnect";
 
 export default function ContactPage({
   params,
@@ -80,14 +82,18 @@ export default function ContactPage({
   }
 
   const { contact } = contactProfile;
-  const { interests, activities } = contact;
+  const { linkedIn, email, phone, goalDays, interests, activities } = contact;
 
   const renderProfile = () => {
     return (
       <>
-        <ContactHeader contact={contact} />
         <ContactInfo contact={contact} />
-        {interests.length !== 0 && <ContactInterests interests={interests} />}
+        <ContactReminder
+          goalDays={goalDays}
+          lastActivityDate={contact.activities[0].date}
+        />
+        <ContactConnect linkedIn={linkedIn} email={email} phone={phone} />
+        {interests.length !== 0 && <ContactTags interests={interests} />}
         <ContactActivites activities={activities} contactId={contact.id} />
       </>
     );
@@ -95,19 +101,16 @@ export default function ContactPage({
 
   return (
     <main className="relative min-h-screen pb-8 text-white">
-      {isLoading ? (
-        renderProfile()
-      ) : (
-        <PullToRefresh
-          onRefresh={handleRefresh(refetch)}
-          resistance={3}
-          refreshingContent={
-            <ClipLoader color="#38ACE2" size={50} className="mt-5" />
-          }
-        >
-          {renderProfile()}
-        </PullToRefresh>
-      )}
+      <ContactHeader contact={contact} />
+      <PullToRefresh
+        onRefresh={handleRefresh(refetch)}
+        resistance={3}
+        refreshingContent={
+          <ClipLoader color="#38ACE2" size={50} className="mt-5" />
+        }
+      >
+        {renderProfile()}
+      </PullToRefresh>
       {showTutorial && isProfileTutorialShown && <ProfileTutorial />}
       <NavFooter />
     </main>
