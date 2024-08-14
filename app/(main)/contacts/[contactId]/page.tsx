@@ -83,6 +83,7 @@ export default function ContactPage({
 
   const { contact } = contactProfile;
   const {
+    id,
     firstName,
     lastName,
     title,
@@ -109,8 +110,10 @@ export default function ContactPage({
           links={links}
         />
         <ContactReminder
+          id={id}
           goalDays={goalDays}
           lastActivityDate={contact.activities[0].date}
+          refetch={refetch}
         />
         <ContactConnect linkedIn={linkedIn} email={email} phone={phone} />
         {interests.length !== 0 && <ContactTags interests={interests} />}
