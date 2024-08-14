@@ -11,7 +11,7 @@ import Image from "next/image";
 import icon from "@/public/images/empty_state_icon.svg";
 import Lottie from "react-lottie";
 import animationData from "@/lottie/908-add-and-save.json";
-import { ChevronDown } from "react-feather";
+import { CaretDown } from "@phosphor-icons/react";
 
 interface Props {
   actions?: {
@@ -115,7 +115,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
       <Accordion disableGutters defaultExpanded={true}>
         <AccordionSummary
           expandIcon={
-            <ChevronDown
+            <CaretDown
               color="white"
               size={24}
               className="md:w-7 md:h-7 lg:w-8 lg:h-8"
@@ -147,7 +147,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
       <Accordion disableGutters defaultExpanded={true}>
         <AccordionSummary
           expandIcon={
-            <ChevronDown
+            <CaretDown
               color="white"
               size={24}
               className="md:w-7 md:h-7 lg:w-8 lg:h-8"

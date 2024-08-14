@@ -2,7 +2,7 @@ import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
-import { Check, Archive } from "react-feather";
+import { Check, Archive } from "@phosphor-icons/react";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { ActivityType, Contact, SearchParams } from "@/types";
 import { AlertDialog } from "./AlertDialog";

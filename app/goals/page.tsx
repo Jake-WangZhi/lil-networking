@@ -6,7 +6,6 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperRef } from "swiper";
 import { Button } from "@/components/Button";
-import { ChevronRight, ChevronLeft } from "react-feather";
 import { ProgressBar } from "@/components/ProgressBar";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useSession } from "next-auth/react";
@@ -14,7 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { GoalQuestions } from "@/components/GoalQuestions";
 import { SearchParams } from "@/types";
 import { event } from "nextjs-google-analytics";
-import { X, Lightning } from "@phosphor-icons/react";
+import { X, Lightning, CaretLeft, CaretRight } from "@phosphor-icons/react";
 
 import "swiper/css";
 import { pauseFor } from "@/lib/utils";
@@ -137,9 +136,9 @@ export default function GoalsPage() {
       <Button
         variant="text"
         onClick={handleBackClick}
-        sx={{ px: "12px", ml: "-12px", mb: "4px" }}
+        sx={{ px: "12px", ml: "-16px", mb: "4px", mt: "20px" }}
       >
-        <X className="text-2xl md:text-3xl lg:text-4xl" />
+        <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
       </Button>
       <ProgressBar
         title={"Goal"}
@@ -222,7 +221,7 @@ export default function GoalsPage() {
                     sx={{ px: "12px" }}
                     onClick={handlePrevClick}
                   >
-                    <ChevronLeft
+                    <CaretLeft
                       size={16}
                       className="md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
@@ -233,7 +232,7 @@ export default function GoalsPage() {
               <div>
                 <Button variant="contained" onClick={handleNextClick}>
                   Next
-                  <ChevronRight
+                  <CaretRight
                     size={16}
                     className="md:w-5 md:h-5 lg:w-6 lg:h-6"
                   />

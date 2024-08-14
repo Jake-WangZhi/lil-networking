@@ -185,7 +185,7 @@ export const ContactHeader = ({ contact }: Props) => {
               >
                 <DotsThreeCircleVertical
                   size={32}
-                  className="md:w-9 md:h-9 lg:w-10 lg:h-10"
+                  className="md:w-10 md:h-10 lg:w-12 lg:h-12"
                 />
               </Button>
             </div>

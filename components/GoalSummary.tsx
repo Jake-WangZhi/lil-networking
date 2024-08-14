@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { GoalStats } from "./GoalStats";
 import { useGoals } from "@/hooks/useGoals";
 import { Button } from "./Button";
-import { PlusCircle } from "react-feather";
+import { PlusCircle } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 import { useCallback, useEffect } from "react";
@@ -118,7 +118,7 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
             },
           }}
         >
-          <PlusCircle />
+          <PlusCircle size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           Add Goal
         </Button>
       )}
