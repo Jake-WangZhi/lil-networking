@@ -40,14 +40,17 @@ export const ContactReminder = ({
       setErrorMessage("");
     },
     onError: (error) => {
+      setShowSkipButton(true);
       setErrorMessage(
-        "An error occurred. Cannot submit the form. Please try again."
+        "An error occurred. Cannot skip the reminder. Please try again."
       );
       console.log(error);
     },
   });
 
   const handleSkipClick = useCallback(() => {
+    setShowSkipButton(false);
+
     postActivityMutation.mutate({
       title: "",
       date: formatISO(new Date()),
