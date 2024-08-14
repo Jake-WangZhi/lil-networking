@@ -64,7 +64,10 @@ export const ContactReminder = ({
       </Typography>
       <div className="flex justify-between">
         <div className="flex gap-3">
-          <CalendarBlank size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+          <CalendarBlank
+            size={24}
+            className="mt-0.5 md:-mt-[1px] lg:-mt-0.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
+          />
           <div className="space-y-1">
             <Typography variant="subtitle1">{`Every ${goalDays} Days`}</Typography>
             <Typography
@@ -76,7 +79,7 @@ export const ContactReminder = ({
         {showSkipButton && (
           <Button
             variant="text"
-            sx={{ px: "16px", py: "12px" }}
+            sx={{ px: "16px", py: "12px", mb: "-4px" }}
             onClick={handleSkipClick}
           >
             <Typography
