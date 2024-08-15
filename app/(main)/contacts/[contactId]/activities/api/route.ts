@@ -31,16 +31,17 @@ export async function POST(
       },
     });
 
-  await prisma.goals.updateMany({
-    where: {
-      userId: contact.userId,
-    },
-    data: {
-      messages: {
-        increment: 1,
+  title &&
+    (await prisma.goals.updateMany({
+      where: {
+        userId: contact.userId,
       },
-    },
-  });
+      data: {
+        messages: {
+          increment: 1,
+        },
+      },
+    }));
 
   const count = await prisma.activity.count({
     where: {
