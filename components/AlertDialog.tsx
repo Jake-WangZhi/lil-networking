@@ -55,8 +55,8 @@ export const AlertDialog = ({
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
         <div>
-          <div className="-mt-6 mb-10">{neverShowAgain}</div>
-          <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="-mt-6">{neverShowAgain}</div>
+          <div className="flex flex-col items-center justify-center space-y-4 mt-12">
             {actionButton}
             {cancelButton}
           </div>
