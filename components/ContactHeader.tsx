@@ -134,6 +134,18 @@ export const ContactHeader = ({ contact }: Props) => {
     [contact.id, router]
   );
 
+  const getDisplayText = (contact: Contact) => {
+    if (contact.isArchived) {
+      return "archived";
+    }
+    if (contact.type) {
+      return contact.type;
+    }
+    if (!contact.activities[0]?.title) {
+      return "skipped";
+    }
+  };
+
   return (
     <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 pb-2 mb-2 px-4">
       {errorMessage && (
@@ -165,13 +177,15 @@ export const ContactHeader = ({ contact }: Props) => {
         {!isFromMessage && (
           <div className="relative">
             <div className="flex items-center">
-              {(contact.type || contact.isArchived) && (
+              {(contact.type ||
+                contact.isArchived ||
+                !contact.activities[0]?.title) && (
                 <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
                   <Typography
                     variant="body1"
                     sx={{ textTransform: "capitalize" }}
                   >
-                    {contact.isArchived ? "archived" : contact.type}
+                    {getDisplayText(contact)}
                   </Typography>
                 </div>
               )}

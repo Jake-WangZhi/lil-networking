@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
+  Typography,
 } from "@mui/material";
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
@@ -12,6 +13,7 @@ interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
   description?: string;
+  neverShowAgain?: ReactNode;
   actionButton: ReactNode;
   cancelButton: ReactNode;
 }
@@ -21,6 +23,7 @@ export const AlertDialog = ({
   setIsOpen,
   title,
   description,
+  neverShowAgain,
   actionButton,
   cancelButton,
 }: Props) => {
@@ -35,24 +38,28 @@ export const AlertDialog = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle
-        id="alert-dialog-title"
-        sx={{ color: "white", textAlign: "center" }}
-      >
-        {title}
+      <DialogTitle id="alert-dialog-title">
+        <Typography
+          variant="h3"
+          sx={{ textAlign: "center", fontWeight: 600, color: "white" }}
+        >
+          {title}
+        </Typography>
       </DialogTitle>
       <DialogContent>
-        <DialogContentText
-          id="alert-dialog-description"
-          sx={{ color: "white", textAlign: "center" }}
-        >
-          {description}
+        <DialogContentText id="alert-dialog-description">
+          <Typography variant="body1" sx={{ textAlign: "center" }}>
+            {description}
+          </Typography>
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
-        <div className="flex flex-col items-center justify-center space-y-4">
-          {actionButton}
-          {cancelButton}
+        <div>
+          <div className="-mt-6 mb-10">{neverShowAgain}</div>
+          <div className="flex flex-col items-center justify-center space-y-4">
+            {actionButton}
+            {cancelButton}
+          </div>
         </div>
       </DialogActions>
     </Dialog>
