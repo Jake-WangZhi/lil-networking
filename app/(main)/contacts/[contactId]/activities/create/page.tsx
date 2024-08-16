@@ -100,7 +100,8 @@ export default function CreateActivityPage({
     }
 
     if (!hasError) {
-      submitFormRef.current?.click();
+      setIsNavigatingBack(true);
+      pauseFor(500).then(() => submitFormRef.current?.click());
     } else {
       setIsSaving(false);
     }
@@ -134,214 +135,216 @@ export default function CreateActivityPage({
   ]);
 
   return (
-    <main
-      className={`relative flex flex-col items-center text-white px-4 pb-8 ${
-        isNavigatingBack
-          ? "animate-slide-out-bottom"
-          : "animate-slide-in-bottom"
-      }`}
-      onAnimationEnd={() => setIsNavigatingBack(false)}
-    >
+    <main className="relative flex flex-col items-center text-white px-4 pb-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={createActivity}>
-        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6">
-          <Grid container alignItems="center">
-            <Grid item xs={2}>
-              <Button
-                variant="text"
-                onClick={handleBackClick}
-                sx={{ px: "14px", ml: "-14px" }}
-              >
-                <Typography variant="subtitle1">Cancel</Typography>
-              </Button>
+        <div
+          className={`${
+            isNavigatingBack
+              ? "animate-slide-out-bottom"
+              : "animate-slide-in-bottom"
+          }`}
+          onAnimationEnd={() => setIsNavigatingBack(false)}
+        >
+          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6">
+            <Grid container alignItems="center">
+              <Grid item xs={2}>
+                <Button
+                  variant="text"
+                  onClick={handleBackClick}
+                  sx={{ px: "14px", ml: "-14px" }}
+                >
+                  <Typography variant="subtitle1">Cancel</Typography>
+                </Button>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontWeight: 600,
+                    textAlign: "center",
+                  }}
+                >
+                  Add Activity
+                </Typography>
+              </Grid>
+              <Grid item xs={2} sx={{ display: "flex", justifyContent: "end" }}>
+                <Button
+                  variant="text"
+                  onClick={validateFields}
+                  sx={{
+                    color: "#38ACE2",
+                    fontSize: "16px",
+                    fontWeight: 400,
+                    px: "14px",
+                    mr: "-14px",
+                    "&:hover": {
+                      color: "#38ACE2",
+                    },
+                    "@media (min-width: 768px)": {
+                      fontSize: "18px",
+                    },
+                    "@media (min-width: 1024px)": {
+                      fontSize: "20px",
+                    },
+                    "&:disabled": {
+                      color: "#38ACE2",
+                    },
+                  }}
+                  disabled={isSaving}
+                >
+                  {isSaving ? "Saving..." : "Save"}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <Typography
-                variant="h3"
-                sx={{
-                  fontWeight: 600,
-                  textAlign: "center",
-                }}
-              >
-                Add Activity
+          </div>
+
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12}>
+              <Grid container alignItems="center" rowSpacing={"4px"}>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1">Title *</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={title}
+                    placeholder="Add title"
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </Grid>
+
+                <Grid item xs={3} />
+                <Grid item xs={9}>
+                  {titleError && (
+                    <div className=" flex items-center space-x-1">
+                      <AlertTriangle
+                        size={16}
+                        fill="#FB5913"
+                        color="black"
+                        className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      />
+                      <Typography variant="subtitle2">{titleError}</Typography>
+                    </div>
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Grid container alignItems="center" rowSpacing={"4px"}>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1">Date *</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    style={{
+                      colorScheme: "dark",
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={3} />
+                <Grid item xs={9}>
+                  {dateError && (
+                    <div className=" flex items-center space-x-1">
+                      <AlertTriangle
+                        size={16}
+                        fill="#FB5913"
+                        color="black"
+                        className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                      />
+                      <Typography variant="subtitle2">{dateError}</Typography>
+                    </div>
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12} sx={{ mt: "8px" }}>
+              <Typography variant="h3" sx={{ fontWeight: 600 }}>
+                Note
               </Typography>
             </Grid>
-            <Grid item xs={2} sx={{ display: "flex", justifyContent: "end" }}>
-              <Button
-                variant="text"
-                onClick={validateFields}
-                sx={{
-                  color: "#38ACE2",
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  px: "14px",
-                  mr: "-14px",
-                  "&:hover": {
-                    color: "#38ACE2",
-                  },
-                  "@media (min-width: 768px)": {
-                    fontSize: "18px",
-                  },
-                  "@media (min-width: 1024px)": {
-                    fontSize: "20px",
-                  },
-                  "&:disabled": {
-                    color: "#38ACE2",
-                  },
-                }}
-                disabled={isSaving}
-              >
-                {isSaving ? "Saving..." : "Save"}
-              </Button>
+            <Grid item xs={12}>
+              <textarea
+                id="note"
+                name="note"
+                value={note}
+                onChange={handleNoteChange}
+                placeholder="Add a note..."
+                maxLength={NOTE_CHARACTER_LIMIT}
+                className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] outline-none appearance-none caret-white"
+              />
+            </Grid>
+            <Grid item xs={12} className="relative -mt-2 flex justify-end">
+              <Typography variant="body1">
+                {note.length}/{NOTE_CHARACTER_LIMIT}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} sx={{ mt: "8px" }}>
+              <Typography variant="h3" sx={{ fontWeight: 600 }}>
+                Extra Details
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <textarea
+                id="description"
+                name="description"
+                value={description}
+                onChange={handleDescriptionChange}
+                placeholder="Add any extra activity details here..."
+                maxLength={DESCRIPTION_CHARACTER_LIMIT}
+                className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] outline-none appearance-none caret-white"
+              />
+            </Grid>
+            <Grid item xs={12} className="relative -mt-2 flex justify-end">
+              <Typography variant="body1">
+                {description.length}/{DESCRIPTION_CHARACTER_LIMIT}
+              </Typography>
             </Grid>
           </Grid>
+
+          <input
+            id="contactId"
+            name="contactId"
+            type="hidden"
+            defaultValue={params.contactId}
+          />
+          <input
+            id="isFromMessage"
+            name="isFromMessage"
+            type="hidden"
+            defaultValue={isFromMessage}
+          />
+          <input
+            id="isFromProfile"
+            name="isFromProfile"
+            type="hidden"
+            defaultValue={isFromProfile}
+          />
+          <input
+            id="isFromDashboard"
+            name="isFromDashboard"
+            type="hidden"
+            defaultValue={isFromDashboard}
+          />
+          <input
+            id="localizedISODate"
+            name="localizedISODate"
+            type="hidden"
+            defaultValue={localizedISODate}
+          />
+          <button ref={submitFormRef} className="hidden" type="submit"></button>
         </div>
-
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12}>
-            <Grid container alignItems="center" rowSpacing={"4px"}>
-              <Grid item xs={3}>
-                <Typography variant="subtitle1">Title *</Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={title}
-                  placeholder="Add title"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={3} />
-              <Grid item xs={9}>
-                {titleError && (
-                  <div className=" flex items-center space-x-1">
-                    <AlertTriangle
-                      size={16}
-                      fill="#FB5913"
-                      color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
-                    />
-                    <Typography variant="subtitle2">{titleError}</Typography>
-                  </div>
-                )}
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Grid container alignItems="center" rowSpacing={"4px"}>
-              <Grid item xs={3}>
-                <Typography variant="subtitle1">Date *</Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <input
-                  type="date"
-                  id="date"
-                  name="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  style={{
-                    colorScheme: "dark",
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={3} />
-              <Grid item xs={9}>
-                {dateError && (
-                  <div className=" flex items-center space-x-1">
-                    <AlertTriangle
-                      size={16}
-                      fill="#FB5913"
-                      color="black"
-                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
-                    />
-                    <Typography variant="subtitle2">{dateError}</Typography>
-                  </div>
-                )}
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12} sx={{ mt: "8px" }}>
-            <Typography variant="h3" sx={{ fontWeight: 600 }}>
-              Note
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <textarea
-              id="note"
-              name="note"
-              value={note}
-              onChange={handleNoteChange}
-              placeholder="Add a note..."
-              maxLength={NOTE_CHARACTER_LIMIT}
-              className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] outline-none appearance-none caret-white"
-            />
-          </Grid>
-          <Grid item xs={12} className="relative -mt-2 flex justify-end">
-            <Typography variant="body1">
-              {note.length}/{NOTE_CHARACTER_LIMIT}
-            </Typography>
-          </Grid>
-
-          <Grid item xs={12} sx={{ mt: "8px" }}>
-            <Typography variant="h3" sx={{ fontWeight: 600 }}>
-              Extra Details
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <textarea
-              id="description"
-              name="description"
-              value={description}
-              onChange={handleDescriptionChange}
-              placeholder="Add any extra activity details here..."
-              maxLength={DESCRIPTION_CHARACTER_LIMIT}
-              className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] outline-none appearance-none caret-white"
-            />
-          </Grid>
-          <Grid item xs={12} className="relative -mt-2 flex justify-end">
-            <Typography variant="body1">
-              {description.length}/{DESCRIPTION_CHARACTER_LIMIT}
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <input
-          id="contactId"
-          name="contactId"
-          type="hidden"
-          defaultValue={params.contactId}
-        />
-        <input
-          id="isFromMessage"
-          name="isFromMessage"
-          type="hidden"
-          defaultValue={isFromMessage}
-        />
-        <input
-          id="isFromProfile"
-          name="isFromProfile"
-          type="hidden"
-          defaultValue={isFromProfile}
-        />
-        <input
-          id="isFromDashboard"
-          name="isFromDashboard"
-          type="hidden"
-          defaultValue={isFromDashboard}
-        />
-        <input
-          id="localizedISODate"
-          name="localizedISODate"
-          type="hidden"
-          defaultValue={localizedISODate}
-        />
-        <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>
 
       {errorMessage && (
