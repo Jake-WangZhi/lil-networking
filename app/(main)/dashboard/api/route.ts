@@ -108,7 +108,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         contactLastName: contact.lastName,
         contactId: contact.id,
         title: contact.title,
-        description: activity.description,
+        note: activity.note,
         days,
         goalDays,
         isNewUser: !isUserActivity,

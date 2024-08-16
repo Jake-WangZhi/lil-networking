@@ -38,7 +38,7 @@ export const ActivityCard = ({
         {formatDate(date)}
       </Typography>
       {note && (
-        <Grid container alignItems="center">
+        <Grid container>
           <Grid item xs={1} sm={0.8} lg={0.7}>
             <NoteBlank
               size={24}

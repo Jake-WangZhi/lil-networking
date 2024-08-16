@@ -37,7 +37,7 @@ model Activity {
 
   title       String
   description String
-  note        String?
+  note        String
   date        DateTime
 
   type ActivityType

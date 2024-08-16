@@ -5,9 +5,9 @@ export interface Action {
   contactFirstName: string;
   contactLastName: string;
   days: number;
-  description: string;
+  note: string;
   goalDays: number;
-  title?: string;
+  title: string;
   isNewUser: boolean;
 }
 
