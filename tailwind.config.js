@@ -41,7 +41,7 @@ module.exports = {
       },
       animation: {
         "slide-in-bottom": "slideInBottom 0.5s ease-out",
-        "slide-out-bottom": "slideOutBottom 0.5s ease-in",
+        "slide-out-bottom": "slideOutBottom 0.6s ease-in",
       },
       keyframes: {
         slideInBottom: {
