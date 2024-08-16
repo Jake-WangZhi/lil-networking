@@ -124,7 +124,7 @@ export const ContactForm = ({ contact }: Props) => {
 
     if (!hasError) {
       setIsNavigatingBack(true);
-      pauseFor(500).then(() => submitFormRef.current?.click());
+      pauseFor(250).then(() => submitFormRef.current?.click());
 
       !contact && userEmail && event("contact_created", { label: userEmail });
     } else {

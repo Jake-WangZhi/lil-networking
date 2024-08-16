@@ -101,7 +101,7 @@ export default function CreateActivityPage({
 
     if (!hasError) {
       setIsNavigatingBack(true);
-      pauseFor(500).then(() => submitFormRef.current?.click());
+      pauseFor(250).then(() => submitFormRef.current?.click());
     } else {
       setIsSaving(false);
     }
