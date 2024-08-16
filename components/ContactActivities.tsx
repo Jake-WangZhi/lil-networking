@@ -2,23 +2,12 @@ import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity, SearchParams } from "@/types";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/lib/utils";
-import {
-  PlusCircle,
-  Circle,
-  CalendarX,
-  NoteBlank,
-} from "@phosphor-icons/react";
-import Link from "next/link";
+import { PlusCircle, Circle, CalendarX } from "@phosphor-icons/react";
+import { ActivityCard } from "./ActivityCard";
 
 interface Props {
   activities: Activity[];
@@ -128,52 +117,14 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
               }`}
             >
               {title && (
-                <Card sx={{ ml: "24px" }}>
-                  <CardActionArea>
-                    <CardContent>
-                      <Link
-                        href={`/contacts/${contactId}/activities/${id}/edit`}
-                        className="text-white"
-                      >
-                        <Typography
-                          variant="subtitle1"
-                          sx={{
-                            fontWeight: 600,
-                          }}
-                        >
-                          {title}
-                        </Typography>
-                        <Typography variant="body1" sx={{ opacity: 0.7 }}>
-                          {formatDate(date)}
-                        </Typography>
-                        {note && (
-                          <Grid container spacing={2} alignItems="center">
-                            <Grid item xs={1}>
-                              <NoteBlank
-                                size={24}
-                                color="white"
-                                className="mt-1.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
-                              />
-                            </Grid>
-                            <Grid item xs={11}>
-                              <Typography
-                                variant="body1"
-                                sx={{ marginTop: "8px" }}
-                              >
-                                {note}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        )}
-                        {description && (
-                          <Typography variant="body1" sx={{ marginTop: "8px" }}>
-                            {description}
-                          </Typography>
-                        )}
-                      </Link>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
+                <ActivityCard
+                  contactId={contactId}
+                  activityId={id}
+                  title={title}
+                  date={date}
+                  note={note}
+                  description={description}
+                />
               )}
             </div>
           </div>
