@@ -1,18 +1,11 @@
-import { useActivityMutation } from "@/hooks/useActivityMutation";
-import { Activity, ActivityType, SearchParams } from "@/types";
-import { useCallback, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { Activity, SearchParams } from "@/types";
+import { useCallback } from "react";
+import { Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/lib/utils";
-import {
-  PlusCircle,
-  Circle,
-  Trash,
-  CalendarX,
-  NoteBlank,
-} from "@phosphor-icons/react";
+import { PlusCircle, Circle, CalendarX } from "@phosphor-icons/react";
+import { ActivityCard } from "./ActivityCard";
 
 interface Props {
   activities: Activity[];
@@ -20,32 +13,10 @@ interface Props {
 }
 
 export const ContactActivites = ({ activities, contactId }: Props) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
   const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
   const isFromDashboard = searchParams?.get(SearchParams.IsFromDashboard);
-
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const deleteActivityMutation = useActivityMutation({
-    method: "DELETE",
-    onSuccess: () => {
-      setErrorMessage("");
-      queryClient.refetchQueries(["contact", activities?.[0].contactId]);
-    },
-    onError: (error) => {
-      setErrorMessage("An error occurred. Please try again.");
-      console.log(error);
-    },
-  });
-
-  const handleDeleteClick = useCallback(
-    (id: string) => () => {
-      deleteActivityMutation.mutate({ id });
-    },
-    [deleteActivityMutation]
-  );
 
   const handlePlusClick = useCallback(
     () =>
@@ -59,14 +30,6 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
 
   return (
     <div className="mb-12 mx-4">
-      {errorMessage && (
-        <Typography
-          variant="subtitle2"
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
-          {errorMessage}
-        </Typography>
-      )}
       <div className="flex items-center justify-between mb-3">
         <Typography variant="h3" sx={{ fontWeight: 600 }}>
           History
@@ -129,58 +92,14 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
               }`}
             >
               {title && (
-                <Card sx={{ ml: "24px" }}>
-                  <CardContent>
-                    <div className="flex justify-between items-center">
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          fontWeight: 600,
-                        }}
-                      >
-                        {title}
-                      </Typography>
-                      {type === ActivityType.User && !isFromMessage && (
-                        <div className="flex items-start">
-                          <Button
-                            variant="text"
-                            onClick={handleDeleteClick(id)}
-                            sx={{ height: "auto" }}
-                          >
-                            <Trash
-                              size={24}
-                              className="md:w-7 md:h-7 lg:w-8 lg:h-8"
-                            />
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                    <Typography variant="body1" sx={{ opacity: 0.7 }}>
-                      {formatDate(date)}
-                    </Typography>
-                    {note && (
-                      <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={1}>
-                          <NoteBlank
-                            size={24}
-                            color="white"
-                            className="mt-1.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
-                          />
-                        </Grid>
-                        <Grid item xs={11}>
-                          <Typography variant="body1" sx={{ marginTop: "8px" }}>
-                            {note}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    )}
-                    {description && (
-                      <Typography variant="body1" sx={{ marginTop: "8px" }}>
-                        {description}
-                      </Typography>
-                    )}
-                  </CardContent>
-                </Card>
+                <ActivityCard
+                  contactId={contactId}
+                  activityId={id}
+                  title={title}
+                  date={date}
+                  note={note}
+                  description={description}
+                />
               )}
             </div>
           </div>

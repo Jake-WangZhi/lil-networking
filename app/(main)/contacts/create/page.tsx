@@ -4,6 +4,6 @@ import "react-tagsinput/react-tagsinput.css";
 import "../styles.css";
 import { ContactForm } from "@/components/ContactForm";
 
-export default function CreatePage() {
+export default function CreateContactPage() {
   return <ContactForm />;
 }
