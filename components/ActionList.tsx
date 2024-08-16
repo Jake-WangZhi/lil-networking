@@ -136,11 +136,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
 
   return (
     <div className="w-full mb-20 mt-5 space-y-6">
-      <Accordion
-        disableGutters
-        expanded={priorityExpanded}
-        onClick={handlePriorityClick}
-      >
+      <Accordion disableGutters expanded={priorityExpanded}>
         <AccordionSummary
           expandIcon={
             <CaretDown
@@ -149,6 +145,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               className="md:w-7 md:h-7 lg:w-8 lg:h-8"
             />
           }
+          onClick={handlePriorityClick}
         >
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-magenta mb-1 md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
@@ -172,11 +169,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion
-        disableGutters
-        expanded={upcomingExpanded}
-        onClick={handleUpcomingClick}
-      >
+      <Accordion disableGutters expanded={upcomingExpanded}>
         <AccordionSummary
           expandIcon={
             <CaretDown
@@ -185,6 +178,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               className="md:w-7 md:h-7 lg:w-8 lg:h-8"
             />
           }
+          onClick={handleUpcomingClick}
         >
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-light-yellow mb-1 md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
