@@ -2,11 +2,17 @@ import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity, ActivityType, SearchParams } from "@/types";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/lib/utils";
-import { PlusCircle, Circle, Trash, CalendarX } from "@phosphor-icons/react";
+import {
+  PlusCircle,
+  Circle,
+  Trash,
+  CalendarX,
+  NoteBlank,
+} from "@phosphor-icons/react";
 
 interface Props {
   activities: Activity[];
@@ -89,79 +95,97 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
           </Button>
         )}
       </div>
-      {activities?.map(({ id, title, date, description, type }, index) => (
-        <div key={`activity-${index}`}>
-          {title ? (
-            <Circle
-              size={16}
-              fill="#38ACE2"
-              weight="fill"
-              color="#38ACE2"
-              className="absolute bg-dark-blue w-4 h-7 flex items-center -mt-2 md:w-5 md:h-8 lg:w-6 lg:h-9"
-            />
-          ) : (
-            <div className="flex">
-              <CalendarX
-                size={24}
-                className="text-light-blue -ml-1 md:w-7 md:h-7 lg:w-8 lg:h-8"
+      {activities?.map(
+        ({ id, title, date, description, note, type }, index) => (
+          <div key={`activity-${index}`}>
+            {title ? (
+              <Circle
+                size={16}
+                fill="#38ACE2"
+                weight="fill"
+                color="#38ACE2"
+                className="absolute bg-dark-blue w-4 h-7 flex items-center -mt-2 md:w-5 md:h-8 lg:w-6 lg:h-9"
               />
-              <div className="flex ml-3 gap-1 mt-[2.5px] md:mt-1 lg:mt-1.5">
-                <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                  Skipped
-                </Typography>
-                <Typography variant="body1" sx={{ opacity: 0.7 }}>
-                  {formatDate(date)}
-                </Typography>
-              </div>
-            </div>
-          )}
-          <div
-            className={`flex pb-4 ml-[7px] md:ml-[9px] lg:ml-[11px] bg-dark-blue ${
-              index + 1 !== activities?.length &&
-              "border-l-2 border-light-blue border-dashed"
-            }`}
-          >
-            {title && (
-              <Card sx={{ ml: "24px" }}>
-                <CardContent>
-                  <div className="flex justify-between items-center">
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        fontWeight: 600,
-                      }}
-                    >
-                      {title}
-                    </Typography>
-                    {type === ActivityType.User && !isFromMessage && (
-                      <div className="flex items-start">
-                        <Button
-                          variant="text"
-                          onClick={handleDeleteClick(id)}
-                          sx={{ height: "auto" }}
-                        >
-                          <Trash
-                            size={24}
-                            className="md:w-7 md:h-7 lg:w-8 lg:h-8"
-                          />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
+            ) : (
+              <div className="flex">
+                <CalendarX
+                  size={24}
+                  className="text-light-blue -ml-1 md:w-7 md:h-7 lg:w-8 lg:h-8"
+                />
+                <div className="flex ml-3 gap-1 mt-[2.5px] md:mt-1 lg:mt-1.5">
+                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                    Skipped
+                  </Typography>
                   <Typography variant="body1" sx={{ opacity: 0.7 }}>
                     {formatDate(date)}
                   </Typography>
-                  {description && (
-                    <Typography variant="body1" sx={{ marginTop: "8px" }}>
-                      {description}
-                    </Typography>
-                  )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             )}
+            <div
+              className={`flex pb-4 ml-[7px] md:ml-[9px] lg:ml-[11px] bg-dark-blue ${
+                index + 1 !== activities?.length &&
+                "border-l-2 border-light-blue border-dashed"
+              }`}
+            >
+              {title && (
+                <Card sx={{ ml: "24px" }}>
+                  <CardContent>
+                    <div className="flex justify-between items-center">
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          fontWeight: 600,
+                        }}
+                      >
+                        {title}
+                      </Typography>
+                      {type === ActivityType.User && !isFromMessage && (
+                        <div className="flex items-start">
+                          <Button
+                            variant="text"
+                            onClick={handleDeleteClick(id)}
+                            sx={{ height: "auto" }}
+                          >
+                            <Trash
+                              size={24}
+                              className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                            />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    <Typography variant="body1" sx={{ opacity: 0.7 }}>
+                      {formatDate(date)}
+                    </Typography>
+                    {note && (
+                      <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={1}>
+                          <NoteBlank
+                            size={24}
+                            color="white"
+                            className="mt-1.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
+                          />
+                        </Grid>
+                        <Grid item xs={11}>
+                          <Typography variant="body1" sx={{ marginTop: "8px" }}>
+                            {note}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    )}
+                    {description && (
+                      <Typography variant="body1" sx={{ marginTop: "8px" }}>
+                        {description}
+                      </Typography>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      )}
     </div>
   );
 };
