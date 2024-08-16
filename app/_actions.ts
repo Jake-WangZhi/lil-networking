@@ -89,6 +89,7 @@ export async function upsertContact(formData: FormData) {
       data: {
         contactId: contact.id,
         title: "Contact created",
+        note: "",
         description: history || "",
         date: new Date(),
         type: "SYSTEM",

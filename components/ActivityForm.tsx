@@ -159,7 +159,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
   const handleConfirmClick = useCallback(() => {
     deleteActivityMutation.mutate({ contactId, id: activity?.id });
     setIsAlertOpen(false);
-  }, []);
+  }, [activity?.id, contactId, deleteActivityMutation]);
 
   const handleAlertCancelClick = useCallback(() => {
     setIsAlertOpen(false);

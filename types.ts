@@ -56,6 +56,7 @@ export interface ActivityArgs {
   id?: string;
   contactId?: string;
   title?: string;
+  note?: string;
   description?: string;
   date?: string;
   type?: ActivityType;
