@@ -121,7 +121,7 @@ export default function GoalsPage() {
 
   const handleBackClick = useCallback(() => {
     setIsNavigatingBack(true);
-    pauseFor(500).then(() => router.back());
+    pauseFor(450).then(() => router.back());
   }, [router]);
 
   return (

@@ -127,7 +127,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
 
   const handleCancelClick = useCallback(() => {
     setIsNavigatingBack(true);
-    pauseFor(500).then(() => {
+    pauseFor(450).then(() => {
       if (isFromMessage) {
         const localizedISODate = convertToLocalizedISODate(date);
 
@@ -153,7 +153,10 @@ export default function ActivityForm({ contactId, activity }: Props) {
   ]);
 
   const handleDeleteClick = useCallback(() => {
-    deleteActivityMutation.mutate({ contactId, id: activity?.id });
+    setIsNavigatingBack(true);
+    pauseFor(450).then(() => {
+      deleteActivityMutation.mutate({ contactId, id: activity?.id });
+    });
   }, []);
 
   return (

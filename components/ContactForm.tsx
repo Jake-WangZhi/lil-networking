@@ -133,9 +133,9 @@ export const ContactForm = ({ contact }: Props) => {
     }
   }, [firstName, linkedIn, email, phone, links, contact, userEmail]);
 
-  const handleBackClick = useCallback(() => {
+  const handleCancelClick = useCallback(() => {
     setIsNavigatingBack(true);
-    pauseFor(500).then(() => router.back());
+    pauseFor(450).then(() => router.back());
   }, [router]);
 
   useEffect(() => {
@@ -192,7 +192,7 @@ export const ContactForm = ({ contact }: Props) => {
               <Grid item xs={2}>
                 <Button
                   variant="text"
-                  onClick={handleBackClick}
+                  onClick={handleCancelClick}
                   sx={{ px: "14px", ml: "-14px" }}
                 >
                   <Typography variant="subtitle1">Cancel</Typography>
