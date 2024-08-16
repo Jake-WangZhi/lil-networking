@@ -9,11 +9,12 @@ import { AlertTriangle } from "react-feather";
 import { createActivity } from "@/app/_actions";
 import { Button } from "@/components/Button";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
-import { convertToLocalizedISODate } from "@/lib/utils";
+import { convertToLocalizedISODate, pauseFor } from "@/lib/utils";
 
 import "../../../styles.css";
 
-const CHARACTER_LIMIT = 300;
+const NOTE_CHARACTER_LIMIT = 100;
+const DESCRIPTION_CHARACTER_LIMIT = 300;
 
 export default function CreateActivityPage({
   params,
@@ -33,13 +34,17 @@ export default function CreateActivityPage({
   const isFromDashboard = searchParams?.get(SearchParams.IsFromDashboard) || "";
 
   const [description, setDescription] = useState(prefilledDescription);
+  const [note, setNote] = useState("");
   const [title, setTitle] = useState(prefilledTitle);
-  const [date, setDate] = useState(prefilledDate);
+  const [date, setDate] = useState(
+    prefilledDate || new Date().toISOString().slice(0, 10)
+  );
   const [titleError, setTitleError] = useState("");
   const [dateError, setDateError] = useState("");
-  const [isLogging, setIsLogging] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [localizedISODate, setlocalizedISODate] = useState("");
+  const [isNavigatingBack, setIsNavigatingBack] = useState(false);
 
   useEffect(() => {
     if (date) {
@@ -73,44 +78,51 @@ export default function CreateActivityPage({
     setDescription(event.target.value);
   };
 
+  const handleNoteChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setNote(event.target.value);
+  };
+
   const validateFields = useCallback(() => {
-    setIsLogging(true);
+    setIsSaving(true);
     let hasError = false;
 
     setTitleError("");
     setDateError("");
 
     if (!title) {
-      setTitleError("Title is required");
+      setTitleError("Required Field");
       hasError = true;
     }
 
     if (!date) {
-      setDateError("Invalid entry");
+      setDateError("Invalid Date");
       hasError = true;
     }
 
     if (!hasError) {
       submitFormRef.current?.click();
     } else {
-      setIsLogging(false);
+      setIsSaving(false);
     }
   }, [date, title]);
 
-  const handleCancelClick = useCallback(() => {
-    if (isFromMessage) {
-      const localizedISODate = convertToLocalizedISODate(date);
+  const handleBackClick = useCallback(() => {
+    setIsNavigatingBack(true);
+    pauseFor(500).then(() => {
+      if (isFromMessage) {
+        const localizedISODate = convertToLocalizedISODate(date);
 
-      postActivityMutation.mutate({
-        title: prefilledTitle,
-        date: localizedISODate,
-        description: prefilledDescription,
-        contactId: params.contactId,
-        type: ActivityType.User,
-      });
-    } else {
-      router.back();
-    }
+        postActivityMutation.mutate({
+          title: prefilledTitle,
+          date: localizedISODate,
+          description: prefilledDescription,
+          contactId: params.contactId,
+          type: ActivityType.User,
+        });
+      } else {
+        router.back();
+      }
+    });
   }, [
     date,
     isFromMessage,
@@ -122,14 +134,70 @@ export default function CreateActivityPage({
   ]);
 
   return (
-    <main className="relative flex flex-col items-center text-white px-4 py-8">
+    <main
+      className={`relative flex flex-col items-center text-white px-4 pb-8 ${
+        isNavigatingBack
+          ? "animate-slide-out-bottom"
+          : "animate-slide-in-bottom"
+      }`}
+      onAnimationEnd={() => setIsNavigatingBack(false)}
+    >
       {/* @ts-expect-error Async Server Component */}
       <form action={createActivity}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} sx={{ textAlign: "center" }}>
-            <Typography variant="h2">Log Activity</Typography>
+        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6">
+          <Grid container alignItems="center">
+            <Grid item xs={2}>
+              <Button
+                variant="text"
+                onClick={handleBackClick}
+                sx={{ px: "14px", ml: "-14px" }}
+              >
+                <Typography variant="subtitle1">Cancel</Typography>
+              </Button>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="h3"
+                sx={{
+                  fontWeight: 600,
+                  textAlign: "center",
+                }}
+              >
+                Add Activity
+              </Typography>
+            </Grid>
+            <Grid item xs={2} sx={{ display: "flex", justifyContent: "end" }}>
+              <Button
+                variant="text"
+                onClick={validateFields}
+                sx={{
+                  color: "#38ACE2",
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  px: "14px",
+                  mr: "-14px",
+                  "&:hover": {
+                    color: "#38ACE2",
+                  },
+                  "@media (min-width: 768px)": {
+                    fontSize: "18px",
+                  },
+                  "@media (min-width: 1024px)": {
+                    fontSize: "20px",
+                  },
+                  "&:disabled": {
+                    color: "#38ACE2",
+                  },
+                }}
+                disabled={isSaving}
+              >
+                {isSaving ? "Saving..." : "Save"}
+              </Button>
+            </Grid>
           </Grid>
+        </div>
 
+        <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
@@ -141,6 +209,7 @@ export default function CreateActivityPage({
                   id="title"
                   name="title"
                   value={title}
+                  placeholder="Add title"
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </Grid>
@@ -198,7 +267,27 @@ export default function CreateActivityPage({
           </Grid>
 
           <Grid item xs={12} sx={{ mt: "8px" }}>
-            <Typography variant="subtitle1">Activity Details</Typography>
+            <Typography variant="subtitle1">Note</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <textarea
+              id="note"
+              name="note"
+              value={note}
+              onChange={handleNoteChange}
+              placeholder="Add a note..."
+              maxLength={NOTE_CHARACTER_LIMIT}
+              className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] outline-none appearance-none caret-white"
+            />
+          </Grid>
+          <Grid item xs={12} className="relative -mt-2 flex justify-end">
+            <Typography variant="body1">
+              {note.length}/{NOTE_CHARACTER_LIMIT}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sx={{ mt: "8px" }}>
+            <Typography variant="subtitle1">Extra Details</Typography>
           </Grid>
           <Grid item xs={12}>
             <textarea
@@ -206,39 +295,15 @@ export default function CreateActivityPage({
               name="description"
               value={description}
               onChange={handleDescriptionChange}
-              placeholder="Describe this activity here..."
-              maxLength={CHARACTER_LIMIT}
+              placeholder="Add any extra activity details here..."
+              maxLength={DESCRIPTION_CHARACTER_LIMIT}
               className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] outline-none appearance-none caret-white"
             />
           </Grid>
           <Grid item xs={12} className="relative -mt-2 flex justify-end">
             <Typography variant="body1">
-              {description.length}/{CHARACTER_LIMIT}
+              {description.length}/{DESCRIPTION_CHARACTER_LIMIT}
             </Typography>
-          </Grid>
-
-          <Grid item xs={12} className="flex justify-center mt-2">
-            <Button
-              variant="contained"
-              onClick={validateFields}
-              disabled={isLogging}
-              sx={{
-                "&:disabled": {
-                  color: "#0F1A24",
-                },
-              }}
-            >
-              {isLogging ? "Logging..." : "Log Activity"}
-            </Button>
-          </Grid>
-          <Grid item xs={12} className="flex justify-center mt-2">
-            <Button
-              variant="text"
-              onClick={handleCancelClick}
-              sx={{ px: "16px" }}
-            >
-              Cancel
-            </Button>
           </Grid>
         </Grid>
 
