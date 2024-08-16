@@ -165,7 +165,7 @@ export const ContactHeader = ({ contact }: Props) => {
           onClick={handleBackClick}
           sx={{
             px: isChanged ? "12px" : "6px",
-            ml: isChanged ? "-12px" : "-6px",
+            ml: isChanged ? "-18px" : "-12px",
           }}
         >
           {isChanged ? (
@@ -192,7 +192,7 @@ export const ContactHeader = ({ contact }: Props) => {
               <Button
                 variant="text"
                 sx={{
-                  mr: "-12px",
+                  mr: "-16px",
                   px: "12px",
                 }}
                 onClick={handleDropdownClick}

@@ -12,6 +12,7 @@ import icon from "@/public/images/empty_state_icon.svg";
 import Lottie from "react-lottie";
 import animationData from "@/lottie/908-add-and-save.json";
 import { CaretDown } from "@phosphor-icons/react";
+import { useCallback, useEffect, useState } from "react";
 
 interface Props {
   actions?: {
@@ -24,6 +25,29 @@ interface Props {
 }
 
 export const ActionList = ({ actions, isLoading, isError }: Props) => {
+  const [priorityExpanded, setPriorityExpanded] = useState(
+    JSON.parse(localStorage.getItem("priorityExpanded") || "true")
+  );
+  const [upcomingExpanded, setUpcomingExpanded] = useState(
+    JSON.parse(localStorage.getItem("upcomingExpanded") || "true")
+  );
+
+  useEffect(() => {
+    localStorage.setItem("priorityExpanded", JSON.stringify(priorityExpanded));
+  }, [priorityExpanded]);
+
+  useEffect(() => {
+    localStorage.setItem("upcomingExpanded", JSON.stringify(upcomingExpanded));
+  }, [upcomingExpanded]);
+
+  const handlePriorityClick = () => {
+    setPriorityExpanded(!priorityExpanded);
+  };
+
+  const handleUpcomingClick = () => {
+    setUpcomingExpanded(!upcomingExpanded);
+  };
+
   if (isError) {
     return (
       <Typography
@@ -112,7 +136,11 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
 
   return (
     <div className="w-full mb-20 mt-5 space-y-6">
-      <Accordion disableGutters defaultExpanded={true}>
+      <Accordion
+        disableGutters
+        expanded={priorityExpanded}
+        onClick={handlePriorityClick}
+      >
         <AccordionSummary
           expandIcon={
             <CaretDown
@@ -144,7 +172,11 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion disableGutters defaultExpanded={true}>
+      <Accordion
+        disableGutters
+        expanded={upcomingExpanded}
+        onClick={handleUpcomingClick}
+      >
         <AccordionSummary
           expandIcon={
             <CaretDown
