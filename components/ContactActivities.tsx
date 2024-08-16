@@ -99,6 +99,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                   date={date}
                   note={note}
                   description={description}
+                  type={type}
                 />
               )}
             </div>

@@ -117,9 +117,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
     }
 
     if (!hasError) {
-      setIsNavigatingBack(true);
-      pauseFor(100).then(() => submitFormRef.current?.click());
-      pauseFor(400);
+      submitFormRef.current?.click();
     } else {
       setIsSaving(false);
     }
@@ -153,10 +151,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
   ]);
 
   const handleDeleteClick = useCallback(() => {
-    setIsNavigatingBack(true);
-    pauseFor(450).then(() => {
-      deleteActivityMutation.mutate({ contactId, id: activity?.id });
-    });
+    deleteActivityMutation.mutate({ contactId, id: activity?.id });
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import { formatDate } from "@/lib/utils";
+import { ActivityType } from "@/types";
 import {
   Card,
   CardActionArea,
@@ -16,6 +17,7 @@ interface Props {
   date: string;
   note: string;
   description: string;
+  type: ActivityType;
 }
 
 export const ActivityCard = ({
@@ -25,50 +27,54 @@ export const ActivityCard = ({
   date,
   note,
   description,
+  type,
 }: Props) => {
+  const content = (
+    <CardContent>
+      <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+        {title}
+      </Typography>
+      <Typography variant="body1" sx={{ opacity: 0.7 }}>
+        {formatDate(date)}
+      </Typography>
+      {note && (
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={1}>
+            <NoteBlank
+              size={24}
+              color="white"
+              className="mt-1.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
+            />
+          </Grid>
+          <Grid item xs={11}>
+            <Typography variant="body1" sx={{ marginTop: "8px" }}>
+              {note}
+            </Typography>
+          </Grid>
+        </Grid>
+      )}
+      {description && (
+        <Typography variant="body1" sx={{ marginTop: "8px" }}>
+          {description}
+        </Typography>
+      )}
+    </CardContent>
+  );
+
   return (
     <Card sx={{ ml: "24px" }}>
-      <CardActionArea>
-        <CardContent>
+      {type === ActivityType.User ? (
+        <CardActionArea>
           <Link
             href={`/contacts/${contactId}/activities/${activityId}/edit`}
             className="text-white"
           >
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: 600,
-              }}
-            >
-              {title}
-            </Typography>
-            <Typography variant="body1" sx={{ opacity: 0.7 }}>
-              {formatDate(date)}
-            </Typography>
-            {note && (
-              <Grid container spacing={2} alignItems="center">
-                <Grid item xs={1}>
-                  <NoteBlank
-                    size={24}
-                    color="white"
-                    className="mt-1.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
-                  />
-                </Grid>
-                <Grid item xs={11}>
-                  <Typography variant="body1" sx={{ marginTop: "8px" }}>
-                    {note}
-                  </Typography>
-                </Grid>
-              </Grid>
-            )}
-            {description && (
-              <Typography variant="body1" sx={{ marginTop: "8px" }}>
-                {description}
-              </Typography>
-            )}
+            {content}
           </Link>
-        </CardContent>
-      </CardActionArea>
+        </CardActionArea>
+      ) : (
+        content
+      )}
     </Card>
   );
 };
