@@ -10,6 +10,7 @@ import { createActivity } from "@/app/_actions";
 import { Button } from "@/components/Button";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { convertToLocalizedISODate, pauseFor } from "@/lib/utils";
+import { AlertDialog } from "./AlertDialog";
 
 const NOTE_CHARACTER_LIMIT = 100;
 const DESCRIPTION_CHARACTER_LIMIT = 300;
@@ -48,6 +49,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [localizedISODate, setlocalizedISODate] = useState("");
   const [isNavigatingBack, setIsNavigatingBack] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   useEffect(() => {
     if (date) {
@@ -151,7 +153,16 @@ export default function ActivityForm({ contactId, activity }: Props) {
   ]);
 
   const handleDeleteClick = useCallback(() => {
+    setIsAlertOpen(true);
+  }, []);
+
+  const handleConfirmClick = useCallback(() => {
     deleteActivityMutation.mutate({ contactId, id: activity?.id });
+    setIsAlertOpen(false);
+  }, []);
+
+  const handleAlertCancelClick = useCallback(() => {
+    setIsAlertOpen(false);
   }, []);
 
   return (
@@ -391,6 +402,38 @@ export default function ActivityForm({ contactId, activity }: Props) {
           <button ref={submitFormRef} className="hidden" type="submit"></button>
         </div>
       </form>
+
+      <AlertDialog
+        isOpen={isAlertOpen}
+        setIsOpen={setIsAlertOpen}
+        title={`Are you sure you want to delete this Activity?`}
+        description={
+          "Deleting this activity is permanent. This activity will need to be rentered."
+        }
+        actionButton={
+          <Button
+            variant="contained"
+            onClick={handleConfirmClick}
+            sx={{
+              zIndex: 10,
+              width: "221px",
+              color: "white !important",
+              backgroundColor: "#FB5913 !important",
+            }}
+          >
+            Delete
+          </Button>
+        }
+        cancelButton={
+          <Button
+            variant="text"
+            onClick={handleAlertCancelClick}
+            sx={{ zIndex: 10, width: "221px" }}
+          >
+            Cancel
+          </Button>
+        }
+      />
 
       {errorMessage && (
         <Typography variant="subtitle2" sx={{ textAlign: "center" }}>

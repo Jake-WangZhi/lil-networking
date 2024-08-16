@@ -38,15 +38,15 @@ export const ActivityCard = ({
         {formatDate(date)}
       </Typography>
       {note && (
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={1}>
+        <Grid container alignItems="center">
+          <Grid item xs={1} sm={0.8} lg={0.7}>
             <NoteBlank
               size={24}
               color="white"
               className="mt-1.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
             />
           </Grid>
-          <Grid item xs={11}>
+          <Grid item xs={11} sm={11.2} lg={11.3}>
             <Typography variant="body1" sx={{ marginTop: "8px" }}>
               {note}
             </Typography>
