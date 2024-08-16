@@ -1,7 +1,5 @@
-import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity, SearchParams } from "@/types";
 import { useCallback, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,25 +13,12 @@ interface Props {
 }
 
 export const ContactActivites = ({ activities, contactId }: Props) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
   const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
   const isFromDashboard = searchParams?.get(SearchParams.IsFromDashboard);
 
   const [errorMessage, setErrorMessage] = useState("");
-
-  const deleteActivityMutation = useActivityMutation({
-    method: "DELETE",
-    onSuccess: () => {
-      setErrorMessage("");
-      queryClient.refetchQueries(["contact", activities?.[0].contactId]);
-    },
-    onError: (error) => {
-      setErrorMessage("An error occurred. Please try again.");
-      console.log(error);
-    },
-  });
 
   const handlePlusClick = useCallback(
     () =>

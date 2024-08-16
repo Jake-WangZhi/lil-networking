@@ -57,6 +57,20 @@ export default function ActivityForm({ contactId, activity }: Props) {
     }
   }, [date]);
 
+  const deleteActivityMutation = useActivityMutation({
+    method: "DELETE",
+    onSuccess: () => {
+      setErrorMessage("");
+      router.back();
+    },
+    onError: (error) => {
+      setErrorMessage(
+        "An error occurred. Cannot delete the activity. Please try again."
+      );
+      console.log(error);
+    },
+  });
+
   const postActivityMutation = useActivityMutation({
     method: "POST",
     onSuccess: ({ showQuote }) => {
@@ -138,7 +152,9 @@ export default function ActivityForm({ contactId, activity }: Props) {
     router,
   ]);
 
-  const handleDeleteClick = useCallback(() => {}, []);
+  const handleDeleteClick = useCallback(() => {
+    deleteActivityMutation.mutate({ contactId, id: activity?.id });
+  }, []);
 
   return (
     <main className="relative flex flex-col items-center text-white px-4 pb-8">
