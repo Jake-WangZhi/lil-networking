@@ -12,7 +12,7 @@ import icon from "@/public/images/empty_state_icon.svg";
 import Lottie from "react-lottie";
 import animationData from "@/lottie/908-add-and-save.json";
 import { CaretDown } from "@phosphor-icons/react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   actions?: {
