@@ -267,7 +267,9 @@ export default function CreateActivityPage({
           </Grid>
 
           <Grid item xs={12} sx={{ mt: "8px" }}>
-            <Typography variant="subtitle1">Note</Typography>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              Note
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <textarea
@@ -287,7 +289,9 @@ export default function CreateActivityPage({
           </Grid>
 
           <Grid item xs={12} sx={{ mt: "8px" }}>
-            <Typography variant="subtitle1">Extra Details</Typography>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              Extra Details
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <textarea
