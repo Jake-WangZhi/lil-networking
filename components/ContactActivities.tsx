@@ -1,5 +1,5 @@
 import { Activity, SearchParams } from "@/types";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -18,8 +18,6 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
   const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
   const isFromDashboard = searchParams?.get(SearchParams.IsFromDashboard);
 
-  const [errorMessage, setErrorMessage] = useState("");
-
   const handlePlusClick = useCallback(
     () =>
       router.push(
@@ -32,14 +30,6 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
 
   return (
     <div className="mb-12 mx-4">
-      {errorMessage && (
-        <Typography
-          variant="subtitle2"
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
-          {errorMessage}
-        </Typography>
-      )}
       <div className="flex items-center justify-between mb-3">
         <Typography variant="h3" sx={{ fontWeight: 600 }}>
           History
