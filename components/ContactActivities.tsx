@@ -1,18 +1,24 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
-import { Activity, ActivityType, SearchParams } from "@/types";
+import { Activity, SearchParams } from "@/types";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, Grid, Typography } from "@mui/material";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import {
   PlusCircle,
   Circle,
-  Trash,
   CalendarX,
   NoteBlank,
 } from "@phosphor-icons/react";
+import Link from "next/link";
 
 interface Props {
   activities: Activity[];
@@ -39,13 +45,6 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
       console.log(error);
     },
   });
-
-  const handleDeleteClick = useCallback(
-    (id: string) => () => {
-      deleteActivityMutation.mutate({ id });
-    },
-    [deleteActivityMutation]
-  );
 
   const handlePlusClick = useCallback(
     () =>
@@ -130,56 +129,50 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
             >
               {title && (
                 <Card sx={{ ml: "24px" }}>
-                  <CardContent>
-                    <div className="flex justify-between items-center">
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          fontWeight: 600,
-                        }}
+                  <CardActionArea>
+                    <CardContent>
+                      <Link
+                        href={`/contacts/${contactId}/activities/${id}/edit`}
+                        className="text-white"
                       >
-                        {title}
-                      </Typography>
-                      {type === ActivityType.User && !isFromMessage && (
-                        <div className="flex items-start">
-                          <Button
-                            variant="text"
-                            onClick={handleDeleteClick(id)}
-                            sx={{ height: "auto" }}
-                          >
-                            <Trash
-                              size={24}
-                              className="md:w-7 md:h-7 lg:w-8 lg:h-8"
-                            />
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                    <Typography variant="body1" sx={{ opacity: 0.7 }}>
-                      {formatDate(date)}
-                    </Typography>
-                    {note && (
-                      <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={1}>
-                          <NoteBlank
-                            size={24}
-                            color="white"
-                            className="mt-1.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
-                          />
-                        </Grid>
-                        <Grid item xs={11}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{
+                            fontWeight: 600,
+                          }}
+                        >
+                          {title}
+                        </Typography>
+                        <Typography variant="body1" sx={{ opacity: 0.7 }}>
+                          {formatDate(date)}
+                        </Typography>
+                        {note && (
+                          <Grid container spacing={2} alignItems="center">
+                            <Grid item xs={1}>
+                              <NoteBlank
+                                size={24}
+                                color="white"
+                                className="mt-1.5 md:w-7 md:h-7 lg:w-8 lg:h-8"
+                              />
+                            </Grid>
+                            <Grid item xs={11}>
+                              <Typography
+                                variant="body1"
+                                sx={{ marginTop: "8px" }}
+                              >
+                                {note}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        )}
+                        {description && (
                           <Typography variant="body1" sx={{ marginTop: "8px" }}>
-                            {note}
+                            {description}
                           </Typography>
-                        </Grid>
-                      </Grid>
-                    )}
-                    {description && (
-                      <Typography variant="body1" sx={{ marginTop: "8px" }}>
-                        {description}
-                      </Typography>
-                    )}
-                  </CardContent>
+                        )}
+                      </Link>
+                    </CardContent>
+                  </CardActionArea>
                 </Card>
               )}
             </div>

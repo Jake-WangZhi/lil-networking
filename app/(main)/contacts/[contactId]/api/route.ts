@@ -14,7 +14,11 @@ export async function GET(
     },
   });
 
-  if (!contact) return NextResponse.json(contact);
+  if (!contact)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "No Contact Found" }),
+      { status: 404, headers: { "content-type": "application/json" } }
+    );
 
   const activities = await prisma.activity.findMany({
     where: {

@@ -1,19 +1,21 @@
 "use client";
 
 import "react-tagsinput/react-tagsinput.css";
-import "../../styles.css";
-import { useContact } from "@/hooks/useContact";
-import { ContactForm } from "@/components/ContactForm";
+import "../../../../styles.css";
+
 import { ClipLoader } from "react-spinners";
 import { Typography } from "@mui/material";
+import ActivityForm from "@/components/ActivityForm";
+import { useActivity } from "@/hooks/useActivity";
 
-export default function EditContactPage({
+export default function EditActivityPage({
   params,
 }: {
-  params: { contactId: string };
+  params: { contactId: string; activityId: string };
 }) {
-  const { contactProfile, isLoading, isError } = useContact({
-    id: params.contactId,
+  const { activity, isLoading, isError } = useActivity({
+    contactId: params.contactId,
+    activityId: params.activityId,
   });
 
   if (isError) {
@@ -42,7 +44,7 @@ export default function EditContactPage({
     );
   }
 
-  if (!contactProfile?.contact) {
+  if (!activity) {
     return (
       <Typography
         variant="h3"
@@ -55,10 +57,10 @@ export default function EditContactPage({
           color: "#FB5913",
         }}
       >
-        No contact available
+        No activity available
       </Typography>
     );
   }
 
-  return <ContactForm contact={contactProfile.contact} />;
+  return <ActivityForm contactId={params.contactId} activity={activity} />;
 }
