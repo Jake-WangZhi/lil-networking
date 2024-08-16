@@ -22,6 +22,7 @@ interface FormDataOptions {
   history: string;
   userEmail: string;
   description: string;
+  note: string;
   contactId: string;
   isFromMessage: boolean;
   isFromProfile: boolean;
@@ -144,6 +145,7 @@ export async function upsertContact(formData: FormData) {
 export async function createActivity(formData: FormData) {
   const title = formData.get("title");
   const description = formData.get("description");
+  const note = formData.get("note");
   const contactId = formData.get("contactId");
   const isFromMessage = formData.get("isFromMessage");
   const isFromProfile = formData.get("isFromProfile");
@@ -155,6 +157,7 @@ export async function createActivity(formData: FormData) {
       contactId,
       title,
       description,
+      note,
       date: new Date(localizedISODate),
       type: "USER",
     },
