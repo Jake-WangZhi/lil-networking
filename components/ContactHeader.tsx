@@ -210,6 +210,7 @@ export const ContactHeader = ({ contact }: Props) => {
               MenuListProps={{
                 "aria-labelledby": "basic-button",
               }}
+              disableScrollLock={true}
             >
               <MenuItem onClick={handleDropdownClose}>
                 <Button
