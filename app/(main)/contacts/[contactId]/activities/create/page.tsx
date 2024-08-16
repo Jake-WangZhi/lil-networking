@@ -101,7 +101,7 @@ export default function CreateActivityPage({
 
     if (!hasError) {
       setIsNavigatingBack(true);
-      pauseFor(250).then(() => submitFormRef.current?.click());
+      pauseFor(200).then(() => submitFormRef.current?.click());
     } else {
       setIsSaving(false);
     }
@@ -144,6 +144,7 @@ export default function CreateActivityPage({
               ? "animate-slide-out-bottom"
               : "animate-slide-in-bottom"
           }`}
+          onAnimationEnd={() => setIsNavigatingBack(false)}
         >
           <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6">
             <Grid container alignItems="center">
