@@ -41,6 +41,7 @@ export interface Activity {
   updatedAt: string;
   title: string;
   description: string;
+  note: string;
   date: string;
   type: ActivityType;
   contactId: string;
