@@ -1,6 +1,12 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { Search } from "react-feather";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Button } from "./Button";
+import { MagnifyingGlass, X } from "@phosphor-icons/react";
 
 interface Props {
   name: string;
@@ -8,21 +14,21 @@ interface Props {
 }
 
 export const SearchBar = ({ name, setName }: Props) => {
-  const [isInputFocused, setInputFocused] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
 
   const handleInputFocus = useCallback(() => {
-    setInputFocused(true);
+    setIsInputFocused(true);
     setShowCancel(true);
   }, []);
 
   const handleInputBlur = useCallback(() => {
-    setInputFocused(false);
+    setIsInputFocused(false);
   }, []);
 
   const handleCancel = useCallback(() => {
     setName("");
-    setInputFocused(false);
+    setIsInputFocused(false);
     setShowCancel(false);
   }, [setName]);
 
@@ -33,7 +39,7 @@ export const SearchBar = ({ name, setName }: Props) => {
           isInputFocused ? "ring-1 ring-white bg-opacity-[0.12]" : ""
         }`}
       >
-        <Search
+        <MagnifyingGlass
           size={16}
           className="mx-2 my-auto text-grey opacity-60 md:w-5 md:h-5 lg:w-6 lg:h-6"
         />
@@ -47,23 +53,16 @@ export const SearchBar = ({ name, setName }: Props) => {
           onBlur={handleInputBlur}
           className="flex-grow bg-transparent text-white caret-white focus:outline-none text-base md:text-lg lg:text-xl"
         />
-      </div>
-      {showCancel && (
-        <div>
+        {showCancel && (
           <Button
             variant="text"
-            sx={{
-              color: "#38ACE2",
-              "&:hover": {
-                color: "#38ACE2",
-              },
-            }}
             onClick={handleCancel}
+            sx={{ mr: "8px", mt: "-1px" }}
           >
-            Cancel
+            <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           </Button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
