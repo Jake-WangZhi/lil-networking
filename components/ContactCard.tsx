@@ -1,19 +1,20 @@
-import { ActivityType, Contact } from "@/types";
-import { ArrowRight, Archive } from "react-feather";
+import { ContactCardType } from "@/types";
 import Link from "next/link";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
-import { formatDate } from "@/lib/utils";
 
 interface Props {
-  contact: Contact;
+  contact: ContactCardType;
 }
 
 export const ContactCard = ({ contact }: Props) => {
+  const { id, firstName, lastName, title, interests, note, isArchived } =
+    contact;
+
   return (
     <Card>
       <CardActionArea>
         <CardContent>
-          <Link href={`/contacts/${contact.id}`} className="text-white">
+          <Link href={`/contacts/${id}`} className="text-white">
             <div className="flex justify-between">
               <Typography
                 variant="subtitle1"
@@ -21,9 +22,18 @@ export const ContactCard = ({ contact }: Props) => {
                   fontWeight: 600,
                 }}
               >
-                {contact.firstName} {contact.lastName}
+                {firstName} {lastName}
               </Typography>
-              <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8 flex-shrink-0" />
+              {isArchived && (
+                <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
+                  <Typography
+                    variant="body1"
+                    sx={{ textTransform: "capitalize" }}
+                  >
+                    archived
+                  </Typography>
+                </div>
+              )}
             </div>
             <div className="flex items-center space-x-2">
               <Typography
@@ -32,25 +42,22 @@ export const ContactCard = ({ contact }: Props) => {
                   opacity: 0.7,
                 }}
               >
-                {contact.industry}
+                {title}
               </Typography>
-              {contact.isArchived && (
-                <Archive size={16} className="opacity-70 flex-shrink-0" />
-              )}
             </div>
-            <Typography
-              variant="body1"
-              sx={{
-                overflow: "hidden",
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 2,
-              }}
-            >
-              {contact.activities[0].type === ActivityType.User
-                ? contact.activities[0].description
-                : `Contact added ${formatDate(contact.activities[0].date)}`}
-            </Typography>
+            {note && (
+              <Typography
+                variant="body1"
+                sx={{
+                  overflow: "hidden",
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                }}
+              >
+                {note}
+              </Typography>
+            )}
           </Link>
         </CardContent>
       </CardActionArea>

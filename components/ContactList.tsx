@@ -1,12 +1,12 @@
 import { ClipLoader } from "react-spinners";
 import { ContactCard } from "./ContactCard";
-import { Contact } from "@/types";
+import { ContactCardType } from "@/types";
 import { Typography } from "@mui/material";
 import Lottie from "react-lottie";
 import animationData from "@/lottie/908-add-and-save.json";
 
 interface Props {
-  contacts?: Array<Contact>;
+  contacts?: ContactCardType[];
   isLoading: boolean;
   isError: boolean;
   name: string;

@@ -35,6 +35,16 @@ export interface Contact {
   isArchived: boolean;
 }
 
+export interface ContactCardType {
+  id: string;
+  firstName: string;
+  lastName: string;
+  title: string;
+  interests: string[];
+  note: string;
+  isArchived: boolean;
+}
+
 export interface Activity {
   id: string;
   createdAt: string;
