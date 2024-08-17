@@ -17,6 +17,7 @@ import {
   X,
   DotsThreeCircleVertical,
 } from "@phosphor-icons/react";
+import { Chip } from "./Chip";
 
 interface Props {
   contact: Contact;
@@ -38,6 +39,8 @@ export const ContactHeader = ({ contact }: Props) => {
   const [action, setAction] = useState<"delete" | "archive">();
   const [alertDescription, setAlertDescription] = useState("");
 
+  const { id, type, isArchived } = contact;
+
   const deleteContactMutation = useContactMutation({
     method: "DELETE",
     onSuccess: () => {
@@ -56,11 +59,11 @@ export const ContactHeader = ({ contact }: Props) => {
       setErrorMessage("");
 
       if (email)
-        event(`contact_${!contact.isArchived ? "archived" : "unarchived"}`, {
+        event(`contact_${!isArchived ? "archived" : "unarchived"}`, {
           label: email,
         });
 
-      queryClient.refetchQueries(["contact", contact.id]);
+      queryClient.refetchQueries(["contact", id]);
     },
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");
@@ -97,25 +100,25 @@ export const ContactHeader = ({ contact }: Props) => {
         setIsAlertOpen(true);
       } else {
         updateContactMutation.mutate({
-          id: contact.id,
-          isArchived: !contact.isArchived,
+          id: id,
+          isArchived: !isArchived,
         });
       }
     },
-    [contact, updateContactMutation]
+    [id, isArchived, updateContactMutation]
   );
 
   const handleConfirmClick = useCallback(() => {
     if (action === "delete") {
-      deleteContactMutation.mutate({ id: contact.id });
+      deleteContactMutation.mutate({ id: id });
     } else if (action === "archive") {
       updateContactMutation.mutate({
-        id: contact.id,
-        isArchived: !contact.isArchived,
+        id: id,
+        isArchived: !isArchived,
       });
     }
     setIsAlertOpen(false);
-  }, [action, contact, deleteContactMutation, updateContactMutation]);
+  }, [action, deleteContactMutation, id, isArchived, updateContactMutation]);
 
   const handleCancelClick = useCallback(() => {
     setIsAlertOpen(false);
@@ -130,21 +133,9 @@ export const ContactHeader = ({ contact }: Props) => {
   }, [backPath, isChanged, router]);
 
   const handleEditClick = useCallback(
-    () => router.push(`/contacts/${contact.id}/edit`),
-    [contact.id, router]
+    () => router.push(`/contacts/${id}/edit`),
+    [id, router]
   );
-
-  const getDisplayText = (contact: Contact) => {
-    if (contact.isArchived) {
-      return "archived";
-    }
-    if (contact.type) {
-      return contact.type;
-    }
-    if (!contact.activities[0]?.title) {
-      return "skipped";
-    }
-  };
 
   return (
     <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 pb-2 mb-2 px-4">
@@ -177,18 +168,7 @@ export const ContactHeader = ({ contact }: Props) => {
         {!isFromMessage && (
           <div className="relative">
             <div className="flex items-center">
-              {(contact.type ||
-                contact.isArchived ||
-                !contact.activities[0]?.title) && (
-                <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
-                  <Typography
-                    variant="body1"
-                    sx={{ textTransform: "capitalize" }}
-                  >
-                    {getDisplayText(contact)}
-                  </Typography>
-                </div>
-              )}
+              {type && <Chip label={type} />}
               <Button
                 variant="text"
                 sx={{
@@ -240,7 +220,7 @@ export const ContactHeader = ({ contact }: Props) => {
               <Divider />
               <MenuItem onClick={handleDropdownClose}>
                 <Button
-                  onClick={handleStatusChange(!contact.isArchived)}
+                  onClick={handleStatusChange(!isArchived)}
                   variant="text"
                   sx={{
                     width: "100%",
@@ -255,7 +235,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ color: "black" }}>
-                    {contact.isArchived ? "Unarchive" : "Archive"}
+                    {isArchived ? "Unarchive" : "Archive"}
                   </Typography>
                   <Archive size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
                 </Button>
@@ -310,7 +290,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   }),
             }}
           >
-            {action === "delete" ? "Delete" : "Allow"}
+            {action === "delete" ? "Delete" : "Archive"}
           </Button>
         }
         cancelButton={

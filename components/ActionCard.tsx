@@ -1,18 +1,18 @@
-import { Action, ActionType, SearchParams } from "@/types";
+import { Action, UserType, SearchParams } from "@/types";
 import {
   Card,
   CardActionArea,
   CardContent,
-  Chip,
   Grid,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
 import { CalendarBlank, NoteBlank } from "@phosphor-icons/react";
+import { Chip } from "./Chip";
 
 interface Props {
   action: Action;
-  actionType: ActionType;
+  actionType: UserType;
 }
 
 export const ActionCard = ({ action, actionType }: Props) => {
@@ -31,7 +31,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
           <Link
             href={`/contacts/${contactId}?${SearchParams.IsFromDashboard}=true`}
           >
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-start">
               <div>
                 <div className="flex justify-between text-white">
                   <Typography
@@ -55,15 +55,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
                   </Typography>
                 )}
               </div>
-              {action.isNewUser && (
-                <Chip
-                  label="New"
-                  sx={{
-                    color: "white",
-                    background: "#2C353E",
-                  }}
-                />
-              )}
+              {action.isNewUser && <Chip label={UserType.New} />}
             </div>
             <div className="flex items-center gap-1.5">
               <CalendarBlank
@@ -77,7 +69,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
                 sx={{
                   fontWeight: 600,
                   color:
-                    actionType === ActionType.Priority ? "#ED3293" : "#FFCF79",
+                    actionType === UserType.Priority ? "#ED3293" : "#FFCF79",
                 }}
               >
                 Last Activity: {getLastActivityMessage(action.days)}

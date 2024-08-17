@@ -172,7 +172,7 @@ export const ContactReminder = ({
               backgroundColor: "#38ACE2 !important",
             }}
           >
-            Skip Cadence
+            Skip Reminder
           </Button>
         }
         cancelButton={

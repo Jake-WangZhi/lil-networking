@@ -1,5 +1,5 @@
 import { fetcher } from "@/lib/utils";
-import { Contact, SearchParams } from "@/types";
+import { ContactCardType, SearchParams } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {
@@ -8,7 +8,7 @@ type Args = {
 };
 
 type ContactsType = {
-  contacts: Contact[];
+  contacts: ContactCardType[];
   hasViewedContactsTutorial: boolean;
 };
 

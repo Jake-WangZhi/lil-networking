@@ -1,4 +1,4 @@
-import { ActionType, ActivityType } from "@/types";
+import { UserType, ActivityType } from "@/types";
 import { Activity } from "@prisma/client";
 import { QueryObserverResult } from "@tanstack/react-query";
 import { parseISO, format, formatISO, differenceInDays } from "date-fns";
@@ -124,9 +124,9 @@ export const getActionType = (lastActivity: Activity, goalDays: number) => {
   const upcomingThreshold = goalDays + DAYS_BEFORE_PAST_DUE;
 
   if (days > upcomingThreshold) {
-    return ActionType.Priority;
+    return UserType.Priority;
   } else if (priorityDueThreshold <= days && days <= upcomingThreshold) {
-    return ActionType.Upcoming;
+    return UserType.Upcoming;
   } else {
     return "";
   }
