@@ -76,7 +76,9 @@ export default function ContactsPage() {
               <Typography variant="h1">All Contacts</Typography>
               <div className="-mr-3">
                 <AddContactTooltipButton
-                  hasContacts={contactList?.contacts.length !== 0}
+                  hasContacts={
+                    contactList?.contacts.length !== 0 || name !== ""
+                  }
                   hasShownTutorial={contactList?.hasViewedContactsTutorial}
                 />
               </div>
