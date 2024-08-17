@@ -26,7 +26,7 @@ export async function GET(request: Request) {
 
   const contactIds = contacts.map((c) => c.id);
 
-  const lastActivity = await prisma.activity.findFirst({
+  const activities = await prisma.activity.findMany({
     where: {
       contactId: { in: contactIds },
     },
@@ -42,7 +42,7 @@ export async function GET(request: Request) {
     distinct: ["contactId"],
   });
 
-  const parsedContacts = parseContacts(contacts, lastActivity);
+  const parsedContacts = parseContacts(contacts, activities);
 
   return NextResponse.json({
     contacts: parsedContacts,
@@ -50,7 +50,7 @@ export async function GET(request: Request) {
   });
 }
 
-const parseContacts = (contacts: Contact[], lastActivity: Activity | null) => {
+const parseContacts = (contacts: Contact[], activities: Activity[]) => {
   const parsedContacts = contacts.map((contact) => {
     return {
       id: contact.id,
@@ -58,7 +58,9 @@ const parseContacts = (contacts: Contact[], lastActivity: Activity | null) => {
       lastName: contact.lastName,
       title: contact.title,
       interests: contact.interests,
-      note: lastActivity?.note || "",
+      note: activities.filter(
+        (activity) => activity.contactId === contact.id
+      )[0].note,
       isArchived: contact.isArchived,
     };
   });
