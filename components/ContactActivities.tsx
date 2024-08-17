@@ -1,4 +1,4 @@
-import { Activity, SearchParams } from "@/types";
+import { Activity, SearchParams, UserType } from "@/types";
 import { useCallback } from "react";
 import { Typography } from "@mui/material";
 import { Button } from "./Button";
@@ -77,7 +77,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                 />
                 <div className="flex ml-3 gap-1 mt-[2.5px] md:mt-1 lg:mt-1.5">
                   <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                    Skipped
+                    {UserType.Skipped}
                   </Typography>
                   <Typography variant="body1" sx={{ opacity: 0.7 }}>
                     {formatDate(date)}

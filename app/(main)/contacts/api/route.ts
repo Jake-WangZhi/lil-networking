@@ -57,16 +57,10 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
       firstName: contact.firstName,
       lastName: contact.lastName,
       title: contact.title,
-      company: contact.company,
-      industry: contact.industry,
-      goalDays: contact.goalDays,
-      email: contact.email,
-      phone: contact.phone,
-      links: contact.links,
       interests: contact.interests,
-      activities: activities.filter(
+      note: activities.filter(
         (activity) => activity.contactId === contact.id
-      ),
+      )[0].note,
       isArchived: contact.isArchived,
     };
   });

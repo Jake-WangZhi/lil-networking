@@ -1,4 +1,4 @@
-import { Action, ActionType } from "@/types";
+import { Action, UserType } from "@/types";
 import { ClipLoader } from "react-spinners";
 import { ActionCard } from "./ActionCard";
 import {
@@ -163,7 +163,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               <ActionCard
                 key={index}
                 action={action}
-                actionType={ActionType.Priority}
+                actionType={UserType.Priority}
               />
             ))}
           </div>
@@ -196,7 +196,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               <ActionCard
                 key={index}
                 action={action}
-                actionType={ActionType.Upcoming}
+                actionType={UserType.Upcoming}
               />
             ))}
           </div>
