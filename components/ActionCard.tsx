@@ -48,7 +48,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
                     variant="body1"
                     sx={{
                       opacity: 0.7,
-                      mb: 0.5,
+                      mb: 1,
                     }}
                   >
                     {title}
