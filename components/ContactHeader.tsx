@@ -290,7 +290,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   }),
             }}
           >
-            {action === "delete" ? "Delete" : "Allow"}
+            {action === "delete" ? "Delete" : "Archive"}
           </Button>
         }
         cancelButton={
