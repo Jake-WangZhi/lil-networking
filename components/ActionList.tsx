@@ -135,7 +135,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     );
 
   return (
-    <div className="w-full mb-20 mt-5 space-y-6">
+    <div className="w-full mb-24 mt-5 space-y-6">
       <Accordion disableGutters expanded={priorityExpanded}>
         <AccordionSummary
           expandIcon={

@@ -82,7 +82,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   }
 
   return (
-    <div className="w-full mb-20 mt-5">
+    <div className="w-full mb-24 mt-5">
       <div className="flex items-center space-x-2 mb-2">
         <Typography
           variant="h3"
