@@ -11,14 +11,17 @@ export interface Action {
   isNewUser: boolean;
 }
 
-export enum ActionType {
+export enum UserType {
   Priority = "priority",
   Upcoming = "upcoming",
+  Archived = "archived",
+  New = "new",
+  Skipped = "skipped",
 }
 
 export interface Contact {
   id: string;
-  type: ActionType;
+  type: UserType;
   firstName: string;
   lastName: string;
   title: string;

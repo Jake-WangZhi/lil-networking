@@ -1,6 +1,7 @@
-import { ContactCardType } from "@/types";
+import { ContactCardType, UserType } from "@/types";
 import Link from "next/link";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import { Chip } from "./Chip";
 
 interface Props {
   contact: ContactCardType;
@@ -15,7 +16,7 @@ export const ContactCard = ({ contact }: Props) => {
       <CardActionArea>
         <CardContent>
           <Link href={`/contacts/${id}`} className="text-white">
-            <div className="flex justify-between">
+            <div className="flex justify-between items-start">
               <Typography
                 variant="subtitle1"
                 sx={{
@@ -24,16 +25,7 @@ export const ContactCard = ({ contact }: Props) => {
               >
                 {firstName} {lastName}
               </Typography>
-              {isArchived && (
-                <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
-                  <Typography
-                    variant="body1"
-                    sx={{ textTransform: "capitalize" }}
-                  >
-                    archived
-                  </Typography>
-                </div>
-              )}
+              {isArchived && <Chip label={UserType.Archived} />}
             </div>
             <div className="flex items-center space-x-2">
               <Typography

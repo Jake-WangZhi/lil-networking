@@ -3,7 +3,7 @@ import { useContactMutation } from "@/hooks/useContactMutation";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Contact, SearchParams } from "@/types";
+import { Contact, SearchParams, UserType } from "@/types";
 import { Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { AlertDialog } from "./AlertDialog";
@@ -17,6 +17,7 @@ import {
   X,
   DotsThreeCircleVertical,
 } from "@phosphor-icons/react";
+import { Chip } from "./Chip";
 
 interface Props {
   contact: Contact;
@@ -134,16 +135,18 @@ export const ContactHeader = ({ contact }: Props) => {
     [contact.id, router]
   );
 
-  const getDisplayText = (contact: Contact) => {
+  const getChipText = (contact: Contact) => {
     if (contact.isArchived) {
-      return "archived";
+      return UserType.Archived;
     }
     if (contact.type) {
       return contact.type;
     }
     if (!contact.activities[0]?.title) {
-      return "skipped";
+      return UserType.Skipped;
     }
+
+    return "";
   };
 
   return (
@@ -177,18 +180,7 @@ export const ContactHeader = ({ contact }: Props) => {
         {!isFromMessage && (
           <div className="relative">
             <div className="flex items-center">
-              {(contact.type ||
-                contact.isArchived ||
-                !contact.activities[0]?.title) && (
-                <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
-                  <Typography
-                    variant="body1"
-                    sx={{ textTransform: "capitalize" }}
-                  >
-                    {getDisplayText(contact)}
-                  </Typography>
-                </div>
-              )}
+              {getChipText(contact) && <Chip label={getChipText(contact)} />}
               <Button
                 variant="text"
                 sx={{
