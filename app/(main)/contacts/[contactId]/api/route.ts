@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { ContactArgs } from "@/types";
+import { ActivityType, ContactArgs, UserType } from "@/types";
 import { getActionType } from "@/lib/utils";
 
 export async function GET(
@@ -91,9 +91,25 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
     isArchived,
   } = contact;
 
+  const getType = () => {
+    if (isArchived) {
+      return UserType.Archived;
+    }
+
+    if (activities[0].type === ActivityType.System) {
+      return UserType.New;
+    }
+
+    if (!activities[0].title) {
+      return UserType.Skipped;
+    }
+
+    return getActionType(activities[0], goalDays);
+  };
+
   return {
     id,
-    type: getActionType(activities[0], goalDays),
+    type: getType(),
     firstName,
     lastName,
     title,
