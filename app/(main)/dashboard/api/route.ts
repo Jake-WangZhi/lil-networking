@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { Action, ActionType, ActivityType, SearchParams } from "@/types";
+import { Action, UserType, ActivityType, SearchParams } from "@/types";
 import { differenceInDays } from "date-fns";
 import { getActionType } from "@/lib/utils";
 
@@ -116,9 +116,9 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
 
       const type = getActionType(activity, goalDays);
 
-      if (type === ActionType.Priority) {
+      if (type === UserType.Priority) {
         priorityActions.push(action);
-      } else if (type === ActionType.Upcoming) {
+      } else if (type === UserType.Upcoming) {
         upcomingActions.push(action);
       }
     }

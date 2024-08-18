@@ -19,6 +19,7 @@ export const ContactTags = ({ interests }: Props) => {
         spaceBetween={8}
         freeMode={true}
         modules={[FreeMode]}
+        style={{ zIndex: "0" }}
       >
         {interests?.map((interest, index) => (
           <SwiperSlide

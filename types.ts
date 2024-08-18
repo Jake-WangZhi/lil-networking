@@ -11,14 +11,17 @@ export interface Action {
   isNewUser: boolean;
 }
 
-export enum ActionType {
+export enum UserType {
   Priority = "priority",
   Upcoming = "upcoming",
+  Archived = "archived",
+  New = "new",
+  Skipped = "skipped",
 }
 
 export interface Contact {
   id: string;
-  type: ActionType;
+  type: UserType;
   firstName: string;
   lastName: string;
   title: string;
@@ -32,6 +35,16 @@ export interface Contact {
   interests: string[];
   history: string;
   activities: Activity[];
+  isArchived: boolean;
+}
+
+export interface ContactCardType {
+  id: string;
+  firstName: string;
+  lastName: string;
+  title: string;
+  interests: string[];
+  note: string;
   isArchived: boolean;
 }
 
@@ -86,6 +99,9 @@ export enum SearchParams {
   IsFromSettings = "is_from_settings",
   IsFromDashboard = "is_from_dashboard",
   Endpoint = "endpoint",
+  Tags = "tags",
+  Count = "count",
+  TotalTags = "totalTags",
 }
 
 export interface SubscriptionArgs {

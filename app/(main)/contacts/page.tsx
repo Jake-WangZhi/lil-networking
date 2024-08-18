@@ -13,14 +13,28 @@ import { handleRefresh, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { ClipLoader } from "react-spinners";
+import { FilterPage } from "@/components/FilterPage";
+import { useContactTags } from "@/hooks/useContactTags";
+import { RemovableChip } from "@/components/RemovableChip";
 
 export default function ContactsPage() {
   const { email } = useUser();
   const [name, setName] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
   const { isContactsTutorialShown } = useSettings();
+  const [isHiddenPageVisible, setIsHiddenPageVisible] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
+  const [tags, setTags] = useState<Array<string>>([]);
+
+  const [clickedTags, setClickedTags] = useState<Array<boolean>>([]);
 
   const { contactList, isLoading, isError, refetch } = useContacts({
+    userEmail: email,
+    name,
+    tags: selectedTags,
+  });
+
+  const { contactTags } = useContactTags({
     userEmail: email,
     name,
   });
@@ -46,6 +60,36 @@ export default function ContactsPage() {
     );
   };
 
+  useEffect(() => {
+    setTags(contactTags?.tags || []);
+  }, [contactTags]);
+
+  useEffect(() => {
+    const defaultClickedTags = [];
+    for (let i = 0; i < tags.length; i++) {
+      if (selectedTags.includes(tags[i])) {
+        defaultClickedTags.push(true);
+      } else {
+        defaultClickedTags.push(false);
+      }
+    }
+
+    setClickedTags(defaultClickedTags);
+  }, [tags, selectedTags]);
+
+  useEffect(() => {
+    const indexes = tags.map((tag, index) => {
+      if (selectedTags.includes(tag)) return index;
+    });
+
+    setClickedTags((prev: boolean[]) =>
+      prev.map((tagBoolean, index) => {
+        if (indexes.includes(index)) return true;
+        else return false;
+      })
+    );
+  }, [tags, selectedTags]);
+
   return (
     <main className="relative flex flex-col items-center text-white px-4">
       {isLoading ? (
@@ -64,7 +108,11 @@ export default function ContactsPage() {
               (!isError &&
                 !isLoading &&
                 contactList?.contacts.length !== 0)) && (
-              <SearchBar name={name} setName={setName} />
+              <SearchBar
+                name={name}
+                setName={setName}
+                setIsHiddenPageVisible={setIsHiddenPageVisible}
+              />
             )}
           </div>
           {renderContacts()}
@@ -76,7 +124,9 @@ export default function ContactsPage() {
               <Typography variant="h1">All Contacts</Typography>
               <div className="-mr-3">
                 <AddContactTooltipButton
-                  hasContacts={contactList?.contacts.length !== 0}
+                  hasContacts={
+                    contactList?.contacts.length !== 0 || name !== ""
+                  }
                   hasShownTutorial={contactList?.hasViewedContactsTutorial}
                 />
               </div>
@@ -85,9 +135,28 @@ export default function ContactsPage() {
               (!isError &&
                 !isLoading &&
                 contactList?.contacts.length !== 0)) && (
-              <SearchBar name={name} setName={setName} />
+              <SearchBar
+                name={name}
+                setName={setName}
+                setIsHiddenPageVisible={setIsHiddenPageVisible}
+              />
+            )}
+            {selectedTags.length !== 0 && (
+              <div className="flex gap-3 pt-4 flex-wrap">
+                {selectedTags.map(
+                  (tag, index) =>
+                    tag && (
+                      <RemovableChip
+                        key={index}
+                        label={tag}
+                        setSelectedTags={setSelectedTags}
+                      />
+                    )
+                )}
+              </div>
             )}
           </div>
+
           <PullToRefresh
             onRefresh={handleRefresh(refetch)}
             resistance={3}
@@ -101,6 +170,17 @@ export default function ContactsPage() {
       )}
       {showTutorial && isContactsTutorialShown && <ContactsTutorial />}
       <NavFooter />
+      <FilterPage
+        isVisible={isHiddenPageVisible}
+        setIsHiddenPageVisible={setIsHiddenPageVisible}
+        clickedTags={clickedTags}
+        setClickedTags={setClickedTags}
+        setSelectedTags={setSelectedTags}
+        tags={tags}
+        email={email || ""}
+        name={name}
+        selectedTags={selectedTags}
+      />
     </main>
   );
 }
