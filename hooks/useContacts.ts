@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 type Args = {
   userEmail?: string | null;
   name?: string | null;
+  tags?: Set<string> | null;
 };
 
 type ContactsType = {
@@ -12,7 +13,7 @@ type ContactsType = {
   hasViewedContactsTutorial: boolean;
 };
 
-export const useContacts = ({ userEmail, name }: Args) => {
+export const useContacts = ({ userEmail, name, tags }: Args) => {
   const {
     isLoading,
     data: contactList,
@@ -22,7 +23,9 @@ export const useContacts = ({ userEmail, name }: Args) => {
     queryKey: ["contacts", userEmail, name],
     queryFn: () =>
       fetcher(
-        `/contacts/api?${SearchParams.UserEmail}=${userEmail}&${SearchParams.Name}=${name}`
+        `/contacts/api?${SearchParams.UserEmail}=${userEmail}&${
+          SearchParams.Name
+        }=${name}&${SearchParams.Tags}=${Array.from(tags ?? []).join(",")}`
       ),
     enabled: !!userEmail,
   });

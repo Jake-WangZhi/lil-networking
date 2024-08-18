@@ -6,23 +6,35 @@ import { NavFooter } from "@/components/NavFooter";
 import { SearchBar } from "@/components/SearchBar";
 import { useContacts } from "@/hooks/useContacts";
 import { Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { ContactsTutorial } from "@/components/ContactsTutorial";
 import { handleRefresh, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { ClipLoader } from "react-spinners";
+import { FilterPage } from "@/components/FilterPage";
 
 export default function ContactsPage() {
   const { email } = useUser();
   const [name, setName] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
   const { isContactsTutorialShown } = useSettings();
+  const [isHiddenPageVisible, setIsHiddenPageVisible] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
+
+  const handleFilterClick = useCallback(() => {
+    setIsHiddenPageVisible(true);
+  }, []);
+
+  const handleCloseHiddenPage = useCallback(() => {
+    setIsHiddenPageVisible(false);
+  }, []);
 
   const { contactList, isLoading, isError, refetch } = useContacts({
     userEmail: email,
     name,
+    tags: selectedTags,
   });
 
   useEffect(() => {
@@ -46,6 +58,12 @@ export default function ContactsPage() {
     );
   };
 
+  const tags = new Set(
+    contactList?.contacts.map((contact) => contact.interests).flat()
+  );
+
+  console.log("selectedTags", selectedTags);
+
   return (
     <main className="relative flex flex-col items-center text-white px-4">
       {isLoading ? (
@@ -64,7 +82,11 @@ export default function ContactsPage() {
               (!isError &&
                 !isLoading &&
                 contactList?.contacts.length !== 0)) && (
-              <SearchBar name={name} setName={setName} />
+              <SearchBar
+                name={name}
+                setName={setName}
+                setIsHiddenPageVisible={setIsHiddenPageVisible}
+              />
             )}
           </div>
           {renderContacts()}
@@ -87,7 +109,11 @@ export default function ContactsPage() {
               (!isError &&
                 !isLoading &&
                 contactList?.contacts.length !== 0)) && (
-              <SearchBar name={name} setName={setName} />
+              <SearchBar
+                name={name}
+                setName={setName}
+                setIsHiddenPageVisible={setIsHiddenPageVisible}
+              />
             )}
           </div>
           <PullToRefresh
@@ -103,6 +129,12 @@ export default function ContactsPage() {
       )}
       {showTutorial && isContactsTutorialShown && <ContactsTutorial />}
       <NavFooter />
+      <FilterPage
+        isVisible={isHiddenPageVisible}
+        onClose={handleCloseHiddenPage}
+        setSelectedTags={setSelectedTags}
+        tags={[...tags]}
+      />
     </main>
   );
 }

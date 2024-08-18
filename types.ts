@@ -99,6 +99,7 @@ export enum SearchParams {
   IsFromSettings = "is_from_settings",
   IsFromDashboard = "is_from_dashboard",
   Endpoint = "endpoint",
+  Tags = "tags",
 }
 
 export interface SubscriptionArgs {
