@@ -92,82 +92,55 @@ export default function ContactsPage() {
 
   return (
     <main className="relative flex flex-col items-center text-white px-4">
-      {isLoading ? (
-        <>
-          <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
-            <div className="flex justify-between items-center">
-              <Typography variant="h1">All Contacts</Typography>
-              <div className="-mr-3">
-                <AddContactTooltipButton
-                  hasContacts={contactList?.contacts.length !== 0}
-                  hasShownTutorial={contactList?.hasViewedContactsTutorial}
-                />
-              </div>
-            </div>
-            {(name ||
-              (!isError &&
-                !isLoading &&
-                contactList?.contacts.length !== 0)) && (
-              <SearchBar
-                name={name}
-                setName={setName}
-                setIsHiddenPageVisible={setIsHiddenPageVisible}
-              />
+      <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
+        <div className="flex justify-between items-center">
+          <Typography variant="h1">All Contacts</Typography>
+          <div className="-mr-3">
+            <AddContactTooltipButton
+              hasContacts={contactList?.contacts.length !== 0 || name !== ""}
+              hasShownTutorial={contactList?.hasViewedContactsTutorial}
+            />
+          </div>
+        </div>
+        {(name ||
+          selectedTags.length !== 0 ||
+          (!isError && !isLoading && contactList?.contacts.length !== 0)) && (
+          <SearchBar
+            name={name}
+            setName={setName}
+            setIsHiddenPageVisible={setIsHiddenPageVisible}
+          />
+        )}
+        {selectedTags.length !== 0 && (
+          <div className="flex gap-3 pt-4 flex-wrap">
+            {selectedTags.map(
+              (tag, index) =>
+                tag && (
+                  <RemovableChip
+                    key={index}
+                    label={tag}
+                    setSelectedTags={setSelectedTags}
+                  />
+                )
             )}
           </div>
-          {renderContacts()}
-        </>
-      ) : (
-        <>
-          <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
-            <div className="flex justify-between items-center">
-              <Typography variant="h1">All Contacts</Typography>
-              <div className="-mr-3">
-                <AddContactTooltipButton
-                  hasContacts={
-                    contactList?.contacts.length !== 0 || name !== ""
-                  }
-                  hasShownTutorial={contactList?.hasViewedContactsTutorial}
-                />
-              </div>
-            </div>
-            {(name ||
-              (!isError &&
-                !isLoading &&
-                contactList?.contacts.length !== 0)) && (
-              <SearchBar
-                name={name}
-                setName={setName}
-                setIsHiddenPageVisible={setIsHiddenPageVisible}
-              />
-            )}
-            {selectedTags.length !== 0 && (
-              <div className="flex gap-3 pt-4 flex-wrap">
-                {selectedTags.map(
-                  (tag, index) =>
-                    tag && (
-                      <RemovableChip
-                        key={index}
-                        label={tag}
-                        setSelectedTags={setSelectedTags}
-                      />
-                    )
-                )}
-              </div>
-            )}
-          </div>
+        )}
+      </div>
 
-          <PullToRefresh
-            onRefresh={handleRefresh(refetch)}
-            resistance={3}
-            refreshingContent={
-              <ClipLoader color="#38ACE2" size={50} className="mt-5" />
-            }
-          >
-            {renderContacts()}
-          </PullToRefresh>
-        </>
+      {!isLoading ? (
+        <PullToRefresh
+          onRefresh={handleRefresh(refetch)}
+          resistance={3}
+          refreshingContent={
+            <ClipLoader color="#38ACE2" size={50} className="mt-5" />
+          }
+        >
+          {renderContacts()}
+        </PullToRefresh>
+      ) : (
+        renderContacts()
       )}
+
       {showTutorial && isContactsTutorialShown && <ContactsTutorial />}
       <NavFooter />
       <FilterPage
