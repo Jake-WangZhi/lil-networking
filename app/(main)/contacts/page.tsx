@@ -16,6 +16,7 @@ import { ClipLoader } from "react-spinners";
 import { FilterPage } from "@/components/FilterPage";
 import { Chip } from "@/components/Chip";
 import { useContactTags } from "@/hooks/useContactTags";
+import { RemovableChip } from "@/components/RemovableChip";
 
 export default function ContactsPage() {
   const { email } = useUser();
@@ -77,6 +78,19 @@ export default function ContactsPage() {
     setClickedTags(defaultClickedTags);
   }, [tags]);
 
+  useEffect(() => {
+    const indexes = tags.map((tag, index) => {
+      if (selectedTags.includes(tag)) return index;
+    });
+
+    setClickedTags((prev: boolean[]) =>
+      prev.map((tagBoolean, index) => {
+        if (indexes.includes(index)) return true;
+        else return false;
+      })
+    );
+  }, [selectedTags]);
+
   console.log("tags", tags);
 
   console.log("selectedTags", selectedTags);
@@ -133,9 +147,16 @@ export default function ContactsPage() {
               />
             )}
             {selectedTags.length !== 0 && (
-              <div className="flex gap-3 pt-2 flex-wrap">
+              <div className="flex gap-3 pt-4 flex-wrap">
                 {selectedTags.map(
-                  (tag, index) => tag && <Chip key={index} label={tag} />
+                  (tag, index) =>
+                    tag && (
+                      <RemovableChip
+                        key={index}
+                        label={tag}
+                        setSelectedTags={setSelectedTags}
+                      />
+                    )
                 )}
               </div>
             )}
