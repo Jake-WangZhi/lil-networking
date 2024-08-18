@@ -84,18 +84,24 @@ export const FilterPage = ({
         </Button>
       </div>
       <Typography variant="body1">Filter your contact list by tags</Typography>
-      <div className="h-5/6">
-        <div className="flex gap-3 pt-2 flex-wrap px-2 !py-6">
-          {tags.map((tag, index) => (
-            <ClickableChip
-              key={index}
-              label={tag}
-              isClicked={clickedTags[index]}
-              onClick={() => handleChipClick(index)}
-            />
-          ))}
+      {tags.length > 0 ? (
+        <div className="h-5/6">
+          <div className="flex gap-3 pt-2 flex-wrap px-2 !py-6">
+            {tags.map((tag, index) => (
+              <ClickableChip
+                key={index}
+                label={tag}
+                isClicked={clickedTags[index]}
+                onClick={() => handleChipClick(index)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center items-center h-5/6">
+          <Typography variant="h3">You have no tags</Typography>
+        </div>
+      )}
       <div className="flex justify-between w-full">
         <Button
           variant="text"
