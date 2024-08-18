@@ -185,7 +185,7 @@ export const ContactForm = ({ contact }: Props) => {
           }`}
           onAnimationEnd={() => setIsNavigatingBack(false)}
         >
-          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-4">
+          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-4 mb-4 md:pt-8">
             <Grid container alignItems="center">
               <Grid item xs={2}>
                 <Button
@@ -204,7 +204,7 @@ export const ContactForm = ({ contact }: Props) => {
                     textAlign: "center",
                   }}
                 >
-                  {contact ? "Edit contact" : "Create contact"}
+                  {contact ? "Edit Contact" : "Create Contact"}
                 </Typography>
               </Grid>
               <Grid item xs={2} sx={{ display: "flex", justifyContent: "end" }}>

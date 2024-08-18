@@ -26,7 +26,7 @@ export default function SettingsPage() {
   const handleLogoutClick = useCallback(() => signOut(), []);
 
   return (
-    <main className="relative min-h-screen py-8 space-y-6">
+    <main className="relative min-h-screen pt-4 pb-8 space-y-6 md:pt-8">
       <Typography variant="h1" sx={{ px: "24px" }}>
         Settings
       </Typography>
