@@ -32,7 +32,9 @@ export async function GET(request: Request) {
 
   if (totalTags === "true")
     return NextResponse.json({
-      tags: contacts.flatMap((contact) => contact.interests),
+      tags: Array.from(
+        new Set(contacts.flatMap((contact) => contact.interests))
+      ),
     });
 
   const contactIds = contacts.map((c) => c.id);
