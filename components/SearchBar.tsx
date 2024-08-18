@@ -1,13 +1,14 @@
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { Button } from "./Button";
-import { MagnifyingGlass, X } from "@phosphor-icons/react";
+import { FunnelSimple, MagnifyingGlass, X } from "@phosphor-icons/react";
 
 interface Props {
   name: string;
   setName: Dispatch<SetStateAction<string>>;
+  setIsHiddenPageVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-export const SearchBar = ({ name, setName }: Props) => {
+export const SearchBar = ({ name, setName, setIsHiddenPageVisible }: Props) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
 
@@ -25,6 +26,10 @@ export const SearchBar = ({ name, setName }: Props) => {
     setIsInputFocused(false);
     setShowCancel(false);
   }, [setName]);
+
+  const handleFilterClick = useCallback(() => {
+    setIsHiddenPageVisible(true);
+  }, [setIsHiddenPageVisible]);
 
   return (
     <div className="flex items-center mt-6 mb-1 space-x-3">
@@ -57,6 +62,13 @@ export const SearchBar = ({ name, setName }: Props) => {
           </Button>
         )}
       </div>
+      <Button
+        variant="text"
+        onClick={handleFilterClick}
+        sx={{ mr: "-8px !important", px: "8px" }}
+      >
+        <FunnelSimple size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
+      </Button>
     </div>
   );
 };
