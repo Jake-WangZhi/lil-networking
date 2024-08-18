@@ -43,7 +43,6 @@ export const FilterPage = ({
 
   const handleClearClick = () => {
     setClickedTags((prev) => prev.map(() => false));
-    setSelectedTags(clickedTags.map(() => ""));
   };
 
   const handleConfirmClick = () => {
