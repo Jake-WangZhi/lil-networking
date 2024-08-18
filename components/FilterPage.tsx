@@ -2,46 +2,59 @@ import { X } from "@phosphor-icons/react";
 import { Button } from "./Button";
 import { Typography } from "@mui/material";
 import { ClickableChip } from "./ClickableChip";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
+import { useContactCount } from "@/hooks/useContactCount";
+import { ClipLoader } from "react-spinners";
 
 interface Props {
   isVisible: boolean;
-  onClose: () => void;
   tags: string[];
-  setSelectedTags: Dispatch<SetStateAction<Set<string>>>;
+  clickedTags: boolean[];
+  setClickedTags: Dispatch<SetStateAction<boolean[]>>;
+  setSelectedTags: Dispatch<SetStateAction<string[]>>;
+  email: string;
+  name: string;
+  selectedTags: string[];
+  setIsHiddenPageVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 export const FilterPage = ({
   isVisible,
-  onClose,
   tags,
+  clickedTags,
+  setClickedTags,
   setSelectedTags,
+  email,
+  name,
+  setIsHiddenPageVisible,
 }: Props) => {
-  const [clickedTags, setClickedTags] = useState(
-    [...Array(tags.length)].map(() => false)
-  );
+  const { contactCount } = useContactCount({
+    userEmail: email,
+    name,
+    tags: tags.filter((tag, index) => clickedTags[index]),
+  });
 
+  console.log("clickedTags", clickedTags);
   const handleChipClick = (index: number) => {
     setClickedTags((prev) =>
       prev.map((clicked, i) => (i === index ? !clicked : clicked))
     );
-
-    setSelectedTags((prev) => {
-      const newTags = new Set(prev);
-
-      if (newTags.has(tags[index])) {
-        newTags.delete(tags[index]);
-      } else {
-        newTags.add(tags[index]);
-      }
-
-      return newTags;
-    });
   };
 
   const handleClearClick = () => {
-    setClickedTags([...Array(tags.length)].map(() => false));
+    [...Array(tags.length)].map(() => false);
   };
+
+  const handleConfirmClick = () => {
+    setSelectedTags(
+      clickedTags.map((clicked, index) => (clicked ? tags[index] : ""))
+    );
+    setIsHiddenPageVisible(false);
+  };
+
+  const handleCloseClick = useCallback(() => {
+    setIsHiddenPageVisible(false);
+  }, []);
 
   return (
     <div
@@ -52,7 +65,7 @@ export const FilterPage = ({
     >
       <div className="flex justify-between items-center">
         <Typography variant="h2">Tag List</Typography>
-        <Button variant="text" sx={{ px: "8px" }} onClick={onClose}>
+        <Button variant="text" sx={{ px: "8px" }} onClick={handleCloseClick}>
           <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
         </Button>
       </div>
@@ -75,8 +88,16 @@ export const FilterPage = ({
             Clear All
           </Typography>
         </Button>
-        <Button variant="contained" onClick={onClose} sx={{ margin: 0 }}>
-          Show 35 results
+        <Button
+          variant="contained"
+          onClick={handleConfirmClick}
+          sx={{ margin: 0, width: "180px" }}
+        >
+          {contactCount?.count ? (
+            `Show ${contactCount.count} results`
+          ) : (
+            <ClipLoader color="black" size={30} />
+          )}
         </Button>
       </div>
     </div>

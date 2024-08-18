@@ -14,6 +14,8 @@ import { useSettings } from "@/contexts/SettingsContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { ClipLoader } from "react-spinners";
 import { FilterPage } from "@/components/FilterPage";
+import { Chip } from "@/components/Chip";
+import { useContactTags } from "@/hooks/useContactTags";
 
 export default function ContactsPage() {
   const { email } = useUser();
@@ -21,20 +23,20 @@ export default function ContactsPage() {
   const [showTutorial, setShowTutorial] = useState(false);
   const { isContactsTutorialShown } = useSettings();
   const [isHiddenPageVisible, setIsHiddenPageVisible] = useState(false);
-  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
+  const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
+  const [tags, setTags] = useState<Array<string>>([]);
 
-  const handleFilterClick = useCallback(() => {
-    setIsHiddenPageVisible(true);
-  }, []);
-
-  const handleCloseHiddenPage = useCallback(() => {
-    setIsHiddenPageVisible(false);
-  }, []);
+  const [clickedTags, setClickedTags] = useState<Array<boolean>>([]);
 
   const { contactList, isLoading, isError, refetch } = useContacts({
     userEmail: email,
     name,
     tags: selectedTags,
+  });
+
+  const { contactTags } = useContactTags({
+    userEmail: email,
+    name,
   });
 
   useEffect(() => {
@@ -58,9 +60,24 @@ export default function ContactsPage() {
     );
   };
 
-  const tags = new Set(
-    contactList?.contacts.map((contact) => contact.interests).flat()
-  );
+  useEffect(() => {
+    setTags(contactTags?.tags || []);
+  }, [contactTags]);
+
+  useEffect(() => {
+    const defaultClickedTags = [];
+    for (let i = 0; i < tags.length; i++) {
+      if (selectedTags.includes(tags[i])) {
+        defaultClickedTags.push(true);
+      } else {
+        defaultClickedTags.push(false);
+      }
+    }
+
+    setClickedTags(defaultClickedTags);
+  }, [tags]);
+
+  console.log("tags", tags);
 
   console.log("selectedTags", selectedTags);
 
@@ -115,7 +132,15 @@ export default function ContactsPage() {
                 setIsHiddenPageVisible={setIsHiddenPageVisible}
               />
             )}
+            {selectedTags.length !== 0 && (
+              <div className="flex gap-3 pt-2 flex-wrap">
+                {selectedTags.map(
+                  (tag, index) => tag && <Chip key={index} label={tag} />
+                )}
+              </div>
+            )}
           </div>
+
           <PullToRefresh
             onRefresh={handleRefresh(refetch)}
             resistance={3}
@@ -131,9 +156,14 @@ export default function ContactsPage() {
       <NavFooter />
       <FilterPage
         isVisible={isHiddenPageVisible}
-        onClose={handleCloseHiddenPage}
+        setIsHiddenPageVisible={setIsHiddenPageVisible}
+        clickedTags={clickedTags}
+        setClickedTags={setClickedTags}
         setSelectedTags={setSelectedTags}
-        tags={[...tags]}
+        tags={tags}
+        email={email || ""}
+        name={name}
+        selectedTags={selectedTags}
       />
     </main>
   );

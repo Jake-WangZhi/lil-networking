@@ -1,5 +1,5 @@
 import { fetcher } from "@/lib/utils";
-import { ContactCardType, SearchParams } from "@/types";
+import { SearchParams } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {
@@ -8,32 +8,29 @@ type Args = {
   tags?: string[] | null;
 };
 
-type ContactsType = {
-  contacts: ContactCardType[];
-  hasViewedContactsTutorial: boolean;
+type ContactCount = {
+  count: number;
 };
 
-export const useContacts = ({ userEmail, name, tags }: Args) => {
+export const useContactCount = ({ userEmail, name, tags }: Args) => {
   const {
     isLoading,
-    data: contactList,
+    data: contactCount,
     isError,
     refetch,
-  } = useQuery<ContactsType>({
-    queryKey: ["contacts", userEmail, name, tags],
+  } = useQuery<ContactCount>({
+    queryKey: ["contactCount", userEmail, name, tags],
     queryFn: () =>
       fetcher(
         `/contacts/api?${SearchParams.UserEmail}=${userEmail}&${
           SearchParams.Name
-        }=${name}&${SearchParams.Tags}=${tags
-          ?.filter((t) => t !== "")
-          .join(",")}`
+        }=${name}&${SearchParams.Tags}=${tags?.join(",")}&count=true`
       ),
     enabled: !!userEmail,
   });
 
   return {
-    contactList,
+    contactCount,
     isLoading,
     isError,
     refetch,

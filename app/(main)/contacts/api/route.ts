@@ -7,6 +7,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const userEmail = searchParams.get(SearchParams.UserEmail);
   const name = searchParams.get(SearchParams.Name);
+  const tagsString = searchParams.get(SearchParams.Tags);
+  const tags = tagsString ? tagsString.split(",") : [];
+  const count = searchParams.get("count");
+  const totalTags = searchParams.get("totalTags");
 
   if (!userEmail)
     return new NextResponse(
@@ -22,7 +26,14 @@ export async function GET(request: Request) {
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
-  const contacts = await getContacts(name, user.id);
+  const contacts = await getContacts(name, user.id, tags);
+
+  if (count === "true") return NextResponse.json({ count: contacts.length });
+
+  if (totalTags === "true")
+    return NextResponse.json({
+      tags: contacts.flatMap((contact) => contact.interests),
+    });
 
   const contactIds = contacts.map((c) => c.id);
 
@@ -68,10 +79,17 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
   return parsedContacts;
 };
 
-const getContacts = async (name: string | null, userId: string) => {
+const getContacts = async (
+  name: string | null,
+  userId: string,
+  tags: string[]
+) => {
   let whereClause: Prisma.ContactWhereInput = {
     userId,
   };
+
+  if (tags.length !== 0)
+    whereClause = { ...whereClause, interests: { hasSome: tags } };
 
   if (name) {
     const [firstName, lastName] = name.split(" ");
