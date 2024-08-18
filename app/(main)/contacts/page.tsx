@@ -6,7 +6,7 @@ import { NavFooter } from "@/components/NavFooter";
 import { SearchBar } from "@/components/SearchBar";
 import { useContacts } from "@/hooks/useContacts";
 import { Typography } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { ContactsTutorial } from "@/components/ContactsTutorial";
 import { handleRefresh, pauseFor } from "@/lib/utils";
@@ -14,7 +14,6 @@ import { useSettings } from "@/contexts/SettingsContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { ClipLoader } from "react-spinners";
 import { FilterPage } from "@/components/FilterPage";
-import { Chip } from "@/components/Chip";
 import { useContactTags } from "@/hooks/useContactTags";
 import { RemovableChip } from "@/components/RemovableChip";
 
@@ -76,7 +75,7 @@ export default function ContactsPage() {
     }
 
     setClickedTags(defaultClickedTags);
-  }, [tags]);
+  }, [tags, selectedTags]);
 
   useEffect(() => {
     const indexes = tags.map((tag, index) => {
@@ -89,7 +88,7 @@ export default function ContactsPage() {
         else return false;
       })
     );
-  }, [selectedTags]);
+  }, [tags, selectedTags]);
 
   return (
     <main className="relative flex flex-col items-center text-white px-4">

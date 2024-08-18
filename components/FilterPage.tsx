@@ -2,7 +2,7 @@ import { X } from "@phosphor-icons/react";
 import { Button } from "./Button";
 import { Typography } from "@mui/material";
 import { ClickableChip } from "./ClickableChip";
-import { Dispatch, SetStateAction, useCallback } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useContactCount } from "@/hooks/useContactCount";
 import { ClipLoader } from "react-spinners";
 
