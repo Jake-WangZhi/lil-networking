@@ -664,6 +664,40 @@ export const ContactForm = ({ contact }: Props) => {
               }}
             >
               <Typography variant="h3" sx={{ fontWeight: 600 }}>
+                History
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} sx={{ marginTop: "-4px" }}>
+              <div className="space-y-1">
+                <Typography variant="subtitle1">How did you meet?</Typography>
+                <Typography variant="body1">
+                  Never forget where you met a contact again.
+                </Typography>
+              </div>
+            </Grid>
+
+            <Grid item xs={12}>
+              <textarea
+                id="history"
+                name="history"
+                value={history}
+                onChange={(e) => setHistory(e.target.value)}
+                ref={textareaRef}
+                placeholder="Add where you met here..."
+                className="p-2 min-h-[48px] w-full box-border resize-none overflow-hidden"
+              />
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sx={{
+                marginTop: "16px",
+                position: "relative",
+              }}
+            >
+              <Typography variant="h3" sx={{ fontWeight: 600 }}>
                 Tags
               </Typography>
             </Grid>
@@ -689,40 +723,6 @@ export const ContactForm = ({ contact }: Props) => {
                 }}
                 focusedClassName="ring-1 ring-white outline-none appearance-none caret-white"
                 className="rounded-[4px] block w-full min-h-[64px] h-auto p-2 bg-white bg-opacity-5"
-              />
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sx={{
-                marginTop: "16px",
-                position: "relative",
-              }}
-            >
-              <Typography variant="h3" sx={{ fontWeight: 600 }}>
-                History
-              </Typography>
-            </Grid>
-
-            <Grid item xs={12} sx={{ marginTop: "-4px" }}>
-              <div className="space-y-1">
-                <Typography variant="subtitle1">How did you meet?</Typography>
-                <Typography variant="body1">
-                  Never forget where you met a contact again.
-                </Typography>
-              </div>
-            </Grid>
-
-            <Grid item xs={12}>
-              <textarea
-                id="history"
-                name="history"
-                value={history}
-                onChange={(e) => setHistory(e.target.value)}
-                ref={textareaRef}
-                placeholder="Add where you met here..."
-                className="p-2 min-h-[48px] w-full box-border resize-none overflow-hidden"
               />
             </Grid>
           </Grid>
