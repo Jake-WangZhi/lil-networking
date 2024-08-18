@@ -77,7 +77,7 @@ export default function SettingsPage() {
           onClick={handleLogoutClick}
         >
           <div className="flex justify-between px-4 w-full">
-            <Typography variant="subtitle1" className="text-light-blue">
+            <Typography variant="subtitle1" sx={{ color: "#38ACE2" }}>
               Logout
             </Typography>
             <LogOut

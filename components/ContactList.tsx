@@ -32,7 +32,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="h-[78vh] flex items-center justify-center mt-5">
+      <div className="h-[80vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
       </div>
     );
@@ -57,7 +57,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
 
   if (!name && !contacts.length) {
     return (
-      <div className="h-[78vh] flex flex-col items-center justify-center px-8">
+      <div className="h-[80vh] flex flex-col items-center justify-center px-8">
         <Lottie
           options={{
             loop: false,
@@ -82,15 +82,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   }
 
   return (
-    <div className="w-full mb-24 mt-6">
-      <div className="flex items-center space-x-2 mb-2">
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 600,
-          }}
-        >{`All Contacts (${contacts.length})`}</Typography>
-      </div>
+    <div className="mb-24">
       <div className="space-y-4">
         {contacts.map((contact, index) => (
           <ContactCard key={index} contact={contact} />

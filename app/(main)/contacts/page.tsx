@@ -105,25 +105,39 @@ export default function ContactsPage() {
         {(name ||
           selectedTags.length !== 0 ||
           (!isError && !isLoading && contactList?.contacts.length !== 0)) && (
-          <SearchBar
-            name={name}
-            setName={setName}
-            setIsHiddenPageVisible={setIsHiddenPageVisible}
-          />
-        )}
-        {selectedTags.length !== 0 && (
-          <div className="flex gap-3 pt-4 flex-wrap">
-            {selectedTags.map(
-              (tag, index) =>
-                tag && (
-                  <RemovableChip
-                    key={index}
-                    label={tag}
-                    setSelectedTags={setSelectedTags}
-                  />
-                )
+          <>
+            <SearchBar
+              name={name}
+              setName={setName}
+              setIsHiddenPageVisible={setIsHiddenPageVisible}
+            />
+            {!selectedTags.every((tags) => tags === "") && (
+              <div className="flex gap-3 pt-4 flex-wrap">
+                {selectedTags.map(
+                  (tag, index) =>
+                    tag && (
+                      <RemovableChip
+                        key={index}
+                        label={tag}
+                        setSelectedTags={setSelectedTags}
+                      />
+                    )
+                )}
+              </div>
             )}
-          </div>
+            <div className="mb-3 mt-6">
+              <Typography
+                variant="h3"
+                sx={{
+                  fontWeight: 600,
+                }}
+              >
+                {isLoading
+                  ? "All Contacts (...)"
+                  : `All Contacts (${contactList?.contacts.length})`}
+              </Typography>
+            </div>
+          </>
         )}
       </div>
 
