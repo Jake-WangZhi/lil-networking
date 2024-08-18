@@ -35,7 +35,6 @@ export const FilterPage = ({
     tags: tags.filter((tag, index) => clickedTags[index]),
   });
 
-  console.log("clickedTags", clickedTags);
   const handleChipClick = (index: number) => {
     setClickedTags((prev) =>
       prev.map((clicked, i) => (i === index ? !clicked : clicked))

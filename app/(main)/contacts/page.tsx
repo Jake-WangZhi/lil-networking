@@ -91,10 +91,6 @@ export default function ContactsPage() {
     );
   }, [selectedTags]);
 
-  console.log("tags", tags);
-
-  console.log("selectedTags", selectedTags);
-
   return (
     <main className="relative flex flex-col items-center text-white px-4">
       {isLoading ? (
