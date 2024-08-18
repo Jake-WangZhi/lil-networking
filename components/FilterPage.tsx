@@ -23,6 +23,7 @@ export const FilterPage = ({
   tags,
   clickedTags,
   setClickedTags,
+  selectedTags,
   setSelectedTags,
   email,
   name,
@@ -42,7 +43,7 @@ export const FilterPage = ({
   };
 
   const handleClearClick = () => {
-    [...Array(tags.length)].map(() => false);
+    setClickedTags((prev) => prev.map(() => false));
   };
 
   const handleConfirmClick = () => {
@@ -52,9 +53,22 @@ export const FilterPage = ({
     setIsHiddenPageVisible(false);
   };
 
-  const handleCloseClick = useCallback(() => {
+  const handleCloseClick = () => {
     setIsHiddenPageVisible(false);
-  }, []);
+
+    const indexes = tags.map((tag, index) => {
+      if (selectedTags.includes(tag)) return index;
+    });
+
+    setClickedTags((prev: boolean[]) =>
+      prev.map((tagBoolean, index) => {
+        if (indexes.includes(index)) return true;
+        else return false;
+      })
+    );
+  };
+
+  const noTagsSelected = clickedTags.every((tag) => tag === false);
 
   return (
     <div
@@ -83,8 +97,23 @@ export const FilterPage = ({
         </div>
       </div>
       <div className="flex justify-between w-full">
-        <Button variant="text" onClick={handleClearClick}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600, px: "24px" }}>
+        <Button
+          variant="text"
+          onClick={handleClearClick}
+          disabled={noTagsSelected}
+        >
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontWeight: 600,
+              px: "24px",
+              ...(noTagsSelected
+                ? {
+                    color: "rgb(255, 255, 255, 0.38)",
+                  }
+                : { color: "white" }),
+            }}
+          >
             Clear All
           </Typography>
         </Button>
