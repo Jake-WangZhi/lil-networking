@@ -177,7 +177,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
           }`}
           onAnimationEnd={() => setIsNavigatingBack(false)}
         >
-          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6">
+          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-4">
             <Grid container alignItems="center">
               <Grid item xs={2}>
                 <Button
