@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useRouter } from "next/navigation";
 import { Grid, Typography } from "@mui/material";
@@ -99,13 +99,13 @@ export default function GoalSettingPage() {
     setIsMessageInput(false);
     setGoalConnections(goalConnections || 0);
     setIsConnectionInput(true);
-  }, []);
+  }, [goalConnections]);
 
   const handleMessageClick = useCallback(() => {
     setIsConnectionInput(false);
     setGoalMessages(goalMessages || 0);
     setIsMessageInput(true);
-  }, []);
+  }, [goalMessages]);
 
   if (isError) {
     return (

@@ -131,7 +131,7 @@ export default function OnboardingPage() {
       },
       email: session?.user?.email || "",
     });
-  }, []);
+  }, [putGoalsMutation, session?.user?.email]);
 
   return (
     <main className="relative">
