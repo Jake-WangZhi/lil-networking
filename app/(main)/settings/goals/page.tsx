@@ -19,7 +19,7 @@ import "../../../goals/styles.css";
 export default function GoalSettingPage() {
   const router = useRouter();
   const { email } = useUser();
-  const { goals, isLoading, isError } = useGoals({
+  const { goals, isLoading, isError, isFetching } = useGoals({
     email,
   });
 
@@ -139,7 +139,7 @@ export default function GoalSettingPage() {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <ClipLoader color="#38ACE2" size={150} />

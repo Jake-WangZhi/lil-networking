@@ -12,6 +12,7 @@ export const useGoals = ({ email }: Args) => {
     isError,
     data: goals,
     isLoading,
+    isFetching,
   } = useQuery<Goals>({
     queryKey: ["goals", email],
     queryFn: () =>
@@ -20,6 +21,7 @@ export const useGoals = ({ email }: Args) => {
   });
 
   return {
+    isFetching,
     goals,
     isLoading,
     isError,
