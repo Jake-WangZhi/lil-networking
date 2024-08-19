@@ -26,13 +26,13 @@ export default function GoalsPage() {
   const swiperRef = useRef<SwiperRef>();
 
   const [progress, setProgress] = useState(0);
-  const [goalConnections, setGoalConnections] = useState(2);
-  const [goalMessages, setGoalMessages] = useState(2);
+  const [goalConnections, setGoalConnections] = useState(0);
+  const [goalMessages, setGoalMessages] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const [isNavigatingBack, setIsNavigatingBack] = useState(false);
 
   const postGoalsMutation = useGoalsMutation({
-    method: "POST",
+    method: "PUT",
     onSuccess: () => {
       setErrorMessage("");
 
@@ -109,12 +109,21 @@ export default function GoalsPage() {
     [goalConnections, goalMessages]
   );
 
-  const handleNextClick = useCallback(() => {
-    swiperRef.current?.slideNext();
-    setProgress((prev) => prev + 1);
-  }, []);
+  const handleNextClick = () => {
+    if (
+      (progress === 0 && goalConnections < 1) ||
+      (progress === 1 && goalMessages < 1)
+    ) {
+      setErrorMessage("Please enter positive values for goals");
+    } else {
+      setErrorMessage("");
+      swiperRef.current?.slideNext();
+      setProgress((prev) => prev + 1);
+    }
+  };
 
   const handlePrevClick = useCallback(() => {
+    setErrorMessage("");
     swiperRef.current?.slidePrev();
     setProgress((prev) => prev - 1);
   }, []);
@@ -164,6 +173,7 @@ export default function GoalsPage() {
                     setValue={setValue}
                     selectedValue={selectedValue}
                     buttonContents={buttonContents}
+                    errorMessage={errorMessage}
                   />
                 </SwiperSlide>
               );
@@ -171,9 +181,6 @@ export default function GoalsPage() {
           )}
           <SwiperSlide>
             <div className="mt-20 flex flex-col justify-center items-center">
-              {errorMessage && (
-                <Typography variant="subtitle2">{errorMessage}</Typography>
-              )}
               <div className="mb-6 space-y-12 flex flex-col justify-center items-center">
                 <Lightning className="text-primary-yellow text-[86px] md:text-[90px] lg:text-[94px]" />
                 <div className="text-center space-y-4 flex flex-col items-center">

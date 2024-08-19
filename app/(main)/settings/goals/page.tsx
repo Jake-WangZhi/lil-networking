@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useRouter } from "next/navigation";
 import { Grid, Typography } from "@mui/material";
@@ -15,10 +8,10 @@ import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
 import { ClipLoader } from "react-spinners";
 import { useGoals } from "@/hooks/useGoals";
-import { SearchParams } from "@/types";
-import Lottie from "react-lottie";
-import animationData from "../../../../lottie/106770-empty-box.json";
+// import Lottie from "react-lottie";
+// import animationData from "../../../../lottie/106770-empty-box.json";
 import { useUser } from "@/contexts/UserContext";
+import "../../../goals/styles.css";
 
 export default function GoalSettingPage() {
   const router = useRouter();
@@ -27,10 +20,32 @@ export default function GoalSettingPage() {
     email,
   });
 
-  const [goalConnections, setGoalConnections] = useState(2);
-  const [goalMessages, setGoalMessages] = useState(2);
+  const [goalConnections, setGoalConnections] = useState(
+    goals?.goalConnections
+  );
+  const [goalMessages, setGoalMessages] = useState(goals?.goalMessages);
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isConnectionInput, setIsConnectionInput] = useState(false);
+  const [isMessageInput, setIsMessageInput] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const connectionInputRef = useRef<HTMLInputElement>(null);
+  const messageInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isConnectionInput && connectionInputRef.current) {
+      connectionInputRef.current.focus();
+      connectionInputRef.current.value = "";
+    }
+  }, [isConnectionInput]);
+
+  useEffect(() => {
+    if (isMessageInput && messageInputRef.current) {
+      messageInputRef.current.focus();
+      messageInputRef.current.value = "";
+    }
+  }, [isMessageInput]);
 
   useEffect(() => {
     //Use setTimeout to create a short delay to prevent accidental button triggering
@@ -39,15 +54,6 @@ export default function GoalSettingPage() {
       setIsDisabled(false);
     }, 0);
   }, []);
-
-  useEffect(() => {
-    if (goals) {
-      const { goalConnections, goalMessages } = goals;
-
-      setGoalConnections(goalConnections);
-      setGoalMessages(goalMessages);
-    }
-  }, [goals]);
 
   const putGoalsMutation = useGoalsMutation({
     method: "PUT",
@@ -58,74 +64,48 @@ export default function GoalSettingPage() {
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");
       console.log(error);
+      setIsSubmitting(false);
     },
   });
 
-  const GOAL_QUESTIONS = useMemo(
-    () => [
-      {
-        title: "How many new contacts do you want to make per month?",
-        setValue: setGoalConnections,
-        selectedValue: goalConnections,
-        buttonContents: [
-          {
-            label: "2",
-            value: 2,
-          },
-          {
-            label: "5",
-            value: 5,
-          },
-          {
-            label: "10",
-            value: 10,
-          },
-        ],
-      },
-      {
-        title: "How many contacts do you want to reach out to per month?",
-        setValue: setGoalMessages,
-        selectedValue: goalMessages,
-        buttonContents: [
-          {
-            label: "2",
-            value: 2,
-          },
-          {
-            label: "5",
-            value: 5,
-          },
-          {
-            label: "10",
-            value: 10,
-          },
-        ],
-      },
-    ],
-    [goalConnections, goalMessages]
-  );
-
   const handleBackClick = useCallback(() => {
     router.push("/settings");
-
-    putGoalsMutation.mutate({
-      goalsArgs: {
-        goalConnections,
-        goalMessages,
-      },
-      email: email || "",
-    });
-  }, [router, goalConnections, goalMessages, putGoalsMutation, email]);
-
-  const handleSetGoalsClick = useCallback(() => {
-    router.push(`/goals?${SearchParams.IsFromSettings}=true`);
   }, [router]);
 
-  const handleOptionClick = useCallback(
-    (value: number, setValue: Dispatch<SetStateAction<number>>) => () =>
-      setValue(value),
-    []
-  );
+  const handleDoneClick = () => {
+    if (
+      (!goalConnections && goalConnections !== 0) ||
+      (!goalMessages && goalMessages !== 0)
+    ) {
+      setErrorMessage("Please enter positive values for goals");
+    } else {
+      if (goalConnections < 0 || goalMessages < 0) {
+        setErrorMessage("Please enter positive values for goals");
+      } else {
+        setIsSubmitting(true);
+
+        putGoalsMutation.mutate({
+          goalsArgs: {
+            goalConnections,
+            goalMessages,
+          },
+          email: email || "",
+        });
+      }
+    }
+  };
+
+  const handleConnectionClick = useCallback(() => {
+    setIsMessageInput(false);
+    setGoalConnections(goalConnections || 0);
+    setIsConnectionInput(true);
+  }, []);
+
+  const handleMessageClick = useCallback(() => {
+    setIsConnectionInput(false);
+    setGoalMessages(goalMessages || 0);
+    setIsMessageInput(true);
+  }, []);
 
   if (isError) {
     return (
@@ -153,61 +133,61 @@ export default function GoalSettingPage() {
     );
   }
 
-  if (!goals) {
-    return (
-      <div className="relative py-8">
-        <Grid container alignItems="center" sx={{ px: "16px" }}>
-          <Grid item xs={2}>
-            <Button
-              variant="text"
-              onClick={handleBackClick}
-              sx={{ px: "6px", ml: "-6px" }}
-            >
-              <ChevronLeft
-                size={36}
-                className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-              />
-            </Button>
-          </Grid>
-          <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography variant="h3" sx={{ fontWeight: 600 }}>
-              Goals
-            </Typography>
-          </Grid>
-          <Grid item xs={2}></Grid>
-        </Grid>
-        <div className="h-[80vh] flex flex-col justify-center items-center space-y-6 px-7">
-          <Lottie
-            options={{
-              loop: 1,
-              autoplay: true,
-              animationData: animationData,
-              rendererSettings: {
-                preserveAspectRatio: "xMidYMid slice",
-              },
-            }}
-            width={178}
-            height={178}
-          />
-          <div className="space-y-4 text-center">
-            <Typography variant="h2">No Goals</Typography>
-            <Typography variant="subtitle1">
-              Set up your goals to build habits and track your growth as a
-              networker
-            </Typography>
-          </div>
-          <div className="text-center">
-            <Button variant="contained" onClick={handleSetGoalsClick}>
-              Set up goals
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (!goals) {
+  //   return (
+  //     <div className="relative py-8">
+  //       <Grid container alignItems="center" sx={{ px: "16px" }}>
+  //         <Grid item xs={2}>
+  //           <Button
+  //             variant="text"
+  //             onClick={handleBackClick}
+  //             sx={{ px: "6px", ml: "-6px" }}
+  //           >
+  //             <ChevronLeft
+  //               size={36}
+  //               className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+  //             />
+  //           </Button>
+  //         </Grid>
+  //         <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+  //           <Typography variant="h3" sx={{ fontWeight: 600 }}>
+  //             Edit Goals
+  //           </Typography>
+  //         </Grid>
+  //         <Grid item xs={2}></Grid>
+  //       </Grid>
+  //       <div className="h-[80vh] flex flex-col justify-center items-center space-y-6 px-7">
+  //         <Lottie
+  //           options={{
+  //             loop: 1,
+  //             autoplay: true,
+  //             animationData: animationData,
+  //             rendererSettings: {
+  //               preserveAspectRatio: "xMidYMid slice",
+  //             },
+  //           }}
+  //           width={178}
+  //           height={178}
+  //         />
+  //         <div className="space-y-4 text-center">
+  //           <Typography variant="h2">No Goals</Typography>
+  //           <Typography variant="subtitle1">
+  //             Set up your goals to build habits and track your growth as a
+  //             networker
+  //           </Typography>
+  //         </div>
+  //         <div className="text-center">
+  //           <Button variant="contained" onClick={handleSetGoalsClick}>
+  //             Set up goals
+  //           </Button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
-    <main className="relative min-h-screen py-8 space-y-6">
+    <main className="relative min-h-screen py-8 space-y-12">
       <Grid container alignItems="center" sx={{ px: "16px" }}>
         <Grid item xs={2}>
           <Button
@@ -223,51 +203,131 @@ export default function GoalSettingPage() {
         </Grid>
         <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
           <Typography variant="h3" sx={{ fontWeight: 600 }}>
-            Goals
+            Edit Goals
           </Typography>
         </Grid>
-        <Grid item xs={2}></Grid>
+        <Grid item xs={2} sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="text"
+            onClick={handleDoneClick}
+            sx={{ px: "14px", mr: "-14px" }}
+            disabled={isSubmitting}
+          >
+            <Typography
+              variant="subtitle1"
+              sx={{ fontWeight: 600, color: "#38ACE2" }}
+            >
+              {isSubmitting ? "Saving" : "Done"}
+            </Typography>
+          </Button>
+        </Grid>
       </Grid>
       {errorMessage && (
-        <Typography variant="subtitle2">{errorMessage}</Typography>
+        <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+          {errorMessage}
+        </Typography>
       )}
-      <div className="px-12 space-y-8">
-        {GOAL_QUESTIONS.map(
-          ({ title, selectedValue, setValue, buttonContents }, index) => {
-            return (
-              <div key={`question-${index}`} className="space-y-6">
-                <div>
-                  <Typography variant="h3" sx={{ fontWeight: 600 }}>
-                    {title}
-                  </Typography>
-                </div>
-                <div className="flex items-center justify-between">
-                  {buttonContents.map(({ label, value }, index) => {
-                    return (
-                      <Button
-                        key={`answer-${index}`}
-                        variant="outlined"
-                        sx={{
-                          px: "38px",
-                          py: "12px",
-                          border:
-                            selectedValue === value
-                              ? "1px solid #38ACE2"
-                              : "none",
-                          color: selectedValue === value ? "#38ACE2" : "white",
-                        }}
-                        onClick={handleOptionClick(value, setValue)}
-                        disabled={isDisabled}
-                      >
-                        {label}
-                      </Button>
-                    );
-                  })}
-                </div>
+      <div className="px-20">
+        <Typography
+          variant="h2"
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          Contacts
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            display: "flex",
+            textAlign: "center",
+            mt: "16px",
+          }}
+        >
+          How many new contacts do you want to make per month?
+        </Typography>
+        <div className="flex justify-center mt-6">
+          <Button
+            variant="outlined"
+            sx={{
+              width: "100%",
+              "@media (min-width: 1024px)": {
+                width: "60%",
+              },
+              border: isConnectionInput ? "1px solid #38ACE2" : "none",
+              color: isConnectionInput ? "#38ACE2" : "white",
+              "&:disabled": {
+                color: "white",
+              },
+            }}
+            onClick={handleConnectionClick}
+            disabled={isDisabled}
+            turnOffRipple={true}
+          >
+            {goalConnections || goalConnections == 0 ? (
+              <div className="bg-dark-blue">
+                <input
+                  type="number"
+                  className="text-center w-full"
+                  ref={connectionInputRef}
+                  value={goalConnections || 0}
+                  onChange={(e) => setGoalConnections(parseInt(e.target.value))}
+                />
               </div>
-            );
-          }
-        )}
+            ) : (
+              "Add custom goal here..."
+            )}
+          </Button>
+        </div>
+      </div>
+      <div className="px-20">
+        <Typography
+          variant="h2"
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          Messages
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            display: "flex",
+            textAlign: "center",
+            mt: "16px",
+          }}
+        >
+          How many messages do you want to reach out to per month?
+        </Typography>
+        <div className="flex justify-center mt-6">
+          <Button
+            variant="outlined"
+            sx={{
+              width: "100%",
+              "@media (min-width: 1024px)": {
+                width: "60%",
+              },
+              border: isMessageInput ? "1px solid #38ACE2" : "none",
+              color: isMessageInput ? "#38ACE2" : "white",
+              "&:disabled": {
+                color: "white",
+              },
+            }}
+            onClick={handleMessageClick}
+            disabled={isDisabled}
+            turnOffRipple={true}
+          >
+            {goalMessages || goalMessages === 0 ? (
+              <div className="bg-dark-blue">
+                <input
+                  type="number"
+                  className="text-center w-full"
+                  ref={messageInputRef}
+                  value={goalMessages || 0}
+                  onChange={(e) => setGoalMessages(parseInt(e.target.value))}
+                />
+              </div>
+            ) : (
+              "Add custom goal here..."
+            )}
+          </Button>
+        </div>
       </div>
     </main>
   );
