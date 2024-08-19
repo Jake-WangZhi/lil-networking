@@ -15,6 +15,7 @@ import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useSession } from "next-auth/react";
 import { SubscriptionArgs } from "@/types";
 import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
+import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 
 import "swiper/css";
 
@@ -48,7 +49,9 @@ export default function OnboardingPage() {
   const postNotificationSettingsMutation = useNotificationSettingsMutation({
     method: "POST",
     onSuccess: () => {},
-    onError: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
   });
 
   const postSubscriptionMutation = useSubscriptionMutation({
@@ -61,7 +64,17 @@ export default function OnboardingPage() {
         subscriptionId: id,
       });
     },
-    onError: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const putGoalsMutation = useGoalsMutation({
+    method: "PUT",
+    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
   });
 
   useEffect(() => {
@@ -109,6 +122,16 @@ export default function OnboardingPage() {
       }
     }
   }, [postSubscriptionMutation, session?.user?.email]);
+
+  useEffect(() => {
+    putGoalsMutation.mutate({
+      goalsArgs: {
+        goalConnections: 0,
+        goalMessages: 0,
+      },
+      email: session?.user?.email || "",
+    });
+  }, [putGoalsMutation, session?.user?.email]);
 
   return (
     <main className="relative">

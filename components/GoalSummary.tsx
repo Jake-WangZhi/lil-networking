@@ -75,7 +75,7 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
 
   return (
     <div className="mt-6">
-      {goals ? (
+      {goals?.goalConnections && goals.goalMessages ? (
         <div className="w-full bg-white bg-opacity-5 rounded-xl p-4 space-y-4">
           <div className="flex items-center justify-between">
             <Typography
@@ -119,7 +119,7 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
           }}
         >
           <PlusCircle size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
-          Add Goal
+          Add Goals
         </Button>
       )}
     </div>

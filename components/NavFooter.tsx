@@ -37,22 +37,24 @@ export const NavFooter = () => {
           margin: "auto",
           px: "16px",
           justifyContent: "space-between",
-          pb: "20px",
-          height: "76px",
+          pb: "10px",
+          height: "66px",
           "& .MuiBottomNavigationAction-root.Mui-selected": {
             color: "white",
           },
           "@media (min-width: 768px)": {
             maxWidth: "576px",
+            height: "74px",
           },
           "@media (min-width: 1024px)": {
             maxWidth: "768px",
+            height: "82px",
           },
         }}
       >
         <BottomNavigationAction
           label="Dashboard"
-          icon={<House className="text-2xl md:text-3xl lg:text-4xl" />}
+          icon={<House size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />}
           value={"/dashboard"}
           sx={{
             color: "#C5C6C7",
@@ -69,7 +71,7 @@ export const NavFooter = () => {
         />
         <BottomNavigationAction
           label="Contacts"
-          icon={<Users className="text-2xl md:text-3xl lg:text-4xl" />}
+          icon={<Users size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />}
           value={"/contacts"}
           sx={{
             color: "#C5C6C7",
@@ -86,7 +88,7 @@ export const NavFooter = () => {
         />
         <BottomNavigationAction
           label="Settings"
-          icon={<Gear className="text-2xl md:text-3xl lg:text-4xl" />}
+          icon={<Gear size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />}
           value={"/settings"}
           sx={{
             color: "#C5C6C7",

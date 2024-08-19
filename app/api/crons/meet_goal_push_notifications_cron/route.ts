@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
-import { differenceInDays } from 'date-fns';
-import { sendPushNotification } from '@/helper/PushNotificationHelper';
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
+import { differenceInDays } from "date-fns";
+import { sendPushNotification } from "@/helper/PushNotificationHelper";
 
-export async function GET(request: NextRequest){
+export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const key = url.searchParams.get("key");
 
@@ -12,12 +12,13 @@ export async function GET(request: NextRequest){
   }
 
   try {
-    const meetGoalNotificationsCollection = await prisma.notificationSettings.findMany({
-      where: { meetGoal: true },
-      select: {
-        subscriptionId: true,
-      },
-    });
+    const meetGoalNotificationsCollection =
+      await prisma.notificationSettings.findMany({
+        where: { meetGoal: true },
+        select: {
+          subscriptionId: true,
+        },
+      });
 
     for (const notifications of meetGoalNotificationsCollection) {
       const subscription = await prisma.subscription.findUnique({
@@ -34,7 +35,7 @@ export async function GET(request: NextRequest){
         },
       });
 
-      if (!goals) continue;
+      if (goals?.goalConnections === 0 && goals?.goalMessages === 0) continue;
 
       const contacts = await prisma.contact.findMany({
         where: {
@@ -56,7 +57,9 @@ export async function GET(request: NextRequest){
 
       const notificationData = {
         title: `Meet Goal Reminder`,
-        body: `Hey, ${user.name?.split(" ")[0]}! You haven't been active in a week. Get back on the app and build those habits!`,
+        body: `Hey, ${
+          user.name?.split(" ")[0]
+        }! You haven't been active in a week. Get back on the app and build those habits!`,
       };
 
       const activity = await prisma.activity.findFirst({
@@ -82,8 +85,14 @@ export async function GET(request: NextRequest){
       }
     }
 
-    return NextResponse.json({ message: "Meet goal push notifications sent successfully" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Meet goal push notifications sent successfully" },
+      { status: 200 }
+    );
   } catch (error) {
-    return NextResponse.json({ error: "Error sending meet goal push notifications" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error sending meet goal push notifications" },
+      { status: 500 }
+    );
   }
 }

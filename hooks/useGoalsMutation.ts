@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 type Args = {
   onSuccess: () => void;
   onError: (error: unknown) => void;
-  method: "POST" | "PUT";
+  method: "PUT";
 };
 
 type HandleSetGoalsArgs = {
