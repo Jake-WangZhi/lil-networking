@@ -5,12 +5,15 @@ import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useRouter } from "next/navigation";
 import { Grid, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
-import { ChevronLeft } from "react-feather";
 import { ClipLoader } from "react-spinners";
 import { useGoals } from "@/hooks/useGoals";
-// import Lottie from "react-lottie";
-// import animationData from "../../../../lottie/106770-empty-box.json";
+import { SearchParams } from "@/types";
+import { CaretLeft } from "@phosphor-icons/react";
 import { useUser } from "@/contexts/UserContext";
+
+import Lottie from "react-lottie";
+import animationData from "../../../../lottie/106770-empty-box.json";
+
 import "../../../goals/styles.css";
 
 export default function GoalSettingPage() {
@@ -46,6 +49,13 @@ export default function GoalSettingPage() {
       messageInputRef.current.value = "";
     }
   }, [isMessageInput]);
+
+  useEffect(() => {
+    if (goals) {
+      setGoalConnections(goals.goalConnections);
+      setGoalMessages(goals.goalMessages);
+    }
+  }, [goals]);
 
   useEffect(() => {
     //Use setTimeout to create a short delay to prevent accidental button triggering
@@ -107,6 +117,10 @@ export default function GoalSettingPage() {
     setIsMessageInput(true);
   }, [goalMessages]);
 
+  const handleSetGoalsClick = useCallback(() => {
+    router.push(`/goals?${SearchParams.IsFromSettings}=true`);
+  }, [router]);
+
   if (isError) {
     return (
       <Typography
@@ -133,58 +147,58 @@ export default function GoalSettingPage() {
     );
   }
 
-  // if (!goals) {
-  //   return (
-  //     <div className="relative py-8">
-  //       <Grid container alignItems="center" sx={{ px: "16px" }}>
-  //         <Grid item xs={2}>
-  //           <Button
-  //             variant="text"
-  //             onClick={handleBackClick}
-  //             sx={{ px: "6px", ml: "-6px" }}
-  //           >
-  //             <ChevronLeft
-  //               size={36}
-  //               className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-  //             />
-  //           </Button>
-  //         </Grid>
-  //         <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
-  //           <Typography variant="h3" sx={{ fontWeight: 600 }}>
-  //             Edit Goals
-  //           </Typography>
-  //         </Grid>
-  //         <Grid item xs={2}></Grid>
-  //       </Grid>
-  //       <div className="h-[80vh] flex flex-col justify-center items-center space-y-6 px-7">
-  //         <Lottie
-  //           options={{
-  //             loop: 1,
-  //             autoplay: true,
-  //             animationData: animationData,
-  //             rendererSettings: {
-  //               preserveAspectRatio: "xMidYMid slice",
-  //             },
-  //           }}
-  //           width={178}
-  //           height={178}
-  //         />
-  //         <div className="space-y-4 text-center">
-  //           <Typography variant="h2">No Goals</Typography>
-  //           <Typography variant="subtitle1">
-  //             Set up your goals to build habits and track your growth as a
-  //             networker
-  //           </Typography>
-  //         </div>
-  //         <div className="text-center">
-  //           <Button variant="contained" onClick={handleSetGoalsClick}>
-  //             Set up goals
-  //           </Button>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (goals?.goalConnections === 0 && goals?.goalMessages === 0) {
+    return (
+      <div className="relative py-8">
+        <Grid container alignItems="center" sx={{ px: "16px" }}>
+          <Grid item xs={2}>
+            <Button
+              variant="text"
+              onClick={handleBackClick}
+              sx={{ px: "6px", ml: "-6px" }}
+            >
+              <CaretLeft
+                size={32}
+                className="md:w-10 md:h-10 lg:w-12 lg:h-12"
+              />
+            </Button>
+          </Grid>
+          <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              Edit Goals
+            </Typography>
+          </Grid>
+          <Grid item xs={2}></Grid>
+        </Grid>
+        <div className="h-[80vh] flex flex-col justify-center items-center space-y-6 px-7">
+          <Lottie
+            options={{
+              loop: 1,
+              autoplay: true,
+              animationData: animationData,
+              rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice",
+              },
+            }}
+            width={178}
+            height={178}
+          />
+          <div className="space-y-4 text-center">
+            <Typography variant="h2">No Goals</Typography>
+            <Typography variant="subtitle1">
+              Set up your goals to build habits and track your growth as a
+              networker
+            </Typography>
+          </div>
+          <div className="text-center">
+            <Button variant="contained" onClick={handleSetGoalsClick}>
+              Set up goals
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="relative min-h-screen py-8 space-y-12">
@@ -195,10 +209,7 @@ export default function GoalSettingPage() {
             onClick={handleBackClick}
             sx={{ px: "6px", ml: "-6px" }}
           >
-            <ChevronLeft
-              size={36}
-              className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-            />
+            <CaretLeft size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           </Button>
         </Grid>
         <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>

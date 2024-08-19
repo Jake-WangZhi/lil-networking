@@ -31,7 +31,7 @@ export default function GoalsPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isNavigatingBack, setIsNavigatingBack] = useState(false);
 
-  const postGoalsMutation = useGoalsMutation({
+  const putGoalsMutation = useGoalsMutation({
     method: "PUT",
     onSuccess: () => {
       setErrorMessage("");
@@ -53,14 +53,14 @@ export default function GoalsPage() {
 
   const handleDoneClick = useCallback(
     () =>
-      postGoalsMutation.mutate({
+      putGoalsMutation.mutate({
         goalsArgs: {
           goalConnections,
           goalMessages,
         },
         email: session?.user?.email || "",
       }),
-    [goalConnections, goalMessages, postGoalsMutation, session?.user?.email]
+    [goalConnections, goalMessages, putGoalsMutation, session?.user?.email]
   );
 
   const GOAL_QUESTIONS = useMemo(
