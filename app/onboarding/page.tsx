@@ -71,9 +71,7 @@ export default function OnboardingPage() {
 
   const putGoalsMutation = useGoalsMutation({
     method: "PUT",
-    onSuccess: () => {
-      router.push("/settings");
-    },
+    onSuccess: () => {},
     onError: (error) => {
       console.log(error);
     },

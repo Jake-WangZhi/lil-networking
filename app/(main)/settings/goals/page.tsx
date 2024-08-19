@@ -240,6 +240,7 @@ export default function GoalSettingPage() {
             display: "flex",
             textAlign: "center",
             mt: "16px",
+            justifyContent: "center",
           }}
         >
           How many new contacts do you want to make per month?
@@ -262,7 +263,9 @@ export default function GoalSettingPage() {
             disabled={isDisabled}
             turnOffRipple={true}
           >
-            {goalConnections || goalConnections == 0 ? (
+            {goals?.goalConnections === 0 && !isConnectionInput ? (
+              "Add custom goal here..."
+            ) : (
               <div className="bg-dark-blue">
                 <input
                   type="number"
@@ -272,8 +275,6 @@ export default function GoalSettingPage() {
                   onChange={(e) => setGoalConnections(parseInt(e.target.value))}
                 />
               </div>
-            ) : (
-              "Add custom goal here..."
             )}
           </Button>
         </div>
@@ -291,6 +292,7 @@ export default function GoalSettingPage() {
             display: "flex",
             textAlign: "center",
             mt: "16px",
+            justifyContent: "center",
           }}
         >
           How many messages do you want to reach out to per month?
@@ -313,7 +315,9 @@ export default function GoalSettingPage() {
             disabled={isDisabled}
             turnOffRipple={true}
           >
-            {goalMessages || goalMessages === 0 ? (
+            {goals?.goalMessages === 0 && !isMessageInput ? (
+              "Add custom goal here..."
+            ) : (
               <div className="bg-dark-blue">
                 <input
                   type="number"
@@ -323,8 +327,6 @@ export default function GoalSettingPage() {
                   onChange={(e) => setGoalMessages(parseInt(e.target.value))}
                 />
               </div>
-            ) : (
-              "Add custom goal here..."
             )}
           </Button>
         </div>
