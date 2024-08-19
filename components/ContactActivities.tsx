@@ -29,7 +29,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
   );
 
   return (
-    <div className="mb-12 mx-4">
+    <div className="mx-4">
       <div className="flex items-center justify-between mb-3">
         <Typography variant="h3" sx={{ fontWeight: 600 }}>
           History
@@ -86,9 +86,9 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
               </div>
             )}
             <div
-              className={`flex pb-4 ml-[7px] md:ml-[9px] lg:ml-[11px] bg-dark-blue ${
+              className={`flex ml-[7px] md:ml-[9px] lg:ml-[11px] bg-dark-blue ${
                 index + 1 !== activities?.length &&
-                "border-l-2 border-light-blue border-dashed"
+                "border-l-2 border-light-blue border-dashed pb-4"
               }`}
             >
               {title && (

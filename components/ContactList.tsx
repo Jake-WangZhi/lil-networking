@@ -82,7 +82,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   }
 
   return (
-    <div className="mb-24">
+    <div className="mb-[86px] md:mb-24 lg:mb-28">
       <div className="space-y-4">
         {contacts.map((contact, index) => (
           <ContactCard key={index} contact={contact} />
