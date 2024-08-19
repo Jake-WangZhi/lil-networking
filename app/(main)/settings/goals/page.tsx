@@ -203,7 +203,7 @@ export default function GoalSettingPage() {
   return (
     <main className="relative min-h-screen py-8 space-y-12">
       <Grid container alignItems="center" sx={{ px: "16px" }}>
-        <Grid item xs={2}>
+        <Grid item xs={4}>
           <Button
             variant="text"
             onClick={handleBackClick}
@@ -212,12 +212,12 @@ export default function GoalSettingPage() {
             <CaretLeft size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           </Button>
         </Grid>
-        <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
           <Typography variant="h3" sx={{ fontWeight: 600 }}>
             Edit Goals
           </Typography>
         </Grid>
-        <Grid item xs={2} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid item xs={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             variant="text"
             onClick={handleDoneClick}
