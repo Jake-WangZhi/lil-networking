@@ -58,7 +58,9 @@ export async function GET(request: Request) {
   const isMeetGoals =
     goals &&
     goals.connections === goals.goalConnections &&
-    goals.messages === goals.goalMessages;
+    goals.messages === goals.goalMessages &&
+    goals.goalConnections > 0 &&
+    goals.goalMessages > 0;
 
   if (goals && goals.hasShownConfetti === false && isMeetGoals) {
     await prisma.goals.update({

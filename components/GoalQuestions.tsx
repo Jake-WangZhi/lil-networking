@@ -20,6 +20,7 @@ interface Props {
   setValue: Dispatch<SetStateAction<number>>;
   selectedValue: number;
   buttonContents: ButtonContent[];
+  errorMessage: string;
 }
 
 export const GoalQuestions = ({
@@ -28,6 +29,7 @@ export const GoalQuestions = ({
   setValue,
   selectedValue,
   buttonContents,
+  errorMessage,
 }: Props) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCustomInput, setIsCustomInput] = useState(false);
@@ -135,6 +137,11 @@ export const GoalQuestions = ({
             )}
           </Button>
         </div>
+        {errorMessage && (
+          <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+            {errorMessage}
+          </Typography>
+        )}
       </div>
     </div>
   );

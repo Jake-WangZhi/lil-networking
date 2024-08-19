@@ -26,7 +26,7 @@ model Contact {
   interests  String[]
   activities Activity[]
   isArchived Boolean    @default(false)
-  User       User       @relation(fields: [userId], references: [id])
+  User       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
 }
 
@@ -101,7 +101,7 @@ model Goals {
   highestStreak    Int     @default(0)
   hasShownConfetti Boolean @default(false)
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 }
 
@@ -131,7 +131,7 @@ model Subscription {
   auth      String   @unique
   p256dh    String   @unique
 
-  User   User   @relation(fields: [userId], references: [id])
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   notificationSettings NotificationSettings?
@@ -146,6 +146,6 @@ model NotificationSettings {
   streak    Boolean
   meetGoal  Boolean
 
-  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
   subscriptionId String       @unique
 }

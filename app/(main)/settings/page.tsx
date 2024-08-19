@@ -3,10 +3,9 @@
 import { Button } from "@/components/Button";
 import { NavFooter } from "@/components/NavFooter";
 import { Avatar, Typography } from "@mui/material";
-import { UserCircle } from "@phosphor-icons/react";
+import { UserCircle, CaretRight, SignOut } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { ChevronRight, LogOut } from "react-feather";
 import { useUser } from "@/contexts/UserContext";
 import { signOut } from "next-auth/react";
 
@@ -27,7 +26,7 @@ export default function SettingsPage() {
 
   return (
     <main className="relative min-h-screen pt-4 pb-8 space-y-6 md:pt-8">
-      <Typography variant="h1" sx={{ px: "24px" }}>
+      <Typography variant="h1" sx={{ px: "16px" }}>
         Settings
       </Typography>
       <div className="flex items-center px-4 space-x-2">
@@ -54,7 +53,7 @@ export default function SettingsPage() {
         >
           <div className="flex justify-between px-4 w-full">
             <Typography variant="subtitle1">Goals</Typography>
-            <ChevronRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+            <CaretRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           </div>
         </Button>
         <Button
@@ -66,7 +65,7 @@ export default function SettingsPage() {
         >
           <div className="flex justify-between px-4 w-full">
             <Typography variant="subtitle1">Notifications</Typography>
-            <ChevronRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+            <CaretRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           </div>
         </Button>
         <Button
@@ -80,7 +79,7 @@ export default function SettingsPage() {
             <Typography variant="subtitle1" sx={{ color: "#38ACE2" }}>
               Logout
             </Typography>
-            <LogOut
+            <SignOut
               size={24}
               className="text-light-blue md:w-7 md:h-7 lg:w-8 lg:h-8"
             />
