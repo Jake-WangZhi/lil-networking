@@ -37,16 +37,18 @@ export const NavFooter = () => {
           margin: "auto",
           px: "16px",
           justifyContent: "space-between",
-          pb: "20px",
-          height: "76px",
+          pb: "10px",
+          height: "66px",
           "& .MuiBottomNavigationAction-root.Mui-selected": {
             color: "white",
           },
           "@media (min-width: 768px)": {
             maxWidth: "576px",
+            height: "76px",
           },
           "@media (min-width: 1024px)": {
             maxWidth: "768px",
+            height: "86px",
           },
         }}
       >
