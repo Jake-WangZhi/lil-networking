@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import webpush from 'web-push';
-import prisma from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import webpush from "web-push";
+import prisma from "@/lib/prisma";
 
 webpush.setVapidDetails(
   process.env.VAPID_MAILTO ?? "",
@@ -8,7 +8,7 @@ webpush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY ?? ""
 );
 
-export async function GET(request: NextRequest){
+export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const key = url.searchParams.get("key");
 
@@ -20,8 +20,8 @@ export async function GET(request: NextRequest){
     const subscriptionData = await prisma.subscription.findMany();
 
     const notificationData = {
-      title: "Push Notification Title",
-      body: "This is a push notification",
+      title: "❤嫄嫄",
+      body: "From之之",
     };
 
     for (const { endpoint, p256dh, auth, id } of subscriptionData) {
@@ -44,8 +44,14 @@ export async function GET(request: NextRequest){
       }
     }
 
-    return NextResponse.json({ message: "Push notifications sent successfully" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Push notifications sent successfully" },
+      { status: 200 }
+    );
   } catch (error) {
-    return NextResponse.json({ error: "Error sending push notifications" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error sending push notifications" },
+      { status: 500 }
+    );
   }
 }
