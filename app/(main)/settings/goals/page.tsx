@@ -228,7 +228,7 @@ export default function GoalSettingPage() {
               variant="subtitle1"
               sx={{ fontWeight: 600, color: "#38ACE2" }}
             >
-              {isSubmitting ? "Saving" : "Done"}
+              {isSubmitting ? "Saving..." : "Done"}
             </Typography>
           </Button>
         </Grid>
