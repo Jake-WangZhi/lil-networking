@@ -28,11 +28,12 @@ export const ContactCard = ({ contact }: Props) => {
       <CardActionArea>
         <CardContent>
           <Link href={`/contacts/${id}`} className="text-white">
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-center">
               <Typography
                 variant="subtitle1"
                 sx={{
                   fontWeight: 600,
+                  lineHeight: "28px",
                 }}
               >
                 {firstName} {lastName}
