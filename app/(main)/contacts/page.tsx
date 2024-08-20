@@ -92,7 +92,7 @@ export default function ContactsPage() {
 
   return (
     <main className="relative flex flex-col items-center text-white px-4">
-      <div className="sticky top-0 w-full bg-dark-blue z-10 pt-4 pb-3 mb-1 md:pt-8">
+      <div className="sticky top-0 w-full bg-dark-blue z-10 pt-4 pb-2 mb-1 md:pt-8">
         <div className="flex justify-between items-center">
           <Typography variant="h1">All Contacts</Typography>
           <div className="-mr-3">
