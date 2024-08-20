@@ -67,7 +67,7 @@ export default function TutorialPage() {
         </Grid>
         <Grid item xs={4}></Grid>
       </Grid>
-      <div className="space-y-6 px-4">
+      <div className="space-y-8 px-4">
         <div className="flex justify-between">
           <div>
             <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>

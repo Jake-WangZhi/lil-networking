@@ -330,7 +330,7 @@ export default function NotificationSettingPage() {
           {errorMessage}
         </Typography>
       )}
-      <div className="flex justify-between mt-6">
+      <div className="flex justify-between items-center mt-6">
         <div>
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Enable all push notifications
@@ -344,12 +344,12 @@ export default function NotificationSettingPage() {
           checked={allNotificationsChecked}
         />
       </div>
-      <div className="mt-8 space-y-4">
+      <div className="mt-10 space-y-6">
         <Typography variant="h3" sx={{ fontWeight: 600 }}>
           Push notifications
         </Typography>
-        <div className="space-y-6">
-          <div className="flex justify-between">
+        <div className="space-y-8">
+          <div className="flex justify-between items-center">
             <div>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 New action alert
@@ -360,7 +360,7 @@ export default function NotificationSettingPage() {
             </div>
             <Switch onChange={switchNewAction} checked={newActionChecked} />
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 Streak reminder
@@ -371,7 +371,7 @@ export default function NotificationSettingPage() {
             </div>
             <Switch onChange={switchStreak} checked={streakChecked} />
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 Meet goal reminder
