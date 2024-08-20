@@ -100,7 +100,7 @@ export default function ContactPage({
 
   const renderProfile = () => {
     return (
-      <>
+      <div className="min-h-[80vh] mt-2">
         <ContactInfo
           firstName={firstName}
           lastName={lastName}
@@ -118,12 +118,12 @@ export default function ContactPage({
         <ContactConnect linkedIn={linkedIn} email={email} phone={phone} />
         {interests.length !== 0 && <ContactTags interests={interests} />}
         <ContactActivites activities={activities} contactId={contact.id} />
-      </>
+      </div>
     );
   };
 
   return (
-    <main className="relative min-h-screen mb-[86px] md:mb-24 lg:mb-28 text-white">
+    <main className="relative mb-[86px] md:mb-24 lg:mb-28 text-white">
       <ContactHeader contact={contact} />
       <PullToRefresh
         onRefresh={handleRefresh(refetch)}
