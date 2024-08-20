@@ -1,6 +1,6 @@
 import img1 from "@/public/tutorials/profile/reminder.png";
-import img3 from "@/public/tutorials/profile/tags.png";
-import img2 from "@/public/tutorials/profile/history.png";
+import img2 from "@/public/tutorials/profile/tags.png";
+import img3 from "@/public/tutorials/profile/history.png";
 import { TutorialModal } from "./TutorialModal";
 import { TutorialType } from "@/types";
 

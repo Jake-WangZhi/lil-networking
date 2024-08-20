@@ -1,20 +1,55 @@
 "use client";
 
 import { Button } from "@/components/Button";
+import { ContactsTutorial } from "@/components/ContactsTutorial";
+import { DashboardTutorial } from "@/components/DashboardTutorial";
+import { ProfileTutorial } from "@/components/ProfileTutorial";
+import { useSettings } from "@/contexts/SettingsContext";
 import { Grid, Typography } from "@mui/material";
 import { CaretLeft } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 export default function TutorialPage() {
   const router = useRouter();
+
+  const {
+    isDashboardTutorialShown,
+    isContactsTutorialShown,
+    isProfileTutorialShown,
+    setIsDashboardTutorialShown,
+    setIsContactsTutorialShown,
+    setIsProfileTutorialShown,
+  } = useSettings();
+
+  useEffect(() => {
+    setIsDashboardTutorialShown(false);
+    setIsContactsTutorialShown(false);
+    setIsProfileTutorialShown(false);
+  }, [
+    setIsContactsTutorialShown,
+    setIsDashboardTutorialShown,
+    setIsProfileTutorialShown,
+  ]);
 
   const handleBackClick = useCallback(() => {
     router.push("/settings");
   }, [router]);
 
+  const handleDashboardClick = useCallback(() => {
+    setIsDashboardTutorialShown(true);
+  }, [setIsDashboardTutorialShown]);
+
+  const handleContactsClick = useCallback(() => {
+    setIsContactsTutorialShown(true);
+  }, [setIsContactsTutorialShown]);
+
+  const handleProfileClick = useCallback(() => {
+    setIsProfileTutorialShown(true);
+  }, [setIsProfileTutorialShown]);
+
   return (
-    <main className="relative min-h-screen pt-4 pb-8 space-y-12 px-4">
+    <main className="relative min-h-screen pt-4 pb-8 space-y-12">
       <Grid container alignItems="center" sx={{ px: "16px" }}>
         <Grid item xs={4}>
           <Button
@@ -32,7 +67,7 @@ export default function TutorialPage() {
         </Grid>
         <Grid item xs={4}></Grid>
       </Grid>
-      <div className="space-y-6">
+      <div className="space-y-6 px-4">
         <div className="flex justify-between">
           <div>
             <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
@@ -43,7 +78,11 @@ export default function TutorialPage() {
             </Typography>
           </div>
           <div>
-            <Button variant="contained" sx={{ px: "32px" }}>
+            <Button
+              variant="contained"
+              sx={{ px: "32px" }}
+              onClick={handleDashboardClick}
+            >
               View
             </Button>
           </div>
@@ -58,7 +97,11 @@ export default function TutorialPage() {
             </Typography>
           </div>
           <div>
-            <Button variant="contained" sx={{ px: "32px" }}>
+            <Button
+              variant="contained"
+              sx={{ px: "32px" }}
+              onClick={handleContactsClick}
+            >
               View
             </Button>
           </div>
@@ -73,12 +116,20 @@ export default function TutorialPage() {
             </Typography>
           </div>
           <div>
-            <Button variant="contained" sx={{ px: "32px" }}>
+            <Button
+              variant="contained"
+              sx={{ px: "32px" }}
+              onClick={handleProfileClick}
+            >
               View
             </Button>
           </div>
         </div>
       </div>
+
+      {isDashboardTutorialShown && <DashboardTutorial />}
+      {isContactsTutorialShown && <ContactsTutorial />}
+      {isProfileTutorialShown && <ProfileTutorial />}
     </main>
   );
 }
