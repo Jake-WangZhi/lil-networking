@@ -3,7 +3,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Grid, Switch, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
-import { ChevronLeft } from "react-feather";
 import { useRouter } from "next/navigation";
 import { urlBase64ToUint8Array } from "@/lib/utils";
 import { SubscriptionArgs } from "@/types";
@@ -12,6 +11,7 @@ import { useNotificationSettings } from "@/hooks/useNotificationSettings";
 import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 import { useUser } from "@/contexts/UserContext";
 import { ClipLoader } from "react-spinners";
+import { CaretLeft } from "@phosphor-icons/react";
 
 export default function NotificationSettingPage() {
   const { email } = useUser();
@@ -281,10 +281,7 @@ export default function NotificationSettingPage() {
             onClick={handleBackClick}
             sx={{ px: "6px", ml: "-6px" }}
           >
-            <ChevronLeft
-              size={36}
-              className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-            />
+            <CaretLeft size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           </Button>
         </Grid>
         <Grid
