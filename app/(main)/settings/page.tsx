@@ -20,6 +20,10 @@ export default function SettingsPage() {
     router.push("/settings/notifications");
   }, [router]);
 
+  const handleTutorialsClick = useCallback(() => {
+    router.push("/settings/tutorials");
+  }, [router]);
+
   const { name, image } = useUser();
 
   const handleLogoutClick = useCallback(() => signOut(), []);
@@ -45,7 +49,7 @@ export default function SettingsPage() {
           {name}
         </Typography>
       </div>
-      <div>
+      <div className="space-y-4">
         <Button
           variant="text"
           sx={{ width: "100%" }}
@@ -65,6 +69,18 @@ export default function SettingsPage() {
         >
           <div className="flex justify-between px-4 w-full">
             <Typography variant="subtitle1">Notifications</Typography>
+            <CaretRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
+          </div>
+        </Button>
+        <Button
+          variant="text"
+          sx={{
+            width: "100%",
+          }}
+          onClick={handleTutorialsClick}
+        >
+          <div className="flex justify-between px-4 w-full">
+            <Typography variant="subtitle1">Tutorials</Typography>
             <CaretRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           </div>
         </Button>
