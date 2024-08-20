@@ -116,7 +116,7 @@ export default function SettingsPage() {
             color="red"
             size={16}
             weight="fill"
-            className="mb-1 md:w-5 md:h-5 lg:w-6 lg:h-6"
+            className="mb-0.5 md:w-5 md:h-5 lg:w-6 lg:h-6"
           />
         </div>
       </div>
