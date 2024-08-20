@@ -201,7 +201,7 @@ export default function GoalSettingPage() {
   }
 
   return (
-    <main className="relative min-h-screen py-8 space-y-12">
+    <main className="relative min-h-screen pt-4 pb-8 space-y-12">
       <Grid container alignItems="center" sx={{ px: "16px" }}>
         <Grid item xs={4}>
           <Button

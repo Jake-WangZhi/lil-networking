@@ -3,7 +3,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Grid, Switch, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
-import { ChevronLeft } from "react-feather";
 import { useRouter } from "next/navigation";
 import { urlBase64ToUint8Array } from "@/lib/utils";
 import { SubscriptionArgs } from "@/types";
@@ -11,14 +10,17 @@ import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useNotificationSettings } from "@/hooks/useNotificationSettings";
 import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 import { useUser } from "@/contexts/UserContext";
+import { ClipLoader } from "react-spinners";
+import { CaretLeft } from "@phosphor-icons/react";
 
 export default function NotificationSettingPage() {
   const { email } = useUser();
   const router = useRouter();
   const [endpoint, setEndpoint] = useState("");
-  const { notificationSettings } = useNotificationSettings({
-    endpoint,
-  });
+  const { notificationSettings, isLoading, isError, isFetching } =
+    useNotificationSettings({
+      endpoint,
+    });
 
   const [allNotificationsChecked, setAllNotificationsChecked] = useState(false);
   const [newActionChecked, setNewActionChecked] = useState(false);
@@ -27,6 +29,8 @@ export default function NotificationSettingPage() {
   const [subscriptionId, setSubscriptionId] = useState("");
   const [showDefaultNote, setShowDefaultNote] = useState(true);
   const [showDeniedNote, setShowDeniedNote] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const postSubscriptionMutation = useSubscriptionMutation({
     method: "POST",
@@ -51,8 +55,15 @@ export default function NotificationSettingPage() {
 
   const putNotificationSettingsMutation = useNotificationSettingsMutation({
     method: "PUT",
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: () => {
+      setErrorMessage("");
+      router.push("/settings");
+    },
+    onError: (error) => {
+      setErrorMessage("An error occurred. Please try again.");
+      console.log(error);
+      setIsSubmitting(false);
+    },
   });
 
   useEffect(() => {
@@ -184,9 +195,11 @@ export default function NotificationSettingPage() {
     [isNotificationModificationAllowed]
   );
 
-  const handleBackClick = useCallback(async () => {
+  const handleBackClick = useCallback(() => {
     router.push("/settings");
+  }, [router]);
 
+  const handleDoneClick = useCallback(async () => {
     if (
       !("Notification" in window) ||
       window.Notification.permission !== "granted"
@@ -194,13 +207,16 @@ export default function NotificationSettingPage() {
       return;
     }
 
-    if (subscriptionId)
+    if (subscriptionId) {
+      setIsSubmitting(true);
+
       return putNotificationSettingsMutation.mutate({
         newAction: newActionChecked,
         streak: streakChecked,
         meetGoal: meetGoalChecked,
         subscriptionId,
       });
+    }
 
     //If the permission is granted, but the subscription is not recorded in db, we save the subscription.
     const subscribeOptions = {
@@ -221,37 +237,81 @@ export default function NotificationSettingPage() {
       subscription: pushSubscription?.toJSON() as SubscriptionArgs,
     });
   }, [
-    router,
-    subscriptionId,
-    putNotificationSettingsMutation,
-    newActionChecked,
-    streakChecked,
-    meetGoalChecked,
-    postSubscriptionMutation,
     email,
+    meetGoalChecked,
+    newActionChecked,
+    postSubscriptionMutation,
+    putNotificationSettingsMutation,
+    streakChecked,
+    subscriptionId,
   ]);
 
+  if (isError) {
+    return (
+      <Typography
+        variant="h3"
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#FB5913",
+        }}
+      >
+        Something went wrong, please try again later
+      </Typography>
+    );
+  }
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="min-h-screen flex items-center justify-center pt-8">
+        <ClipLoader color="#38ACE2" size={150} />
+      </div>
+    );
+  }
+
   return (
-    <main className="relative min-h-screen py-8 px-4">
+    <main className="relative min-h-screen pt-4 pb-8 px-4">
       <Grid container alignItems="center">
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Button
             variant="text"
             onClick={handleBackClick}
             sx={{ px: "6px", ml: "-6px" }}
           >
-            <ChevronLeft
-              size={36}
-              className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-            />
+            <CaretLeft size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           </Button>
         </Grid>
-        <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: "flex",
+            textAlign: "center",
+            justifyContent: "center",
+          }}
+        >
           <Typography variant="h3" sx={{ fontWeight: 600 }}>
             Manage Notifications
           </Typography>
         </Grid>
-        <Grid item xs={2}></Grid>
+        <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            variant="text"
+            onClick={handleDoneClick}
+            sx={{ px: "14px", mr: "-14px" }}
+            disabled={isSubmitting}
+          >
+            <Typography
+              variant="subtitle1"
+              sx={{ fontWeight: 600, color: "#38ACE2" }}
+            >
+              {isSubmitting ? "Saving..." : "Done"}
+            </Typography>
+          </Button>
+        </Grid>
       </Grid>
       {showDefaultNote && (
         <Typography variant="subtitle1" sx={{ mt: "16px" }}>
@@ -265,7 +325,12 @@ export default function NotificationSettingPage() {
           settings
         </Typography>
       )}
-      <div className="flex justify-between mt-6">
+      {errorMessage && (
+        <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+          {errorMessage}
+        </Typography>
+      )}
+      <div className="flex justify-between items-center mt-6">
         <div>
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Enable all push notifications
@@ -279,12 +344,12 @@ export default function NotificationSettingPage() {
           checked={allNotificationsChecked}
         />
       </div>
-      <div className="mt-8 space-y-2">
-        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+      <div className="mt-10 space-y-6">
+        <Typography variant="h3" sx={{ fontWeight: 600 }}>
           Push notifications
         </Typography>
-        <div className="space-y-4">
-          <div className="flex justify-between">
+        <div className="space-y-8">
+          <div className="flex justify-between items-center">
             <div>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 New action alert
@@ -295,7 +360,7 @@ export default function NotificationSettingPage() {
             </div>
             <Switch onChange={switchNewAction} checked={newActionChecked} />
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 Streak reminder
@@ -306,7 +371,7 @@ export default function NotificationSettingPage() {
             </div>
             <Switch onChange={switchStreak} checked={streakChecked} />
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 Meet goal reminder

@@ -5,12 +5,12 @@ import { Typography, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, useCallback, useRef, useEffect } from "react";
-import { AlertTriangle } from "react-feather";
 import { createActivity } from "@/app/_actions";
 import { Button } from "@/components/Button";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { convertToLocalizedISODate, pauseFor } from "@/lib/utils";
 import { AlertDialog } from "./AlertDialog";
+import { Warning } from "@phosphor-icons/react";
 
 const NOTE_CHARACTER_LIMIT = 100;
 const DESCRIPTION_CHARACTER_LIMIT = 300;
@@ -257,10 +257,10 @@ export default function ActivityForm({ contactId, activity }: Props) {
                 <Grid item xs={9}>
                   {titleError && (
                     <div className=" flex items-center space-x-1">
-                      <AlertTriangle
+                      <Warning
                         size={16}
                         fill="#FB5913"
-                        color="black"
+                        weight="fill"
                         className="md:w-5 md:h-5 lg:w-6 lg:h-6"
                       />
                       <Typography variant="subtitle2">{titleError}</Typography>
@@ -292,10 +292,10 @@ export default function ActivityForm({ contactId, activity }: Props) {
                 <Grid item xs={9}>
                   {dateError && (
                     <div className=" flex items-center space-x-1">
-                      <AlertTriangle
+                      <Warning
                         size={16}
                         fill="#FB5913"
-                        color="black"
+                        weight="fill"
                         className="md:w-5 md:h-5 lg:w-6 lg:h-6"
                       />
                       <Typography variant="subtitle2">{dateError}</Typography>
