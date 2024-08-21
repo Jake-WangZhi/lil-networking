@@ -12,7 +12,7 @@ export const useNotificationSettings = ({ endpoint }: Args) => {
     isError,
     data: notificationSettings,
     isLoading,
-    isFetching,
+    isRefetching,
   } = useQuery<NotificationSettings>({
     queryKey: ["notificationSettings", endpoint],
     queryFn: () =>
@@ -26,6 +26,6 @@ export const useNotificationSettings = ({ endpoint }: Args) => {
     notificationSettings,
     isLoading,
     isError,
-    isFetching,
+    isRefetching,
   };
 };

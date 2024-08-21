@@ -28,6 +28,12 @@ export async function GET(request: Request) {
     },
   });
 
+  if (!notificationSettings)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "No notification settings" }),
+      { status: 400, headers: { "content-type": "application/json" } }
+    );
+
   return NextResponse.json(notificationSettings);
 }
 

@@ -17,7 +17,7 @@ export default function NotificationSettingPage() {
   const { email } = useUser();
   const router = useRouter();
   const [endpoint, setEndpoint] = useState("");
-  const { notificationSettings, isLoading, isError, isFetching } =
+  const { notificationSettings, isLoading, isError, isRefetching } =
     useNotificationSettings({
       endpoint,
     });
@@ -264,7 +264,7 @@ export default function NotificationSettingPage() {
     );
   }
 
-  if (isLoading || isFetching) {
+  if (isRefetching) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-8">
         <ClipLoader color="#38ACE2" size={150} />
