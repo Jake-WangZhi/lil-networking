@@ -13,7 +13,7 @@ import { CaretLeft } from "@phosphor-icons/react";
 import { useUser } from "@/contexts/UserContext";
 
 import Lottie from "react-lottie";
-import animationData from "../../../../lottie/106770-empty-box.json";
+import animationData from "@/lottie/106770-empty-box.json";
 
 export default function GoalSettingPage() {
   const router = useRouter();
