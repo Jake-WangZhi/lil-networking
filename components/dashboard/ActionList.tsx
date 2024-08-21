@@ -105,13 +105,17 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           width={130}
           height={130}
         />
-        <Typography variant="h2">Your Dashboard is empty</Typography>{" "}
-        <Typography
-          variant="subtitle1"
-          sx={{ fontWeight: 600, textAlign: "center" }}
-        >
-          Add contacts and all actionable items will show up here.
-        </Typography>
+        <div className="space-y-4">
+          <Typography variant="h2" sx={{ textAlign: "center" }}>
+            Your Dashboard is empty
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: 600, textAlign: "center" }}
+          >
+            Add contacts and all actionable items will show up here.
+          </Typography>
+        </div>
       </div>
     );
   }
@@ -123,14 +127,18 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     return (
       <div className="h-[50vh] flex flex-col items-center justify-center px-8">
         <Image src={icon} alt={"empty state"} />
-        <Typography variant="h2">You Rock!</Typography>
-        <Typography
-          variant="subtitle1"
-          sx={{ fontWeight: 600, textAlign: "center" }}
-        >
-          Have you met anyone new? Add more contacts and continue growing your
-          network.
-        </Typography>
+        <div className="space-y-4">
+          <Typography variant="h2" sx={{ textAlign: "center" }}>
+            You Rock!
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: 600, textAlign: "center" }}
+          >
+            Have you met anyone new? Add more contacts and continue growing your
+            network.
+          </Typography>
+        </div>
       </div>
     );
 

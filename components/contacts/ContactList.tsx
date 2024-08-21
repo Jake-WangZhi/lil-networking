@@ -70,13 +70,17 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
           width={130}
           height={130}
         />
-        <Typography variant="h2">You have no contacts</Typography>
-        <Typography
-          variant="subtitle1"
-          sx={{ fontWeight: 600, textAlign: "center" }}
-        >
-          Add contacts and build your network
-        </Typography>
+        <div className="space-y-4">
+          <Typography variant="h2" sx={{ textAlign: "center" }}>
+            You have no contacts
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: 600, textAlign: "center" }}
+          >
+            Add contacts and build your network
+          </Typography>
+        </div>
       </div>
     );
   }
