@@ -10,9 +10,16 @@ interface Props {
   isLoading: boolean;
   isError: boolean;
   name: string;
+  isRefetching: boolean;
 }
 
-export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
+export const ContactList = ({
+  contacts,
+  isLoading,
+  isError,
+  name,
+  isRefetching,
+}: Props) => {
   if (isError) {
     return (
       <Typography
@@ -30,7 +37,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return (
       <div className="h-[80vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
