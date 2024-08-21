@@ -1,6 +1,6 @@
 "use client";
 
-import "../styles.css";
+import "./styles.css";
 import { useContact } from "@/hooks/useContact";
 import { ClipLoader } from "react-spinners";
 import { ContactHeader } from "@/components/profile/ContactHeader";

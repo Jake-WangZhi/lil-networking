@@ -1,5 +1,6 @@
 "use client";
 
+import "./styles.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useRouter } from "next/navigation";
@@ -13,8 +14,6 @@ import { useUser } from "@/contexts/UserContext";
 
 import Lottie from "react-lottie";
 import animationData from "../../../../lottie/106770-empty-box.json";
-
-import "../../../goals/styles.css";
 
 export default function GoalSettingPage() {
   const router = useRouter();

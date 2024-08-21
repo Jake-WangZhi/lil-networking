@@ -1,6 +1,6 @@
 "use client";
 
-import "../../../styles.css";
+import "../../styles.css";
 
 import ActivityForm from "@/components/profile/ActivityForm";
 

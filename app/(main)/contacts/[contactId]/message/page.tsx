@@ -1,5 +1,6 @@
 "use client";
 
+import "../styles.css";
 import { useContact } from "@/hooks/useContact";
 import { Typography } from "@mui/material";
 import { ContactTags } from "@/components/profile/ContactTags";
@@ -8,8 +9,6 @@ import { ClipLoader } from "react-spinners";
 import { MessageCard } from "@/components/messages/MessageCard";
 import { MessageHeader } from "@/components/messages/MessageHeader";
 import { MessageActions } from "@/components/messages/MessageActions";
-
-import "../../styles.css";
 
 export default function MessagePage({
   params,
