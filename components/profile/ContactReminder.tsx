@@ -7,11 +7,11 @@ import {
   formatISO,
   parseISO,
 } from "date-fns";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { useCallback, useEffect, useState } from "react";
 import { ActivityType } from "@/types";
-import { AlertDialog } from "./AlertDialog";
+import { AlertDialog } from "../AlertDialog";
 
 interface Props {
   id: string;

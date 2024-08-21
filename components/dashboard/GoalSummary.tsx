@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { GoalStats } from "./GoalStats";
 import { useGoals } from "@/hooks/useGoals";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import { PlusCircle } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";

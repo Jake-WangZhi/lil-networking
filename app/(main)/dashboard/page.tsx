@@ -1,7 +1,7 @@
 "use client";
 
-import { ActionList } from "@/components/ActionList";
-import { GoalSummary } from "@/components/GoalSummary";
+import { ActionList } from "@/components/dashboard/ActionList";
+import { GoalSummary } from "@/components/dashboard/GoalSummary";
 import { useActions } from "@/hooks/useActions";
 import { Typography } from "@mui/material";
 import { InfoTooltipButton } from "@/components/InfoTooltipButton";
@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
 import Confetti from "react-confetti";
-import { DashboardTutorial } from "@/components/DashboardTutorial";
+import { DashboardTutorial } from "@/components/dashboard/DashboardTutorial";
 import { useWindowHeight, useWindowWidth } from "@react-hook/window-size";
 import { getVisibleWidth, handleRefresh, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";

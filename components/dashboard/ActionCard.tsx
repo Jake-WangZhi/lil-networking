@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { CalendarBlank, NoteBlank } from "@phosphor-icons/react";
-import { Chip } from "./Chip";
+import { Chip } from "../Chip";
 
 interface Props {
   action: Action;

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import { FunnelSimple, MagnifyingGlass, X } from "@phosphor-icons/react";
 
 interface Props {

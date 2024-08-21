@@ -37,6 +37,7 @@ export const AlertDialog = ({
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      disableScrollLock={true}
     >
       <DialogTitle id="alert-dialog-title">
         <Typography
