@@ -1,5 +1,6 @@
 "use client";
 
+import "./styles.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useRouter } from "next/navigation";
@@ -12,9 +13,7 @@ import { CaretLeft } from "@phosphor-icons/react";
 import { useUser } from "@/contexts/UserContext";
 
 import Lottie from "react-lottie";
-import animationData from "../../../../lottie/106770-empty-box.json";
-
-import "../../../goals/styles.css";
+import animationData from "@/lottie/106770-empty-box.json";
 
 export default function GoalSettingPage() {
   const router = useRouter();
@@ -149,7 +148,7 @@ export default function GoalSettingPage() {
 
   if (goals?.goalConnections === 0 && goals?.goalMessages === 0) {
     return (
-      <div className="relative py-8">
+      <main className="relative py-8">
         <Grid container alignItems="center" sx={{ px: "16px" }}>
           <Grid item xs={2}>
             <Button
@@ -196,7 +195,7 @@ export default function GoalSettingPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 

@@ -1,11 +1,11 @@
 "use client";
 
 import "react-tagsinput/react-tagsinput.css";
-import "../../../../styles.css";
+import "../../../styles.css";
 
 import { ClipLoader } from "react-spinners";
 import { Typography } from "@mui/material";
-import ActivityForm from "@/components/ActivityForm";
+import ActivityForm from "@/components/profile/ActivityForm";
 import { useActivity } from "@/hooks/useActivity";
 
 export default function EditActivityPage({

@@ -1,7 +1,7 @@
 import { Activity, SearchParams, UserType } from "@/types";
 import { useCallback } from "react";
 import { Typography } from "@mui/material";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { PlusCircle, Circle, CalendarX } from "@phosphor-icons/react";

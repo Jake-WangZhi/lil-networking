@@ -1,7 +1,7 @@
 import img1 from "@/public/tutorials/contacts/contact.png";
 import img2 from "@/public/tutorials/contacts/lists.png";
 import img3 from "@/public/tutorials/contacts/search.png";
-import { TutorialModal } from "./TutorialModal";
+import { TutorialModal } from "../TutorialModal";
 import { TutorialType } from "@/types";
 
 export const ContactsTutorial = () => {

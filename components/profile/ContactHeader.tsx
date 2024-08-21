@@ -5,8 +5,8 @@ import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Contact, SearchParams } from "@/types";
 import { Divider, Menu, MenuItem, Typography } from "@mui/material";
-import { Button } from "./Button";
-import { AlertDialog } from "./AlertDialog";
+import { Button } from "../Button";
+import { AlertDialog } from "../AlertDialog";
 import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
 import {
@@ -17,7 +17,7 @@ import {
   X,
   DotsThreeCircleVertical,
 } from "@phosphor-icons/react";
-import { Chip } from "./Chip";
+import { Chip } from "../Chip";
 
 interface Props {
   contact: Contact;

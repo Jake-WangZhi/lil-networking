@@ -1,19 +1,19 @@
 "use client";
 
 import { AddContactTooltipButton } from "@/components/AddContactTooltipButton";
-import { ContactList } from "@/components/ContactList";
+import { ContactList } from "@/components/contacts/ContactList";
 import { NavFooter } from "@/components/NavFooter";
-import { SearchBar } from "@/components/SearchBar";
+import { SearchBar } from "@/components/contacts/SearchBar";
 import { useContacts } from "@/hooks/useContacts";
 import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useUser } from "@/contexts/UserContext";
-import { ContactsTutorial } from "@/components/ContactsTutorial";
+import { ContactsTutorial } from "@/components/contacts/ContactsTutorial";
 import { handleRefresh, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { ClipLoader } from "react-spinners";
-import { FilterPage } from "@/components/FilterPage";
+import { FilterPage } from "@/components/contacts/FilterPage";
 import { useContactTags } from "@/hooks/useContactTags";
 import { RemovableChip } from "@/components/RemovableChip";
 

@@ -1,21 +1,21 @@
 "use client";
 
-import "../styles.css";
+import "./styles.css";
 import { useContact } from "@/hooks/useContact";
 import { ClipLoader } from "react-spinners";
-import { ContactHeader } from "@/components/ContactHeader";
+import { ContactHeader } from "@/components/profile/ContactHeader";
 import { Typography } from "@mui/material";
 import { NavFooter } from "@/components/NavFooter";
-import { ContactActivites } from "@/components/ContactActivities";
-import { ContactInfo } from "@/components/ContactInfo";
-import { ContactTags } from "@/components/ContactTags";
+import { ContactActivites } from "@/components/profile/ContactActivities";
+import { ContactInfo } from "@/components/profile/ContactInfo";
+import { ContactTags } from "@/components/profile/ContactTags";
 import { useEffect, useState } from "react";
-import { ProfileTutorial } from "@/components/ProfileTutorial";
+import { ProfileTutorial } from "@/components/profile/ProfileTutorial";
 import { handleRefresh, pauseFor } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
-import { ContactReminder } from "@/components/ContactReminder";
-import { ContactConnect } from "@/components/ContactConnect";
+import { ContactReminder } from "@/components/profile/ContactReminder";
+import { ContactConnect } from "@/components/profile/ContactConnect";
 
 export default function ContactPage({
   params,
