@@ -17,6 +17,7 @@ export const useContact = ({ id }: Args) => {
     data: contactProfile,
     isError,
     refetch,
+    isRefetching,
   } = useQuery<ContactsType>({
     queryKey: ["contact", id],
     queryFn: () => fetcher(`/contacts/${id}/api`),
@@ -28,5 +29,6 @@ export const useContact = ({ id }: Args) => {
     isLoading,
     isError,
     refetch,
+    isRefetching,
   };
 };
