@@ -105,9 +105,9 @@ export default function SettingsPage() {
         </div>
       </div>
       <div className="mb-16 flex flex-col items-center gap-2 justify-center">
-        <Typography variant="body1" sx={{ opacity: 0.7 }}>
+        {/* <Typography variant="body1" sx={{ opacity: 0.7 }}>
           Powered by Jake Wang
-        </Typography>
+        </Typography> */}
         <div className="flex items-center gap-2">
           <Typography variant="body1" sx={{ opacity: 0.7 }}>
             Made with
