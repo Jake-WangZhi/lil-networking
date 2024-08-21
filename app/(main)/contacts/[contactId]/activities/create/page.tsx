@@ -2,7 +2,7 @@
 
 import "../../../styles.css";
 
-import ActivityForm from "@/components/ActivityForm";
+import ActivityForm from "@/components/profile/ActivityForm";
 
 export default function CreateActivityPage({
   params,

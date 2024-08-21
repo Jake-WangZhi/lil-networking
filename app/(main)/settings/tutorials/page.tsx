@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/Button";
-import { ContactsTutorial } from "@/components/ContactsTutorial";
-import { DashboardTutorial } from "@/components/DashboardTutorial";
-import { ProfileTutorial } from "@/components/ProfileTutorial";
+import { ContactsTutorial } from "@/components/contacts/ContactsTutorial";
+import { DashboardTutorial } from "@/components/dashboard/DashboardTutorial";
+import { ProfileTutorial } from "@/components/profile/ProfileTutorial";
 import { useSettings } from "@/contexts/SettingsContext";
 import { Grid, Typography } from "@mui/material";
 import { CaretLeft } from "@phosphor-icons/react";

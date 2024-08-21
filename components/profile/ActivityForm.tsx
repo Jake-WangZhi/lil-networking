@@ -9,7 +9,7 @@ import { createActivity } from "@/app/_actions";
 import { Button } from "@/components/Button";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { convertToLocalizedISODate, pauseFor } from "@/lib/utils";
-import { AlertDialog } from "./AlertDialog";
+import { AlertDialog } from "../AlertDialog";
 import { Warning } from "@phosphor-icons/react";
 
 const NOTE_CHARACTER_LIMIT = 100;

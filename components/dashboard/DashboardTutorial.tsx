@@ -1,7 +1,7 @@
 import img1 from "@/public/tutorials/dashboard/contact.png";
 import img3 from "@/public/tutorials/dashboard/priority.png";
 import img2 from "@/public/tutorials/dashboard/stats.png";
-import { TutorialModal } from "./TutorialModal";
+import { TutorialModal } from "../TutorialModal";
 import { TutorialType } from "@/types";
 
 export const DashboardTutorial = () => {

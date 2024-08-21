@@ -2,12 +2,12 @@
 
 import { useContact } from "@/hooks/useContact";
 import { Typography } from "@mui/material";
-import { ContactTags } from "@/components/ContactTags";
-import { SwipeableActivities } from "@/components/SwipeableActivities";
+import { ContactTags } from "@/components/profile/ContactTags";
+import { SwipeableActivities } from "@/components/messages/SwipeableActivities";
 import { ClipLoader } from "react-spinners";
-import { MessageCard } from "@/components/MessageCard";
-import { MessageHeader } from "@/components/MessageHeader";
-import { MessageActions } from "@/components/MessageActions";
+import { MessageCard } from "@/components/messages/MessageCard";
+import { MessageHeader } from "@/components/messages/MessageHeader";
+import { MessageActions } from "@/components/messages/MessageActions";
 
 import "../../styles.css";
 

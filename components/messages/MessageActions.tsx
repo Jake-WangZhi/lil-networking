@@ -5,7 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Check, Archive } from "@phosphor-icons/react";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { ActivityType, Contact, SearchParams } from "@/types";
-import { AlertDialog } from "./AlertDialog";
+import { AlertDialog } from "../AlertDialog";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { useBackPath } from "@/contexts/BackPathContext";
 import { convertToLocalizedISODate } from "@/lib/utils";

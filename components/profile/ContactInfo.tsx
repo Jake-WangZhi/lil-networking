@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography } from "@mui/material";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import { formatBaseUrl } from "@/lib/utils";
 import { useCallback } from "react";
 import { Link } from "@phosphor-icons/react";
