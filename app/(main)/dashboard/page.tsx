@@ -20,7 +20,7 @@ import { ClipLoader } from "react-spinners";
 
 export default function DashboardPage() {
   const { email, name } = useUser();
-  const { actions, isLoading, isError, refetch } = useActions({
+  const { actions, isLoading, isError, refetch, isRefetching } = useActions({
     email,
   });
   const [showTutorial, setShowTutorial] = useState(false);
@@ -59,7 +59,12 @@ export default function DashboardPage() {
   const renderDashboard = () => {
     return (
       <>
-        <ActionList actions={actions} isLoading={isLoading} isError={isError} />
+        <ActionList
+          actions={actions}
+          isLoading={isLoading}
+          isError={isError}
+          isRefetching={isRefetching}
+        />
       </>
     );
   };
