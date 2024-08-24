@@ -7,6 +7,7 @@ export const useQuote = () => {
     isError,
     data: quote,
     isLoading,
+    isFetching,
   } = useQuery<Quote>({
     queryKey: ["quote"],
     queryFn: () => fetcher(`/quote/api`),
@@ -16,5 +17,6 @@ export const useQuote = () => {
     quote,
     isLoading,
     isError,
+    isFetching,
   };
 };

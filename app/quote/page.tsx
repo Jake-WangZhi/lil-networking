@@ -11,7 +11,7 @@ import { ClipLoader } from "react-spinners";
 export default function QuotePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { quote, isLoading, isError } = useQuote();
+  const { quote, isFetching, isError } = useQuote();
 
   if (isError) {
     return (
@@ -34,7 +34,7 @@ export default function QuotePage() {
     );
   }
 
-  if (isLoading) {
+  if (isFetching) {
     return (
       <main className="relative min-h-screen flex flex-col items-center justify-center">
         <ClipLoader color="#38ACE2" size={150} />
