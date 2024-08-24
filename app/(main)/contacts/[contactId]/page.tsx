@@ -124,7 +124,7 @@ export default function ContactPage({
   };
 
   return (
-    <main className="relative mb-[86px] md:mb-24 lg:mb-28 text-white">
+    <main className="relative mb-[110px] md:mb-24 lg:mb-28 text-white">
       <ContactHeader contact={contact} />
       <PullToRefresh
         onRefresh={handleRefresh(refetch)}

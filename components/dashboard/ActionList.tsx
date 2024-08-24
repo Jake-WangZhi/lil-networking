@@ -149,7 +149,7 @@ export const ActionList = ({
     );
 
   return (
-    <div className="w-full mb-[86px] md:mb-24 lg:mb-28 mt-1 space-y-6">
+    <div className="w-full mb-[110px] md:mb-24 lg:mb-28 mt-1 space-y-6">
       <Accordion disableGutters expanded={priorityExpanded}>
         <AccordionSummary
           expandIcon={

@@ -93,7 +93,7 @@ export const ContactList = ({
   }
 
   return (
-    <div className="mb-[86px] md:mb-24 lg:mb-28 mt-2">
+    <div className="mb-[110px] md:mb-24 lg:mb-28 mt-2">
       <div className="space-y-4">
         {contacts.map((contact, index) => (
           <ContactCard key={index} contact={contact} />
