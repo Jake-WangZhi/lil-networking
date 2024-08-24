@@ -29,7 +29,7 @@ export default function SettingsPage() {
   const handleLogoutClick = useCallback(() => signOut(), []);
 
   return (
-    <main className="relative min-h-screen pt-4 pb-8 flex flex-col justify-between md:pt-8">
+    <main className="relative min-h-screen pb-8 flex flex-col justify-between md:pt-4">
       <div className="space-y-6">
         <Typography variant="h1" sx={{ px: "16px" }}>
           Settings
