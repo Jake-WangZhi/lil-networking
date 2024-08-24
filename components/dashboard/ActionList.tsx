@@ -31,12 +31,19 @@ export const ActionList = ({
   isError,
   isRefetching,
 }: Props) => {
-  const [priorityExpanded, setPriorityExpanded] = useState(
-    JSON.parse(localStorage.getItem("priorityExpanded") || "true")
-  );
-  const [upcomingExpanded, setUpcomingExpanded] = useState(
-    JSON.parse(localStorage.getItem("upcomingExpanded") || "true")
-  );
+  const [priorityExpanded, setPriorityExpanded] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("priorityExpanded") || "true");
+    }
+    return true;
+  });
+
+  const [upcomingExpanded, setUpcomingExpanded] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("upcomingExpanded") || "true");
+    }
+    return true;
+  });
 
   useEffect(() => {
     localStorage.setItem("priorityExpanded", JSON.stringify(priorityExpanded));
@@ -53,6 +60,11 @@ export const ActionList = ({
   const handleUpcomingClick = () => {
     setUpcomingExpanded(!upcomingExpanded);
   };
+
+  const isIOS =
+    typeof window !== "undefined"
+      ? /iPhone|iPad/.test(window.navigator.userAgent)
+      : false;
 
   if (isError) {
     return (
@@ -149,7 +161,11 @@ export const ActionList = ({
     );
 
   return (
-    <div className="w-full mb-[110px] md:mb-24 lg:mb-28 mt-1 space-y-6">
+    <div
+      className={`w-full ${
+        isIOS ? "mb-[110px]" : "mb-[86px]"
+      }  md:mb-24 lg:mb-28 mt-1 space-y-6`}
+    >
       <Accordion disableGutters expanded={priorityExpanded}>
         <AccordionSummary
           expandIcon={

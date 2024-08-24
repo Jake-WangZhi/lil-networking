@@ -12,6 +12,11 @@ export const NavFooter = () => {
   const [value, setValue] = useState(backPath);
   const router = useRouter();
 
+  const isIOS =
+    typeof window !== "undefined"
+      ? /iPhone|iPad/.test(window.navigator.userAgent)
+      : false;
+
   return (
     <Paper
       sx={{
@@ -37,8 +42,9 @@ export const NavFooter = () => {
           margin: "auto",
           px: "16px",
           justifyContent: "space-between",
-          pb: "34px",
-          height: "90px",
+          ...(isIOS
+            ? { height: "90px", pb: "34px" }
+            : { height: "66px", pb: "10px" }),
           "& .MuiBottomNavigationAction-root.Mui-selected": {
             color: "white",
           },

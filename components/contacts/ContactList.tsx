@@ -20,6 +20,11 @@ export const ContactList = ({
   name,
   isRefetching,
 }: Props) => {
+  const isIOS =
+    typeof window !== "undefined"
+      ? /iPhone|iPad/.test(window.navigator.userAgent)
+      : false;
+
   if (isError) {
     return (
       <Typography
@@ -93,7 +98,9 @@ export const ContactList = ({
   }
 
   return (
-    <div className="mb-[110px] md:mb-24 lg:mb-28 mt-2">
+    <div
+      className={`${isIOS ? "mb-[110px]" : "mb-[86px]"} md:mb-24 lg:mb-28 mt-2`}
+    >
       <div className="space-y-4">
         {contacts.map((contact, index) => (
           <ContactCard key={index} contact={contact} />

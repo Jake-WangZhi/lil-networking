@@ -38,6 +38,11 @@ export default function ContactPage({
     }
   }, [contactProfile?.hasViewedProfileTutorial]);
 
+  const isIOS =
+    typeof window !== "undefined"
+      ? /iPhone|iPad/.test(window.navigator.userAgent)
+      : false;
+
   if (isError) {
     return (
       <Typography
@@ -124,7 +129,11 @@ export default function ContactPage({
   };
 
   return (
-    <main className="relative mb-[110px] md:mb-24 lg:mb-28 text-white">
+    <main
+      className={`relative ${
+        isIOS ? "mb-[110px]" : "mb-[86px]"
+      } md:mb-24 lg:mb-28 text-white`}
+    >
       <ContactHeader contact={contact} />
       <PullToRefresh
         onRefresh={handleRefresh(refetch)}
