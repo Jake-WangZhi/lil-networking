@@ -399,6 +399,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
             type="hidden"
             defaultValue={localizedISODate}
           />
+          <input id="id" name="id" type="hidden" defaultValue={activity?.id} />
           <button ref={submitFormRef} className="hidden" type="submit"></button>
         </div>
       </form>

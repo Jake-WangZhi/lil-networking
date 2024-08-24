@@ -144,6 +144,7 @@ export async function upsertContact(formData: FormData) {
 }
 
 export async function createActivity(formData: FormData) {
+  const id = formData.get("id");
   const title = formData.get("title");
   const description = formData.get("description");
   const note = formData.get("note");
@@ -153,8 +154,15 @@ export async function createActivity(formData: FormData) {
   const localizedISODate = formData.get("localizedISODate");
   const isFromDashboard = formData.get("isFromDashboard");
 
-  await prisma.activity.create({
-    data: {
+  await prisma.activity.upsert({
+    where: { id },
+    update: {
+      title,
+      description,
+      note,
+      date: new Date(localizedISODate),
+    },
+    create: {
       contactId,
       title,
       description,
