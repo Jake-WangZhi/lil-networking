@@ -67,7 +67,7 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center mt-6 mb-1 w-full bg-white bg-opacity-5 rounded-xl h-[140px]">
+      <div className="flex items-center justify-center mt-6 mb-1 w-full bg-white bg-opacity-5 rounded-xl h-[136px] md:h-[152px] lg:h-[164px]">
         <ClipLoader color="#38ACE2" size={50} />
       </div>
     );
@@ -115,6 +115,12 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
             "&:hover": {
               border: "1px dashed rgba(255, 255, 255, 0.7)",
               borderRadius: "12px",
+            },
+            "@media (min-width: 768px)": {
+              height: "152px",
+            },
+            "@media (min-width: 1024px)": {
+              height: "164px",
             },
           }}
         >
