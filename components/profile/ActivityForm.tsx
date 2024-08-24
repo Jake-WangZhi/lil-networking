@@ -5,7 +5,7 @@ import { Typography, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, useCallback, useRef, useEffect } from "react";
-import { createActivity } from "@/app/_actions";
+import { upsertActivity } from "@/app/_actions";
 import { Button } from "@/components/Button";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { convertToLocalizedISODate, pauseFor } from "@/lib/utils";
@@ -168,7 +168,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
   return (
     <main className="relative flex flex-col items-center text-white px-4 pb-8 md:pt-4">
       {/* @ts-expect-error Async Server Component */}
-      <form action={createActivity}>
+      <form action={upsertActivity}>
         <div
           className={`${
             isNavigatingBack

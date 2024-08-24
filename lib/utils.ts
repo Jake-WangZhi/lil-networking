@@ -131,3 +131,16 @@ export const getActionType = (lastActivity: Activity, goalDays: number) => {
     return "";
   }
 };
+
+export const isCurrentMonth = (localizedISODate: string): boolean => {
+  const givenDate = new Date(localizedISODate);
+  const currentDate = new Date();
+
+  const givenYear = givenDate.getFullYear();
+  const givenMonth = givenDate.getMonth(); // getMonth() returns 0-11
+
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth(); // getMonth() returns 0-11
+
+  return givenYear === currentYear && givenMonth === currentMonth;
+};
