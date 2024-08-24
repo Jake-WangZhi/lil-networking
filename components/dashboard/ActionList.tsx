@@ -22,9 +22,15 @@ interface Props {
   };
   isLoading: boolean;
   isError: boolean;
+  isRefetching: boolean;
 }
 
-export const ActionList = ({ actions, isLoading, isError }: Props) => {
+export const ActionList = ({
+  actions,
+  isLoading,
+  isError,
+  isRefetching,
+}: Props) => {
   const [priorityExpanded, setPriorityExpanded] = useState(
     JSON.parse(localStorage.getItem("priorityExpanded") || "true")
   );
@@ -65,7 +71,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return (
       <div className="h-[50vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
@@ -143,7 +149,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     );
 
   return (
-    <div className="w-full mb-[86px] md:mb-24 lg:mb-28 mt-1 space-y-6">
+    <div className="w-full mb-[110px] md:mb-24 lg:mb-28 mt-1 space-y-6">
       <Accordion disableGutters expanded={priorityExpanded}>
         <AccordionSummary
           expandIcon={

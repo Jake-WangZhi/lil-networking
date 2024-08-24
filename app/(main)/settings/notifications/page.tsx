@@ -263,7 +263,7 @@ export default function NotificationSettingPage() {
   }
 
   return (
-    <main className="relative min-h-screen pt-4 pb-8 px-4">
+    <main className="relative min-h-screen pb-8 px-4 md:pt-4">
       <Grid container alignItems="center">
         <Grid item xs={3}>
           <Button

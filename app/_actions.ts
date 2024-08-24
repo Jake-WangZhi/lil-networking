@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 
-import { validateEmail, validatePhone } from "@/lib/utils";
+import { isCurrentMonth, validateEmail, validatePhone } from "@/lib/utils";
 import { SearchParams } from "@/types";
 import { redirect } from "next/navigation";
 
@@ -143,7 +143,8 @@ export async function upsertContact(formData: FormData) {
   redirect(`/contacts/${contact.id}?${SearchParams.IsChanged}=true`);
 }
 
-export async function createActivity(formData: FormData) {
+export async function upsertActivity(formData: FormData) {
+  const id = formData.get("id");
   const title = formData.get("title");
   const description = formData.get("description");
   const note = formData.get("note");
@@ -153,8 +154,15 @@ export async function createActivity(formData: FormData) {
   const localizedISODate = formData.get("localizedISODate");
   const isFromDashboard = formData.get("isFromDashboard");
 
-  await prisma.activity.create({
-    data: {
+  await prisma.activity.upsert({
+    where: { id },
+    update: {
+      title,
+      description,
+      note,
+      date: new Date(localizedISODate),
+    },
+    create: {
       contactId,
       title,
       description,
@@ -170,16 +178,18 @@ export async function createActivity(formData: FormData) {
 
   if (!contact) throw new Error("Contact not found");
 
-  await prisma.goals.updateMany({
-    where: {
-      userId: contact.userId,
-    },
-    data: {
-      messages: {
-        increment: 1,
+  if (isCurrentMonth(localizedISODate)) {
+    await prisma.goals.updateMany({
+      where: {
+        userId: contact.userId,
       },
-    },
-  });
+      data: {
+        messages: {
+          increment: 1,
+        },
+      },
+    });
+  }
 
   const count = await prisma.activity.count({
     where: {

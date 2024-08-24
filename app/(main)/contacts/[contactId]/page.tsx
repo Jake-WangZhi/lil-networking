@@ -25,9 +25,10 @@ export default function ContactPage({
   const [showTutorial, setShowTutorial] = useState(false);
   const { isProfileTutorialShown } = useSettings();
 
-  const { contactProfile, isLoading, isError, refetch } = useContact({
-    id: params.contactId,
-  });
+  const { contactProfile, isLoading, isError, refetch, isRefetching } =
+    useContact({
+      id: params.contactId,
+    });
 
   useEffect(() => {
     if (contactProfile?.hasViewedProfileTutorial === false) {
@@ -55,7 +56,7 @@ export default function ContactPage({
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <ClipLoader color="#38ACE2" size={150} />
@@ -123,7 +124,7 @@ export default function ContactPage({
   };
 
   return (
-    <main className="relative mb-[86px] md:mb-24 lg:mb-28 text-white">
+    <main className="relative mb-[110px] md:mb-24 lg:mb-28 text-white">
       <ContactHeader contact={contact} />
       <PullToRefresh
         onRefresh={handleRefresh(refetch)}

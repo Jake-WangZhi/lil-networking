@@ -5,7 +5,7 @@ import { Typography, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, useCallback, useRef, useEffect } from "react";
-import { createActivity } from "@/app/_actions";
+import { upsertActivity } from "@/app/_actions";
 import { Button } from "@/components/Button";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { convertToLocalizedISODate, pauseFor } from "@/lib/utils";
@@ -166,9 +166,9 @@ export default function ActivityForm({ contactId, activity }: Props) {
   }, []);
 
   return (
-    <main className="relative flex flex-col items-center text-white px-4 pb-8 md:pt-8">
+    <main className="relative flex flex-col items-center text-white px-4 pb-8 md:pt-4">
       {/* @ts-expect-error Async Server Component */}
-      <form action={createActivity}>
+      <form action={upsertActivity}>
         <div
           className={`${
             isNavigatingBack
@@ -177,7 +177,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
           }`}
           onAnimationEnd={() => setIsNavigatingBack(false)}
         >
-          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-4 mb-4">
+          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 mb-4">
             <Grid container alignItems="center">
               <Grid item xs={2}>
                 <Button
@@ -399,6 +399,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
             type="hidden"
             defaultValue={localizedISODate}
           />
+          <input id="id" name="id" type="hidden" defaultValue={activity?.id} />
           <button ref={submitFormRef} className="hidden" type="submit"></button>
         </div>
       </form>

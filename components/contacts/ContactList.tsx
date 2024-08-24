@@ -10,9 +10,16 @@ interface Props {
   isLoading: boolean;
   isError: boolean;
   name: string;
+  isRefetching: boolean;
 }
 
-export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
+export const ContactList = ({
+  contacts,
+  isLoading,
+  isError,
+  name,
+  isRefetching,
+}: Props) => {
   if (isError) {
     return (
       <Typography
@@ -30,7 +37,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return (
       <div className="h-[80vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
@@ -86,7 +93,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   }
 
   return (
-    <div className="mb-[86px] md:mb-24 lg:mb-28 mt-2">
+    <div className="mb-[110px] md:mb-24 lg:mb-28 mt-2">
       <div className="space-y-4">
         {contacts.map((contact, index) => (
           <ContactCard key={index} contact={contact} />

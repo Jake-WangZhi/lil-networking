@@ -49,7 +49,7 @@ export default function TutorialPage() {
   }, [setIsProfileTutorialShown]);
 
   return (
-    <main className="relative min-h-screen pt-4 pb-8 space-y-12">
+    <main className="relative min-h-screen pb-8 space-y-8 md:pt-4">
       <Grid container alignItems="center" sx={{ px: "16px" }}>
         <Grid item xs={4}>
           <Button
