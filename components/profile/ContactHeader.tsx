@@ -138,7 +138,7 @@ export const ContactHeader = ({ contact }: Props) => {
   );
 
   return (
-    <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-4 px-4 md:pt-8">
+    <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 px-4 md:pt-4">
       {errorMessage && (
         <Typography
           variant="subtitle2"

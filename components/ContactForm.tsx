@@ -174,7 +174,7 @@ export const ContactForm = ({ contact }: Props) => {
   ]);
 
   return (
-    <main className="relative flex flex-col items-center text-white px-4 pb-8">
+    <main className="relative flex flex-col items-center text-white px-4 pb-8 md:pt-4">
       {/* @ts-expect-error Async Server Component */}
       <form action={upsertContact}>
         <div
@@ -185,7 +185,7 @@ export const ContactForm = ({ contact }: Props) => {
           }`}
           onAnimationEnd={() => setIsNavigatingBack(false)}
         >
-          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-4 mb-4 md:pt-8">
+          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 mb-4">
             <Grid container alignItems="center">
               <Grid item xs={2}>
                 <Button

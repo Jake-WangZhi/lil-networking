@@ -148,7 +148,7 @@ export default function GoalSettingPage() {
 
   if (goals?.goalConnections === 0 && goals?.goalMessages === 0) {
     return (
-      <main className="relative py-8">
+      <main className="relative pb-8 md:pt-4">
         <Grid container alignItems="center" sx={{ px: "16px" }}>
           <Grid item xs={2}>
             <Button
@@ -200,7 +200,7 @@ export default function GoalSettingPage() {
   }
 
   return (
-    <main className="relative min-h-screen pt-4 pb-8 space-y-12">
+    <main className="relative min-h-screen pb-8 space-y-12 md:pt-4">
       <Grid container alignItems="center" sx={{ px: "16px" }}>
         <Grid item xs={4}>
           <Button

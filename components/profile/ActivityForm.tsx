@@ -166,7 +166,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
   }, []);
 
   return (
-    <main className="relative flex flex-col items-center text-white px-4 pb-8 md:pt-8">
+    <main className="relative flex flex-col items-center text-white px-4 pb-8 md:pt-4">
       {/* @ts-expect-error Async Server Component */}
       <form action={createActivity}>
         <div
@@ -177,7 +177,7 @@ export default function ActivityForm({ contactId, activity }: Props) {
           }`}
           onAnimationEnd={() => setIsNavigatingBack(false)}
         >
-          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-4 mb-4">
+          <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 mb-4">
             <Grid container alignItems="center">
               <Grid item xs={2}>
                 <Button
