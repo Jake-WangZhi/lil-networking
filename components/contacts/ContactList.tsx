@@ -11,16 +11,9 @@ interface Props {
   isLoading: boolean;
   isError: boolean;
   name: string;
-  isRefetching: boolean;
 }
 
-export const ContactList = ({
-  contacts,
-  isLoading,
-  isError,
-  name,
-  isRefetching,
-}: Props) => {
+export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   const [isIOS, setIsIOS] = useState(true);
 
   useEffect(() => {
@@ -49,7 +42,7 @@ export const ContactList = ({
     );
   }
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return (
       <div className="h-[80vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />

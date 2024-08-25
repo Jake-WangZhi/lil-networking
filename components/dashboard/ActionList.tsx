@@ -22,15 +22,9 @@ interface Props {
   };
   isLoading: boolean;
   isError: boolean;
-  isRefetching: boolean;
 }
 
-export const ActionList = ({
-  actions,
-  isLoading,
-  isError,
-  isRefetching,
-}: Props) => {
+export const ActionList = ({ actions, isLoading, isError }: Props) => {
   const [priorityExpanded, setPriorityExpanded] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
       return JSON.parse(localStorage.getItem("priorityExpanded") || "true");
@@ -88,7 +82,7 @@ export const ActionList = ({
     );
   }
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return (
       <div className="h-[50vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />

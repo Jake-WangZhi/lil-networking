@@ -26,10 +26,9 @@ export default function ContactPage({
   const { isProfileTutorialShown } = useSettings();
   const [isIOS, setIsIOS] = useState(true);
 
-  const { contactProfile, isLoading, isError, refetch, isRefetching } =
-    useContact({
-      id: params.contactId,
-    });
+  const { contactProfile, isLoading, isError, refetch } = useContact({
+    id: params.contactId,
+  });
 
   useEffect(() => {
     if (typeof navigator !== "undefined" && typeof window !== "undefined") {
@@ -66,7 +65,7 @@ export default function ContactPage({
     );
   }
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <ClipLoader color="#38ACE2" size={150} />

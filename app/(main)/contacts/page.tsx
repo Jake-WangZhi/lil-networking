@@ -28,12 +28,11 @@ export default function ContactsPage() {
 
   const [clickedTags, setClickedTags] = useState<Array<boolean>>([]);
 
-  const { contactList, isLoading, isError, refetch, isRefetching } =
-    useContacts({
-      userEmail: email,
-      name,
-      tags: selectedTags,
-    });
+  const { contactList, isLoading, isError, refetch } = useContacts({
+    userEmail: email,
+    name,
+    tags: selectedTags,
+  });
 
   const { contactTags } = useContactTags({
     userEmail: email,
@@ -56,7 +55,6 @@ export default function ContactsPage() {
           isLoading={isLoading}
           isError={isError}
           name={name}
-          isRefetching={isRefetching}
         />
       </>
     );
