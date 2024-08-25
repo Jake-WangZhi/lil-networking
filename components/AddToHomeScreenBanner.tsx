@@ -86,7 +86,7 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
           className={`fixed bottom-0 left-0 right-0 w-full z-10 mx-auto max-w-lg md:max-w-xl lg:max-w-3xl px-4 py-6 bg-[#2C353E] flex justify-between ${
             addBottomPadding &&
             (isIOS
-              ? "mb-[86px] md:mb-[74px] lg:mb-[82px]"
+              ? "mb-[84px] md:mb-[74px] lg:mb-[82px]"
               : "mb-[66px] md:mb-[74px] lg:mb-[82px]")
           }`}
         >

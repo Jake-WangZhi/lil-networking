@@ -168,7 +168,7 @@ export const ActionList = ({
   return (
     <div
       className={`w-full ${
-        isIOS ? "mb-[106px]" : "mb-[86px]"
+        isIOS ? "mb-[104px]" : "mb-[86px]"
       }  md:mb-24 lg:mb-28 mt-1 space-y-6`}
     >
       <Accordion disableGutters expanded={priorityExpanded}>

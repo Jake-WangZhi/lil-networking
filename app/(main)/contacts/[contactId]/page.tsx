@@ -136,7 +136,7 @@ export default function ContactPage({
   return (
     <main
       className={`relative ${
-        isIOS ? "mb-[106px]" : "mb-[86px]"
+        isIOS ? "mb-[104px]" : "mb-[86px]"
       } md:mb-24 lg:mb-28 text-white`}
     >
       <ContactHeader contact={contact} />

@@ -49,7 +49,7 @@ export const NavFooter = () => {
           px: "16px",
           justifyContent: "space-between",
           ...(isIOS
-            ? { height: "86px", pb: "30px" }
+            ? { height: "84px", pb: "28px" }
             : { height: "66px", pb: "10px" }),
           "& .MuiBottomNavigationAction-root.Mui-selected": {
             color: "white",
