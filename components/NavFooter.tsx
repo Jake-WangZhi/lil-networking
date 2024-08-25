@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useBackPath } from "@/contexts/BackPathContext";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddToHomeScreenBanner } from "./AddToHomeScreenBanner";
 import { House, Users, Gear } from "@phosphor-icons/react";
 
@@ -12,10 +12,16 @@ export const NavFooter = () => {
   const [value, setValue] = useState(backPath);
   const router = useRouter();
 
-  const isIOS =
-    typeof window !== "undefined"
-      ? /iPhone|iPad/.test(window.navigator.userAgent)
-      : false;
+  const [isIOS, setIsIOS] = useState(true);
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined" && typeof window !== "undefined") {
+      setIsIOS(
+        /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+          !(window as any).MSStream
+      );
+    }
+  }, []);
 
   return (
     <Paper
@@ -43,7 +49,7 @@ export const NavFooter = () => {
           px: "16px",
           justifyContent: "space-between",
           ...(isIOS
-            ? { height: "90px", pb: "34px" }
+            ? { height: "80px", pb: "24px" }
             : { height: "66px", pb: "10px" }),
           "& .MuiBottomNavigationAction-root.Mui-selected": {
             color: "white",

@@ -44,6 +44,16 @@ export const ActionList = ({
     }
     return true;
   });
+  const [isIOS, setIsIOS] = useState(true);
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined" && typeof window !== "undefined") {
+      setIsIOS(
+        /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+          !(window as any).MSStream
+      );
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("priorityExpanded", JSON.stringify(priorityExpanded));
@@ -60,11 +70,6 @@ export const ActionList = ({
   const handleUpcomingClick = () => {
     setUpcomingExpanded(!upcomingExpanded);
   };
-
-  const isIOS =
-    typeof window !== "undefined"
-      ? /iPhone|iPad/.test(window.navigator.userAgent)
-      : false;
 
   if (isError) {
     return (
@@ -163,7 +168,7 @@ export const ActionList = ({
   return (
     <div
       className={`w-full ${
-        isIOS ? "mb-[110px]" : "mb-[86px]"
+        isIOS ? "mb-[100px]" : "mb-[86px]"
       }  md:mb-24 lg:mb-28 mt-1 space-y-6`}
     >
       <Accordion disableGutters expanded={priorityExpanded}>

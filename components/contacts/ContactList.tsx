@@ -4,6 +4,7 @@ import { ContactCardType } from "@/types";
 import { Typography } from "@mui/material";
 import Lottie from "react-lottie";
 import animationData from "@/lottie/908-add-and-save.json";
+import { useEffect, useState } from "react";
 
 interface Props {
   contacts?: ContactCardType[];
@@ -20,10 +21,16 @@ export const ContactList = ({
   name,
   isRefetching,
 }: Props) => {
-  const isIOS =
-    typeof window !== "undefined"
-      ? /iPhone|iPad/.test(window.navigator.userAgent)
-      : false;
+  const [isIOS, setIsIOS] = useState(true);
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined" && typeof window !== "undefined") {
+      setIsIOS(
+        /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+          !(window as any).MSStream
+      );
+    }
+  }, []);
 
   if (isError) {
     return (
@@ -99,7 +106,7 @@ export const ContactList = ({
 
   return (
     <div
-      className={`${isIOS ? "mb-[110px]" : "mb-[86px]"} md:mb-24 lg:mb-28 mt-2`}
+      className={`${isIOS ? "mb-[100px]" : "mb-[86px]"} md:mb-24 lg:mb-28 mt-2`}
     >
       <div className="space-y-4">
         {contacts.map((contact, index) => (

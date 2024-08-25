@@ -27,6 +27,16 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isIOS, setIsIOS] = useState(true);
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined" && typeof window !== "undefined") {
+      setIsIOS(
+        /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+          !(window as any).MSStream
+      );
+    }
+  }, []);
 
   const handleBeforeInstallPrompt = useCallback((e: Event) => {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
@@ -36,11 +46,6 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
     // Update UI to notify the user they can add to home screen
     setIsModalOpened(true);
   }, []);
-
-  const isIOS =
-    typeof window !== "undefined"
-      ? /iPhone|iPad/.test(window.navigator.userAgent)
-      : false;
 
   useEffect(() => {
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -81,7 +86,7 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
           className={`fixed bottom-0 left-0 right-0 w-full z-10 mx-auto max-w-lg md:max-w-xl lg:max-w-3xl px-4 py-6 bg-[#2C353E] flex justify-between ${
             addBottomPadding &&
             (isIOS
-              ? "mb-[90px] md:mb-[74px] lg:mb-[82px]"
+              ? "mb-[80px] md:mb-[74px] lg:mb-[82px]"
               : "mb-[66px] md:mb-[74px] lg:mb-[82px]")
           }`}
         >

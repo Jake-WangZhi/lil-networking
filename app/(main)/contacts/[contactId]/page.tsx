@@ -24,11 +24,21 @@ export default function ContactPage({
 }) {
   const [showTutorial, setShowTutorial] = useState(false);
   const { isProfileTutorialShown } = useSettings();
+  const [isIOS, setIsIOS] = useState(true);
 
   const { contactProfile, isLoading, isError, refetch, isRefetching } =
     useContact({
       id: params.contactId,
     });
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined" && typeof window !== "undefined") {
+      setIsIOS(
+        /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+          !(window as any).MSStream
+      );
+    }
+  }, []);
 
   useEffect(() => {
     if (contactProfile?.hasViewedProfileTutorial === false) {
@@ -37,11 +47,6 @@ export default function ContactPage({
       });
     }
   }, [contactProfile?.hasViewedProfileTutorial]);
-
-  const isIOS =
-    typeof window !== "undefined"
-      ? /iPhone|iPad/.test(window.navigator.userAgent)
-      : false;
 
   if (isError) {
     return (
@@ -131,7 +136,7 @@ export default function ContactPage({
   return (
     <main
       className={`relative ${
-        isIOS ? "mb-[110px]" : "mb-[86px]"
+        isIOS ? "mb-[100px]" : "mb-[86px]"
       } md:mb-24 lg:mb-28 text-white`}
     >
       <ContactHeader contact={contact} />
