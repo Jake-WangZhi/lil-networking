@@ -265,7 +265,7 @@ export default function NotificationSettingPage() {
   return (
     <main className="relative min-h-screen pb-8 px-4 md:pt-4">
       <Grid container alignItems="center">
-        <Grid item xs={2.5}>
+        <Grid item xs={2.875}>
           <Button
             variant="text"
             onClick={handleBackClick}
@@ -276,7 +276,7 @@ export default function NotificationSettingPage() {
         </Grid>
         <Grid
           item
-          xs={7}
+          xs={6.25}
           sx={{
             display: "flex",
             textAlign: "center",
@@ -289,7 +289,7 @@ export default function NotificationSettingPage() {
         </Grid>
         <Grid
           item
-          xs={2.5}
+          xs={2.875}
           sx={{
             display: "flex",
             justifyContent: "flex-end",
@@ -306,7 +306,7 @@ export default function NotificationSettingPage() {
               variant="subtitle1"
               sx={{ fontWeight: 600, color: "#38ACE2" }}
             >
-              {isSubmitting ? "Saving..." : "Done"}
+              {true ? "Saving..." : "Done"}
             </Typography>
           </Button>
         </Grid>
