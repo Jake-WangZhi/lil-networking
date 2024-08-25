@@ -265,7 +265,7 @@ export default function NotificationSettingPage() {
   return (
     <main className="relative min-h-screen pb-8 px-4 md:pt-4">
       <Grid container alignItems="center">
-        <Grid item xs={3}>
+        <Grid item xs={2.5}>
           <Button
             variant="text"
             onClick={handleBackClick}
@@ -276,7 +276,7 @@ export default function NotificationSettingPage() {
         </Grid>
         <Grid
           item
-          xs={6}
+          xs={7}
           sx={{
             display: "flex",
             textAlign: "center",
@@ -287,7 +287,11 @@ export default function NotificationSettingPage() {
             Manage Notifications
           </Typography>
         </Grid>
-        <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Grid
+          item
+          xs={2.5}
+          sx={{ display: "flex", justifyContent: "flex-end" }}
+        >
           <Button
             variant="text"
             onClick={handleDoneClick}
