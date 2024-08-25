@@ -52,6 +52,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
         fontSize: 19,
         fontWeight: 400,
         lineHeight: "24px",
+        letterSpacing: "0.01em",
         color: "white",
         "@media (min-width:768px)": {
           fontSize: 21,
@@ -76,6 +77,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
         fontSize: 16,
         fontWeight: 400,
         lineHeight: "24px",
+        letterSpacing: "0.01em",
         color: "white",
         "@media (min-width:768px)": {
           fontSize: 18,
@@ -88,6 +90,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
         fontSize: 14,
         fontWeight: 400,
         lineHeight: "20px",
+        letterSpacing: "0.01em",
         color: "white",
         "@media (min-width:768px)": {
           fontSize: 16,
@@ -100,6 +103,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
         fontSize: 11,
         fontWeight: 400,
         lineHeight: "16px",
+        letterSpacing: "0.01em",
         color: "#FB5913",
         "@media (min-width:768px)": {
           fontSize: 13,

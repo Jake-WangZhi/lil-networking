@@ -162,7 +162,15 @@ export default function GoalSettingPage() {
               />
             </Button>
           </Grid>
-          <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid
+            item
+            xs={8}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
             <Typography variant="h3" sx={{ fontWeight: 600 }}>
               Edit Goals
             </Typography>
