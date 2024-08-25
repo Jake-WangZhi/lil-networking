@@ -106,7 +106,7 @@ export const ContactList = ({
 
   return (
     <div
-      className={`${isIOS ? "mb-[100px]" : "mb-[86px]"} md:mb-24 lg:mb-28 mt-2`}
+      className={`${isIOS ? "mb-[106px]" : "mb-[86px]"} md:mb-24 lg:mb-28 mt-2`}
     >
       <div className="space-y-4">
         {contacts.map((contact, index) => (
