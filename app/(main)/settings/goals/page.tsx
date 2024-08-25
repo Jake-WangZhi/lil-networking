@@ -216,7 +216,15 @@ export default function GoalSettingPage() {
             Edit Goals
           </Typography>
         </Grid>
-        <Grid item xs={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Grid
+          item
+          xs={4}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
           <Button
             variant="text"
             onClick={handleDoneClick}

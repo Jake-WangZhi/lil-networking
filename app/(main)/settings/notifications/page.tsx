@@ -290,12 +290,16 @@ export default function NotificationSettingPage() {
         <Grid
           item
           xs={2.5}
-          sx={{ display: "flex", justifyContent: "flex-end" }}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignContent: "center",
+          }}
         >
           <Button
             variant="text"
             onClick={handleDoneClick}
-            sx={{ px: "14px", mr: "-14px", mb: "-2px" }}
+            sx={{ px: "14px", mr: "-14px" }}
             disabled={isSubmitting}
           >
             <Typography
