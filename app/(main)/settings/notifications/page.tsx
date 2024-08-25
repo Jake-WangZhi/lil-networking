@@ -295,7 +295,7 @@ export default function NotificationSettingPage() {
           <Button
             variant="text"
             onClick={handleDoneClick}
-            sx={{ px: "14px", mr: "-14px", mt: "1px" }}
+            sx={{ px: "14px", mr: "-14px", mb: "-2px" }}
             disabled={isSubmitting}
           >
             <Typography
