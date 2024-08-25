@@ -295,7 +295,7 @@ export default function NotificationSettingPage() {
           <Button
             variant="text"
             onClick={handleDoneClick}
-            sx={{ px: "14px", mr: "-14px" }}
+            sx={{ px: "14px", mr: "-14px", mt: "1px" }}
             disabled={isSubmitting}
           >
             <Typography
@@ -324,7 +324,7 @@ export default function NotificationSettingPage() {
           {errorMessage}
         </Typography>
       )}
-      <div className="flex justify-between items-center mt-6">
+      <div className="flex justify-between items-center mt-10">
         <div>
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Enable all push notifications
