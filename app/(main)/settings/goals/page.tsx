@@ -18,7 +18,7 @@ import animationData from "@/lottie/106770-empty-box.json";
 export default function GoalSettingPage() {
   const router = useRouter();
   const { email } = useUser();
-  const { goals, isLoading, isError, isFetching } = useGoals({
+  const { goals, isError, isFetching } = useGoals({
     email,
   });
 
@@ -138,7 +138,7 @@ export default function GoalSettingPage() {
     );
   }
 
-  if (isLoading || isFetching) {
+  if (isFetching) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <ClipLoader color="#38ACE2" size={150} />

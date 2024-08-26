@@ -11,14 +11,17 @@ import { useNotificationSettings } from "@/hooks/useNotificationSettings";
 import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 import { useUser } from "@/contexts/UserContext";
 import { CaretLeft } from "@phosphor-icons/react";
+import { ClipLoader } from "react-spinners";
 
 export default function NotificationSettingPage() {
   const { email } = useUser();
   const router = useRouter();
   const [endpoint, setEndpoint] = useState("");
-  const { notificationSettings, isError } = useNotificationSettings({
-    endpoint,
-  });
+  const { notificationSettings, isError, isFetching } = useNotificationSettings(
+    {
+      endpoint,
+    }
+  );
 
   const [allNotificationsChecked, setAllNotificationsChecked] = useState(false);
   const [newActionChecked, setNewActionChecked] = useState(false);
@@ -222,6 +225,14 @@ export default function NotificationSettingPage() {
     streakChecked,
     subscriptionId,
   ]);
+
+  if (isFetching) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <ClipLoader color="#38ACE2" size={150} />
+      </div>
+    );
+  }
 
   if (isError) {
     return (
