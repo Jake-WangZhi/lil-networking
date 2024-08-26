@@ -150,33 +150,38 @@ export default function NotificationSettingPage() {
     );
   }, [newActionChecked, streakChecked, meetGoalChecked]);
 
-  // const isNotificationModificationAllowed = useCallback(async () => {
-  //   if ("Notification" in window) {
-  //     const result = await window.Notification.requestPermission();
+  useEffect(() => {
+    const storeSubscription = async () => {
+      if (
+        !("Notification" in window) ||
+        window.Notification.permission !== "granted"
+      ) {
+        return;
+      }
 
-  //     if (result === "granted") {
-  //       setShowDeniedNote(false);
-  //       return true;
-  //     }
-  //   }
+      //If the permission is granted, but the subscription is not recorded in db, we save the subscription.
+      const subscribeOptions = {
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
+        ),
+      };
 
-  //   return false;
-  // }, []);
+      const registration = await navigator.serviceWorker.getRegistration();
 
-  // useEffect(() => {
-  //   const requestNotificationPermission = async () => {
-  //     if ("Notification" in window) {
-  //       const result = await window.Notification.requestPermission();
+      const pushSubscription = await registration?.pushManager.subscribe(
+        subscribeOptions
+      );
 
-  //       if (result === "granted") {
-  //         setShowDeniedNote(false);
-  //         return true;
-  //       }
-  //     }
-  //   };
+      postSubscriptionMutation.mutate({
+        email: email || "",
+        subscription: pushSubscription?.toJSON() as SubscriptionArgs,
+      });
+    };
 
-  //   requestNotificationPermission();
-  // }, []);
+    storeSubscription();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const switchAllNotifications = useCallback(() => {
     setAllNotificationsChecked((prev) => !prev);
@@ -217,41 +222,6 @@ export default function NotificationSettingPage() {
     streakChecked,
     subscriptionId,
   ]);
-
-  useEffect(() => {
-    const storeSubscription = async () => {
-      if (
-        !("Notification" in window) ||
-        window.Notification.permission !== "granted"
-      ) {
-        return;
-      }
-
-      //If the permission is granted, but the subscription is not recorded in db, we save the subscription.
-      const subscribeOptions = {
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
-        ),
-      };
-
-      const registration = await navigator.serviceWorker.getRegistration();
-
-      const pushSubscription = await registration?.pushManager.subscribe(
-        subscribeOptions
-      );
-
-      postSubscriptionMutation.mutate({
-        email: email || "",
-        subscription: pushSubscription?.toJSON() as SubscriptionArgs,
-      });
-    };
-
-    if (!subscriptionId) {
-      storeSubscription();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (isError) {
     return (
