@@ -187,10 +187,10 @@ export default function NotificationSettingPage() {
   }, []);
 
   const switchAllNotifications = useCallback(() => {
-    setAllNotificationsChecked((prev) => !prev);
-    setNewActionChecked((prev) => !prev);
-    setStreakChecked((prev) => !prev);
-    setMeetGoalChecked((prev) => !prev);
+    setAllNotificationsChecked(true);
+    setNewActionChecked(true);
+    setStreakChecked(true);
+    setMeetGoalChecked(true);
   }, []);
 
   const switchNewAction = useCallback(() => {
