@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Grid, Switch, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
 import { useRouter } from "next/navigation";
@@ -35,10 +35,15 @@ export default function NotificationSettingPage() {
     onSuccess: ({ id }) => {
       setSubscriptionId(id);
 
+      setAllNotificationsChecked(true);
+      setNewActionChecked(true);
+      setStreakChecked(true);
+      setMeetGoalChecked(true);
+
       postNotificationSettingsMutation.mutate({
-        newAction: newActionChecked,
-        streak: streakChecked,
-        meetGoal: meetGoalChecked,
+        newAction: true,
+        streak: true,
+        meetGoal: true,
         subscriptionId: id,
       });
     },
@@ -101,15 +106,20 @@ export default function NotificationSettingPage() {
 
       const permission = await window.Notification.requestPermission();
 
-      if (permission === "denied") {
+      if (permission === "denied" || permission === "default") {
         setShowDefaultNote(false);
         setShowDeniedNote(true);
         return;
       }
 
       setShowDefaultNote(false);
+      setShowDeniedNote(false);
 
-      if (prevPermission === "default" && permission === "granted") {
+      if (
+        prevPermission === "default" &&
+        permission === "granted" &&
+        !subscriptionId
+      ) {
         const subscribeOptions = {
           userVisibleOnly: true,
           applicationServerKey: urlBase64ToUint8Array(
@@ -127,11 +137,6 @@ export default function NotificationSettingPage() {
           email: email || "",
           subscription: pushSubscription?.toJSON() as SubscriptionArgs,
         });
-
-        setAllNotificationsChecked(true);
-        setNewActionChecked(true);
-        setStreakChecked(true);
-        setMeetGoalChecked(true);
       }
     };
 
@@ -145,104 +150,108 @@ export default function NotificationSettingPage() {
     );
   }, [newActionChecked, streakChecked, meetGoalChecked]);
 
-  const isNotificationModificationAllowed = useCallback(async () => {
-    if ("Notification" in window) {
-      const result = await window.Notification.requestPermission();
+  // const isNotificationModificationAllowed = useCallback(async () => {
+  //   if ("Notification" in window) {
+  //     const result = await window.Notification.requestPermission();
 
-      if (result === "granted") {
-        setShowDeniedNote(false);
-        return true;
-      }
-    }
+  //     if (result === "granted") {
+  //       setShowDeniedNote(false);
+  //       return true;
+  //     }
+  //   }
 
-    return false;
+  //   return false;
+  // }, []);
+
+  // useEffect(() => {
+  //   const requestNotificationPermission = async () => {
+  //     if ("Notification" in window) {
+  //       const result = await window.Notification.requestPermission();
+
+  //       if (result === "granted") {
+  //         setShowDeniedNote(false);
+  //         return true;
+  //       }
+  //     }
+  //   };
+
+  //   requestNotificationPermission();
+  // }, []);
+
+  const switchAllNotifications = useCallback(() => {
+    setAllNotificationsChecked((prev) => !prev);
+    setNewActionChecked((prev) => !prev);
+    setStreakChecked((prev) => !prev);
+    setMeetGoalChecked((prev) => !prev);
   }, []);
 
-  const switchAllNotifications = useCallback(
-    async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      if (await isNotificationModificationAllowed()) {
-        setAllNotificationsChecked(checked);
-        setNewActionChecked(checked);
-        setStreakChecked(checked);
-        setMeetGoalChecked(checked);
-      }
-    },
-    [isNotificationModificationAllowed]
-  );
+  const switchNewAction = useCallback(() => {
+    setNewActionChecked((prev) => !prev);
+  }, []);
 
-  const switchNewAction = useCallback(
-    async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      if (await isNotificationModificationAllowed())
-        setNewActionChecked(checked);
-    },
-    [isNotificationModificationAllowed]
-  );
+  const switchStreak = useCallback(() => {
+    setStreakChecked((prev) => !prev);
+  }, []);
 
-  const switchStreak = useCallback(
-    async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      if (await isNotificationModificationAllowed()) setStreakChecked(checked);
-    },
-    [isNotificationModificationAllowed]
-  );
-
-  const switchMeetGoal = useCallback(
-    async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      if (await isNotificationModificationAllowed())
-        setMeetGoalChecked(checked);
-    },
-    [isNotificationModificationAllowed]
-  );
+  const switchMeetGoal = useCallback(() => {
+    setMeetGoalChecked((prev) => !prev);
+  }, []);
 
   const handleBackClick = useCallback(() => {
     router.push("/settings");
   }, [router]);
 
   const handleDoneClick = useCallback(async () => {
-    if (
-      !("Notification" in window) ||
-      window.Notification.permission !== "granted"
-    ) {
-      return;
-    }
+    setIsSubmitting(true);
 
-    if (subscriptionId) {
-      setIsSubmitting(true);
-
-      return putNotificationSettingsMutation.mutate({
-        newAction: newActionChecked,
-        streak: streakChecked,
-        meetGoal: meetGoalChecked,
-        subscriptionId,
-      });
-    }
-
-    //If the permission is granted, but the subscription is not recorded in db, we save the subscription.
-    const subscribeOptions = {
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(
-        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
-      ),
-    };
-
-    const registration = await navigator.serviceWorker.getRegistration();
-
-    const pushSubscription = await registration?.pushManager.subscribe(
-      subscribeOptions
-    );
-
-    postSubscriptionMutation.mutate({
-      email: email || "",
-      subscription: pushSubscription?.toJSON() as SubscriptionArgs,
+    return putNotificationSettingsMutation.mutate({
+      newAction: newActionChecked,
+      streak: streakChecked,
+      meetGoal: meetGoalChecked,
+      subscriptionId,
     });
   }, [
-    email,
     meetGoalChecked,
     newActionChecked,
-    postSubscriptionMutation,
     putNotificationSettingsMutation,
     streakChecked,
     subscriptionId,
   ]);
+
+  useEffect(() => {
+    const storeSubscription = async () => {
+      if (
+        !("Notification" in window) ||
+        window.Notification.permission !== "granted"
+      ) {
+        return;
+      }
+
+      //If the permission is granted, but the subscription is not recorded in db, we save the subscription.
+      const subscribeOptions = {
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
+        ),
+      };
+
+      const registration = await navigator.serviceWorker.getRegistration();
+
+      const pushSubscription = await registration?.pushManager.subscribe(
+        subscribeOptions
+      );
+
+      postSubscriptionMutation.mutate({
+        email: email || "",
+        subscription: pushSubscription?.toJSON() as SubscriptionArgs,
+      });
+    };
+
+    if (!subscriptionId) {
+      storeSubscription();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isError) {
     return (
@@ -300,11 +309,17 @@ export default function NotificationSettingPage() {
             variant="text"
             onClick={handleDoneClick}
             sx={{ px: "14px", mr: "-14px" }}
-            disabled={isSubmitting}
+            disabled={isSubmitting || showDeniedNote || !subscriptionId}
           >
             <Typography
               variant="subtitle1"
-              sx={{ fontWeight: 600, color: "#38ACE2" }}
+              sx={{
+                fontWeight: 600,
+                color: "#38ACE2",
+                ...((showDeniedNote || !subscriptionId) && {
+                  color: "rgba(255, 255, 255, 0.38)",
+                }),
+              }}
             >
               {isSubmitting ? "Saving..." : "Done"}
             </Typography>
@@ -312,12 +327,18 @@ export default function NotificationSettingPage() {
         </Grid>
       </Grid>
       {showDefaultNote && (
-        <Typography variant="subtitle1" sx={{ mt: "16px" }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ mt: "16px", color: "rgba(255, 255, 255, 0.7)" }}
+        >
           IOS notifications require version 16.5 or later
         </Typography>
       )}
       {showDeniedNote && (
-        <Typography variant="subtitle1" sx={{ mt: "16px" }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ mt: "16px", color: "rgba(255, 255, 255, 0.7)" }}
+        >
           Your device notifications are turned off. To control what
           notifications you receive, turn on notifications in your device
           settings
@@ -340,6 +361,7 @@ export default function NotificationSettingPage() {
         <Switch
           onChange={switchAllNotifications}
           checked={allNotificationsChecked}
+          disabled={showDeniedNote}
         />
       </div>
       <div className="mt-10 space-y-6">
@@ -356,7 +378,11 @@ export default function NotificationSettingPage() {
                 New actions on your dashboard
               </Typography>
             </div>
-            <Switch onChange={switchNewAction} checked={newActionChecked} />
+            <Switch
+              onChange={switchNewAction}
+              checked={newActionChecked}
+              disabled={showDeniedNote}
+            />
           </div>
           <div className="flex justify-between items-center">
             <div>
@@ -367,7 +393,11 @@ export default function NotificationSettingPage() {
                 One week before losing streak
               </Typography>
             </div>
-            <Switch onChange={switchStreak} checked={streakChecked} />
+            <Switch
+              onChange={switchStreak}
+              checked={streakChecked}
+              disabled={showDeniedNote}
+            />
           </div>
           <div className="flex justify-between items-center">
             <div>
@@ -378,7 +408,11 @@ export default function NotificationSettingPage() {
                 No activity in more than a week
               </Typography>
             </div>
-            <Switch onChange={switchMeetGoal} checked={meetGoalChecked} />
+            <Switch
+              onChange={switchMeetGoal}
+              checked={meetGoalChecked}
+              disabled={showDeniedNote}
+            />
           </div>
         </div>
       </div>
