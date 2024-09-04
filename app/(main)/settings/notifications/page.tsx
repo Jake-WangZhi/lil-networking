@@ -27,7 +27,6 @@ export default function NotificationSettingPage() {
   const [subscriptionId, setSubscriptionId] = useState("");
   const [showDefaultNote, setShowDefaultNote] = useState(true);
   const [showDeniedNote, setShowDeniedNote] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const postSubscriptionMutation = useSubscriptionMutation({
@@ -65,7 +64,6 @@ export default function NotificationSettingPage() {
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");
       console.log(error);
-      setIsSubmitting(false);
     },
   });
 
@@ -203,22 +201,21 @@ export default function NotificationSettingPage() {
   }, []);
 
   const handleBackClick = useCallback(() => {
-    router.push("/settings");
-  }, [router]);
-
-  const handleDoneClick = useCallback(async () => {
-    setIsSubmitting(true);
-
-    return putNotificationSettingsMutation.mutate({
-      newAction: newActionChecked,
-      streak: streakChecked,
-      meetGoal: meetGoalChecked,
-      subscriptionId,
-    });
+    if (subscriptionId) {
+      putNotificationSettingsMutation.mutate({
+        newAction: newActionChecked,
+        streak: streakChecked,
+        meetGoal: meetGoalChecked,
+        subscriptionId,
+      });
+    } else {
+      router.push("/settings");
+    }
   }, [
     meetGoalChecked,
     newActionChecked,
     putNotificationSettingsMutation,
+    router,
     streakChecked,
     subscriptionId,
   ]);
@@ -244,7 +241,7 @@ export default function NotificationSettingPage() {
   return (
     <main className="relative min-h-screen pb-8 px-4 md:pt-4">
       <Grid container alignItems="center">
-        <Grid item xs={2.9}>
+        <Grid item xs={2}>
           <Button
             variant="text"
             onClick={handleBackClick}
@@ -255,7 +252,7 @@ export default function NotificationSettingPage() {
         </Grid>
         <Grid
           item
-          xs={6.2}
+          xs={8}
           sx={{
             display: "flex",
             textAlign: "center",
@@ -266,35 +263,7 @@ export default function NotificationSettingPage() {
             Manage Notifications
           </Typography>
         </Grid>
-        <Grid
-          item
-          xs={2.9}
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            alignContent: "center",
-          }}
-        >
-          <Button
-            variant="text"
-            onClick={handleDoneClick}
-            sx={{ px: "14px", mr: "-14px" }}
-            disabled={isSubmitting || showDeniedNote || !subscriptionId}
-          >
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: 600,
-                color: "#38ACE2",
-                ...((showDeniedNote || !subscriptionId) && {
-                  color: "rgba(255, 255, 255, 0.38)",
-                }),
-              }}
-            >
-              {isSubmitting ? "Saving..." : "Done"}
-            </Typography>
-          </Button>
-        </Grid>
+        <Grid item xs={2}></Grid>
       </Grid>
       {showDefaultNote && (
         <Typography
