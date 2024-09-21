@@ -4,11 +4,11 @@
   "crons": [
     {
       "path": "/api/crons/new_action_push_notifications_cron?key=b0686dfa42e95017476f71d500bd62182e51ee3427fdfa0893e0bc70e3cce546",
-      "schedule": "0 13 * * *"
+      "schedule": "0 8 * * *"
     },
     {
       "path": "/api/crons/streak_calculation_cron?key=b0686dfa42e95017476f71d500bd62182e51ee3427fdfa0893e0bc70e3cce546",
-      "schedule": "0 13 * * *"
+      "schedule": "0 1 1 * *"
     }
   ]
 }
