@@ -57,8 +57,8 @@ export async function GET(request: Request) {
 
   const isMeetGoals =
     goals &&
-    goals.connections === goals.goalConnections &&
-    goals.messages === goals.goalMessages &&
+    goals.connections >= goals.goalConnections &&
+    goals.messages >= goals.goalMessages &&
     goals.goalConnections > 0 &&
     goals.goalMessages > 0;
 
