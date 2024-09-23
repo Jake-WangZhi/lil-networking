@@ -10,7 +10,6 @@ type ActionType = {
   priorityActions: Array<Action>;
   upcomingActions: Array<Action>;
   hasContacts: boolean;
-  isMeetGoals: boolean;
   hasViewedDashboardTutorial: boolean;
   showConfetti: boolean;
 };

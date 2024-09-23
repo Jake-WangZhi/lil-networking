@@ -82,7 +82,6 @@ export async function GET(request: Request) {
   return NextResponse.json({
     ...actions,
     hasContacts: !!contacts.length,
-    isMeetGoals,
     hasViewedDashboardTutorial: user.hasViewedDashboardTutorial,
     showConfetti: !goals?.hasShownConfetti && isMeetGoals,
   });

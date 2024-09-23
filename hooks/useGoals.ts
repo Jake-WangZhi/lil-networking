@@ -7,13 +7,17 @@ type Args = {
   email?: string | null;
 };
 
+interface GoalsType extends Goals {
+  isMeetGoals: boolean;
+}
+
 export const useGoals = ({ email }: Args) => {
   const {
     isError,
     data: goals,
     isLoading,
     isFetching,
-  } = useQuery<Goals>({
+  } = useQuery<GoalsType>({
     queryKey: ["goals", email],
     queryFn: () =>
       fetcher(`/settings/goals/api?${SearchParams.Email}=${email}`),

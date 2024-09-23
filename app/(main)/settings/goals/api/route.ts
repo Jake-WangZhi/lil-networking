@@ -66,5 +66,12 @@ export async function GET(request: Request) {
     },
   });
 
-  return NextResponse.json(goals);
+  const isMeetGoals =
+    goals &&
+    goals.connections >= goals.goalConnections &&
+    goals.messages >= goals.goalMessages &&
+    goals.goalConnections > 0 &&
+    goals.goalMessages > 0;
+
+  return NextResponse.json({ isMeetGoals, ...goals });
 }

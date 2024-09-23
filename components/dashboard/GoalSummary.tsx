@@ -10,11 +10,7 @@ import { event } from "nextjs-google-analytics";
 import { useUser } from "@/contexts/UserContext";
 import { Lightning, Confetti } from "@phosphor-icons/react";
 
-interface Props {
-  isMeetGoals?: boolean;
-}
-
-export const GoalSummary = ({ isMeetGoals }: Props) => {
+export const GoalSummary = () => {
   const router = useRouter();
   const { email } = useUser();
 
@@ -92,7 +88,7 @@ export const GoalSummary = ({ isMeetGoals }: Props) => {
             </div>
           </div>
           <GoalStats goals={goals} />
-          {isMeetGoals && (
+          {goals?.isMeetGoals && (
             <div className="flex items-center justify-center gap-2">
               <Confetti className="text-primary-yellow text-2xl md:text-3xl lg:text-4xl" />
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>

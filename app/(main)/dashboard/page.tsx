@@ -77,7 +77,7 @@ export default function DashboardPage() {
             />
           </div>
         </div>
-        <GoalSummary isMeetGoals={actions?.isMeetGoals} />
+        <GoalSummary />
       </div>
       {actions?.showConfetti && (
         <Confetti
